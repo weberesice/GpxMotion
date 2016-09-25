@@ -15,7 +15,7 @@ body { margin: 0; }
   font-size: 16px
 }
 
-#start {
+#reset {
   position: absolute;
   right: 30px;
   bottom: 60px;

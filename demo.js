@@ -2,14 +2,14 @@
 
 (function(){
 
-var currentTimer;
+var currentTimer = null;
 var plan = [
     [1, 'plane', 3000, 'Toulouse, c\'est parti !', null, null, null],
-    [2, 'bus', 6000, 'Buenos Aires, aqui estamos', 'On reste quelques jours finalement', 'http://photos.pluton.cassio.pe/upload/2016/09/01/20160901163521-60c27121.jpg', 'http://photos.pluton.cassio.pe/index.php?/category/102'],
-    [2, 'hike', 6000],
-    [2, 'car', 6000],
-    [2, 'train', 6000],
-    [20, 'bike', 6000]
+    [2, 'bus', 2000, 'Buenos Aires, aqui estamos', 'On reste quelques jours finalement', 'http://photos.pluton.cassio.pe/upload/2016/09/01/20160901163521-60c27121.jpg', 'http://photos.pluton.cassio.pe/index.php?/category/102'],
+    [2, 'hike', 2000],
+    [2, 'car', 2000],
+    [2, 'train', 2000],
+    [20, 'bike', 2000]
 ];
 
 function Timer(callback, delay) {
@@ -50,6 +50,7 @@ function nextMarker(){
 
         // remove marker when it ends
         if (currentMarkerIndex > 0){
+            markers[currentMarkerIndex-1].stop();
             map.removeLayer(markers[currentMarkerIndex-1]);
         }
 
@@ -99,6 +100,16 @@ function nextMarker(){
             nextMarker();
         }, timeout);
     }
+    else{
+        // this is the end of the animation
+        // we remove the last marker
+        markers[currentMarkerIndex-1].stop();
+        map.removeLayer(markers[currentMarkerIndex-1]);
+        // add last pin marker
+        beginMarkers[currentMarkerIndex].addTo(map);
+        currentMarkerIndex = 0;
+        currentTimer = null;
+    }
 }
 
 function playPause(){
@@ -112,6 +123,32 @@ function playPause(){
     }
 }
 
+function reset(){
+    // stop scheduler
+    if (currentTimer !== null){
+        currentTimer.pause();
+        currentTimer = null;
+    }
+
+    // reset currentMarkerIndex
+    currentMarkerIndex = 0;
+    var i;
+    // remove begin markers
+    for (i=0; i < beginMarkers.length; i++){
+        map.removeLayer(beginMarkers[i]);
+    }
+
+    // remove polylines
+    for (i=0; i < polylines.length; i++){
+        map.removeLayer(polylines[i]);
+    }
+
+    // remove moving markers
+    for (i=0; i < markers.length; i++){
+        markers[i].stop();
+        map.removeLayer(markers[i]);
+    }
+}
 
 var vehicule = {
     plane : {
@@ -170,8 +207,20 @@ var vehicule = {
     }
 }
 
-var pinIcon = L.icon({
+var beginPinIcon = L.icon({
             iconUrl: 'images/pin.png',
+            iconSize: [25, 39],
+            iconAnchor: [5, 39],
+            shadowUrl: null
+        });
+var endPinIcon = L.icon({
+            iconUrl: 'images/pinred.png',
+            iconSize: [25, 39],
+            iconAnchor: [5, 39],
+            shadowUrl: null
+        });
+var normalPinIcon = L.icon({
+            iconUrl: 'images/pinblue.png',
             iconSize: [25, 39],
             iconAnchor: [5, 39],
             shadowUrl: null
@@ -181,6 +230,17 @@ var pinIcon = L.icon({
 
 var map = L.map('map').setView([0, 0], 2);
 L.control.scale({metric: true, imperial: true, position:'topleft'}).addTo(map);
+var legendText = '<h3>Line colors</h3><p style="font-size:18px;">'+
+    '<b style="color:blue;">plane</b><br/>'+
+    '<b style="color:green;">bike</b><br/>'+
+    '<b style="color:brown;">foot</b><br/>'+
+    '<b style="color:purple;">car</b><br/>'+
+    '<b style="color:purple;">bus</b><br/>'+
+    '<b style="color:red;">train</b><br/>'+
+    '</p>';
+var dialog = L.control.dialog({anchor: [120, 0], position: 'topleft', size: [80,300]})
+    .setContent(legendText)
+    .addTo(map);
 
   var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
   var osmAttribution = 'Map data &copy; 2013 <a href="http://openstreetmap'+
@@ -316,10 +376,9 @@ var beginMarkers = [];
               nblinesInserted = 0;
               table = [];
               while (nblinesInserted < planSection[0]+1 && iline < coords.length){
-                  //for (i=0; i< coords.length; i++){
                   thecoord = coords[iline];
                   ll = L.latLng(thecoord[1], thecoord[0]);
-                  console.log('section '+iplan+' : '+thecoord[1]+' ; '+ thecoord[0]);
+                  //console.log('section '+iplan+' : '+thecoord[1]+' ; '+ thecoord[0]);
                   table.push(ll);
                   iline++;
                   nblinesInserted++;
@@ -338,25 +397,32 @@ var beginMarkers = [];
                   icon: theicon
                   }
               );
+              var pinIcon = normalPinIcon;
+              if (iplan === 0){
+                  pinIcon = beginPinIcon;
+              }
               var beginMarker = L.marker(table[0], {icon: pinIcon});
               beginMarkers.push(beginMarker);
 
-              //map.addLayer(marker);
-              //if (iplan !== 0){
-              //    $(marker._icon).hide();
-              //}
               markers.push(marker);
 
               iplan++;
           }
 
-      //});
+          // add last pin marker
+          var beginMarker = L.marker(table[table.length-1], {icon: endPinIcon});
+          beginMarkers.push(beginMarker);
+
 
   });
 
  $(function() {
+  $('#reset').click(function() {
+      reset();
+  });
   $('#pause').click(function() {
       if (currentMarkerIndex === 0){
+          reset();
           nextMarker();
       }
       else{
@@ -370,17 +436,18 @@ var beginMarkers = [];
 	  console.log(kc);
 
 	  if (kc === 32){
+          e.preventDefault();
           if (currentMarkerIndex === 0){
+              reset();
               nextMarker();
           }
           else{
               playPause();
           }
 	  }
-	  if (kc === 161 || kc === 223){
-	  }
-	  if (kc === 60 || kc === 220){
-		  e.preventDefault();
+	  if (kc === 73){
+          e.preventDefault();
+          reset();
 	  }
   }
   document.onkeydown = checkKey;
