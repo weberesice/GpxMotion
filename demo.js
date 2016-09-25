@@ -3,6 +3,14 @@
 (function(){
 
 var currentTimer;
+var plan = [
+    [1, 'plane', 3000, 'Toulouse, c\'est parti !', null, null, null],
+    [2, 'bus', 6000, 'Buenos Aires, aqui estamos', 'On reste quelques jours finalement', 'http://photos.pluton.cassio.pe/upload/2016/09/01/20160901163521-60c27121.jpg', 'http://photos.pluton.cassio.pe/index.php?/category/102'],
+    [2, 'hike', 6000],
+    [2, 'car', 6000],
+    [2, 'train', 6000],
+    [20, 'bike', 6000]
+];
 
 function Timer(callback, delay) {
     var timerId, start, remaining = delay;
@@ -21,6 +29,22 @@ function Timer(callback, delay) {
     this.resume();
 }
 
+String.format = function() {
+    // The string containing the format items (e.g. "{0}")
+    // will and always has to be the first argument.
+    var theString = arguments[0];
+
+    // start with the second argument (i = 1)
+    for (var i = 1; i < arguments.length; i++) {
+        // "gm" = RegEx options for Global search (more than one instance)
+        // and for Multiline search
+        var regEx = new RegExp("\\{" + (i - 1) + "\\}", "gm");
+        theString = theString.replace(regEx, arguments[i]);
+    }
+
+    return theString;
+}
+
 function nextMarker(){
     if (currentMarkerIndex < markers.length){
 
@@ -32,6 +56,30 @@ function nextMarker(){
         // add next marker pin at start point and get its time
         var timeout = plan[currentMarkerIndex][2];
         beginMarkers[currentMarkerIndex].addTo(map);
+		if (plan[currentMarkerIndex].length > 6){
+			linkDest = plan[currentMarkerIndex][6];
+			title = plan[currentMarkerIndex][3];
+			text = plan[currentMarkerIndex][4];
+			photoUrl = plan[currentMarkerIndex][5];
+            var popupString = '<h2 class="popupTitle">'+title+'</h2>';
+            if (text !== null){
+                popupString = popupString + '<p>'+text+'</p>';
+            }
+            if (photoUrl !== null){
+                if (linkDest !== null){
+                    popupString = popupString + '<a href="' + linkDest +
+                        '" target="_blank" title="Click to know more about \''+
+                        title+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
+                }
+                else{
+                    popupString = popupString + '<img class="popupPhoto" src="'+photoUrl+'"/>';
+                }
+            }
+            if (linkDest !== null){
+                popupString = popupString+ '<a href="' + linkDest + '" target="_blank">More about "'+title+'"</a>';
+            }
+			beginMarkers[currentMarkerIndex].bindPopup(popupString);
+		}
 
         //$(markers[currentMarkerIndex]._icon).show();
 
@@ -252,14 +300,6 @@ var markers = [];
 var polylines = [];
 // used to add permanent steps markers
 var beginMarkers = [];
-var plan = [
-    [1, 'plane', 3000],
-    [2, 'bus', 6000],
-    [2, 'hike', 6000],
-    [2, 'car', 6000],
-    [2, 'train', 6000],
-    [20, 'bike', 6000]
-];
 
   $.ajax('./test.gpx').done(function(xml) {
           //console.log(toGeoJSON.gpx(xml).features[0].geometry.coordinates[0]);
@@ -323,23 +363,7 @@ var plan = [
           playPause();
       }
   });
-  $('#start').click(function() {
-    console.log('start');
-    //$.each(markers, function(i, marker) {
-      //marker.start();
-    //});
 
-    nextMarker();
-
-    $(this).hide();
-
-	//setTimeout(function() {
-	//	// Stop the animation
-	//	marker.setIcon(otherIcon);
-	//}, 2000);
-
-
-  });
   function checkKey(e){
 	  e = e || window.event;
 	  var kc = e.keyCode;

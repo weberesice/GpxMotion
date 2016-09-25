@@ -265,3 +265,10 @@ body { margin: 0; }
     font-size: 10px;
   }
 }
+
+.popupPhoto{
+    width: 300px;
+}
+.popupTitle{
+    text-align: center;
+}
