@@ -55,30 +55,6 @@ function nextMarker(){
         // add next marker pin at start point and get its time
         var timeout = plan[currentMarkerIndex][2];
         beginMarkers[currentMarkerIndex].addTo(map);
-		if (plan[currentMarkerIndex].length > 6){
-			linkDest = plan[currentMarkerIndex][6];
-			title = plan[currentMarkerIndex][3];
-			text = plan[currentMarkerIndex][4];
-			photoUrl = plan[currentMarkerIndex][5];
-            var popupString = '<h2 class="popupTitle">'+title+'</h2>';
-            if (text !== null){
-                popupString = popupString + '<p>'+text+'</p>';
-            }
-            if (photoUrl !== null){
-                if (linkDest !== null){
-                    popupString = popupString + '<a href="' + linkDest +
-                        '" target="_blank" title="Click to know more about \''+
-                        title+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
-                }
-                else{
-                    popupString = popupString + '<img class="popupPhoto" src="'+photoUrl+'"/>';
-                }
-            }
-            if (linkDest !== null){
-                popupString = popupString+ '<a href="' + linkDest + '" target="_blank">More about "'+title+'"</a>';
-            }
-			beginMarkers[currentMarkerIndex].bindPopup(popupString);
-		}
 
         //$(markers[currentMarkerIndex]._icon).show();
 
@@ -146,6 +122,20 @@ function reset(){
         markers[i].stop();
         map.removeLayer(markers[i]);
     }
+}
+
+function displayCompleteTravel(){
+    for (var i=0; i<beginMarkers.length; i++){
+        beginMarkers[i].addTo(map);
+    }
+
+    var globalBounds = polylines[0].getBounds();
+    for (var i=0; i<polylines.length; i++){
+        polylines[i].addTo(map);
+        globalBounds.extend(polylines[i].getBounds());
+    }
+    // zoom on whole travel
+    map.fitBounds(globalBounds, {animate:true});
 }
 
 var vehicule = {
@@ -406,6 +396,31 @@ function main(){
                 pinIcon = beginPinIcon;
             }
             var beginMarker = L.marker(table[0], {icon: pinIcon});
+            // popup
+            if (planSection.length > 6){
+                linkDest = planSection[6];
+                title = planSection[3];
+                text = planSection[4];
+                photoUrl = planSection[5];
+                var popupString = '<h2 class="popupTitle">'+title+'</h2>';
+                if (text !== null){
+                    popupString = popupString + '<p>'+text+'</p>';
+                }
+                if (photoUrl !== null){
+                    if (linkDest !== null){
+                        popupString = popupString + '<a href="' + linkDest +
+                            '" target="_blank" title="Click to know more about \''+
+                            title+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
+                    }
+                    else{
+                        popupString = popupString + '<img class="popupPhoto" src="'+photoUrl+'"/>';
+                    }
+                }
+                if (linkDest !== null){
+                    popupString = popupString+ '<a href="' + linkDest + '" target="_blank">More about "'+title+'"</a>';
+                }
+                beginMarker.bindPopup(popupString);
+            }
             beginMarkers.push(beginMarker);
 
             markers.push(marker);
@@ -422,6 +437,10 @@ function main(){
 }
 
 $(function() {
+    $('#global').click(function() {
+        reset();
+        displayCompleteTravel();
+    });
     $('#reset').click(function() {
         reset();
     });
@@ -438,7 +457,7 @@ $(function() {
     function checkKey(e){
         e = e || window.event;
         var kc = e.keyCode;
-        //console.log(kc);
+        console.log(kc);
 
         if (kc === 32){
             e.preventDefault();
@@ -453,6 +472,11 @@ $(function() {
         if (kc === 73){
             e.preventDefault();
             reset();
+        }
+        if (kc === 71){
+            e.preventDefault();
+            reset();
+            displayCompleteTravel();
         }
     }
     document.onkeydown = checkKey;

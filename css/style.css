@@ -22,6 +22,13 @@ body { margin: 0; }
   font-size: 16px
 }
 
+#global {
+  position: absolute;
+  right: 30px;
+  bottom: 90px;
+  font-size: 16px
+}
+
 /* All of this is from cibi.me */
 
 #branding {
