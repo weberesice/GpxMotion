@@ -370,7 +370,11 @@ function main(){
         var planSection, thecoord;
         var iline = 0;
         var nblinesInserted;
-        var coords = toGeoJSON.gpx(xml).features[0].geometry.coordinates;
+        var geogpx = toGeoJSON.gpx(xml);
+        var coords = [];
+        for (var i=0; i<geogpx.features.length; i++){
+            coords = coords.concat(geogpx.features[i].geometry.coordinates);
+        }
         while (iplan < plan.length && iline < coords.length){
             planSection = plan[iplan];
             nblinesInserted = 0;
