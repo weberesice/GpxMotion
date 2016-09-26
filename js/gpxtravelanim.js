@@ -66,7 +66,7 @@ function nextMarker(){
         // draw a line for current marker
         polylines[currentMarkerIndex].addTo(map);
         // zoom on current section
-        map.fitBounds(polylines[currentMarkerIndex].getBounds(), {animate:true, padding: [80,80]});
+        map.fitBounds(polylines[currentMarkerIndex].getBounds(), {animate:true, padding: [100,100]});
 
         currentMarkerIndex++;
 
@@ -136,7 +136,7 @@ function displayCompleteTravel(){
         globalBounds.extend(polylines[i].getBounds());
     }
     // zoom on whole travel
-    map.fitBounds(globalBounds, {animate:true, padding: [80,80]});
+    map.fitBounds(globalBounds, {animate:true, padding: [100,100]});
 }
 
 var vehicule = {
@@ -225,8 +225,14 @@ var legendText = '<h3>Line colors</h3><p style="font-size:18px;">'+
 '<b style="color:purple;">car</b><br/>'+
 '<b style="color:purple;">bus</b><br/>'+
 '<b style="color:red;">train</b><br/>'+
+'</p>'+
+'<h3>Pins</h3>'+
+'<p>'+
+'<img src="images/pin.png"/>start<br/>'+
+'<img src="images/pinblue.png"/>step<br/>'+
+'<img src="images/pinred.png"/>end'+
 '</p>';
-var dialog = L.control.dialog({anchor: [120, 0], position: 'topleft', size: [80,300]})
+var dialog = L.control.dialog({anchor: [120, 0], position: 'topleft', size: [90,500]})
     .setContent(legendText)
     .addTo(map);
 
