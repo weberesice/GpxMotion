@@ -66,7 +66,7 @@ function nextMarker(){
         // draw a line for current marker
         polylines[currentMarkerIndex].addTo(map);
         // zoom on current section
-        map.fitBounds(polylines[currentMarkerIndex].getBounds(), {animate:true});
+        map.fitBounds(polylines[currentMarkerIndex].getBounds(), {animate:true, padding: [80,80]});
 
         currentMarkerIndex++;
 
@@ -136,7 +136,7 @@ function displayCompleteTravel(){
         globalBounds.extend(polylines[i].getBounds());
     }
     // zoom on whole travel
-    map.fitBounds(globalBounds, {animate:true});
+    map.fitBounds(globalBounds, {animate:true, padding: [80,80]});
 }
 
 var vehicule = {
