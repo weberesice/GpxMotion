@@ -173,7 +173,7 @@ var vehicule = {
             iconAnchor: [20, 52],
             shadowUrl: null
         }),
-        color : 'brown'
+        color : 'yellow'
     },
     car : {
         icon: L.icon({
@@ -220,7 +220,7 @@ L.control.scale({metric: true, imperial: true, position:'topleft'}).addTo(map);
 var legendText = '<h3>Line colors</h3><p style="font-size:18px;">'+
 '<b style="color:blue;">plane</b><br/>'+
 '<b style="color:green;">bike</b><br/>'+
-'<b style="color:brown;">foot</b><br/>'+
+'<b style="color:yellow;">foot</b><br/>'+
 '<b style="color:purple;">car</b><br/>'+
 '<b style="color:purple;">bus</b><br/>'+
 '<b style="color:red;">train</b><br/>'+
