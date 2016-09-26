@@ -3,6 +3,7 @@
 (function(){
 
 var currentTimer = null;
+var params;
 var plan;
 var currentMarkerIndex = 0;
 var markers = [];
@@ -344,14 +345,15 @@ L.control.layers(baseLayers, baseOverlays).addTo(map);
 
 
 //############ LOAD JSON PLAN ##############
-$.getJSON('./steps.json', function( data ) {
-    plan = data;
+$.getJSON('./steps2.json', function( data ) {
+    params = data;
+    plan = params.plan;
     main();
 });
 
 // then load gpx file and build our markers, pins...
 function main(){
-    $.ajax('./track.gpx').done(function(xml) {
+    $.ajax('./track2.gpx').done(function(xml) {
         //console.log(toGeoJSON.gpx(xml).features[0].geometry.coordinates[0]);
         var table;
         var ll,mypoly;
@@ -362,8 +364,28 @@ function main(){
         var nblinesInserted;
         var geogpx = toGeoJSON.gpx(xml);
         var coords = [];
+
+        // used in feature mode only
+        // we get the umber of features we want for each plan step
+        var featureNumberPerStep = [];
+        if (params.mode === 'features'){
+            for (var i=0; i<plan.length; i++){
+                featureNumberPerStep.push(plan[i][0]);
+                plan[i][0] = 0;
+            }
+        }
+        var iplancoord = 0;
+        // concatenate all coordinates in one array
         for (var i=0; i<geogpx.features.length; i++){
             coords = coords.concat(geogpx.features[i].geometry.coordinates);
+            // if we count the features, get the correct number of segments
+            if (params.mode === 'features' && iplancoord < plan.length){
+                plan[iplancoord][0] += geogpx.features[i].geometry.coordinates.length;
+                featureNumberPerStep[iplancoord]--;
+                if (featureNumberPerStep[iplancoord] === 0){
+                    iplancoord++;
+                }
+            }
         }
         while (iplan < plan.length && iline < coords.length){
             planSection = plan[iplan];
@@ -377,7 +399,11 @@ function main(){
                 iline++;
                 nblinesInserted++;
             }
-            iline--;
+            // if this is the last coord, there is nothing to link with after
+            // else : we artificialy put the last point we took as the start of next section
+            if (iline !== coords.length){
+                iline--;
+            }
 
             thevehicule = planSection[1];
             theicon = vehicule[thevehicule].icon;
