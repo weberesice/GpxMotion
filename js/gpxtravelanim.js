@@ -434,7 +434,10 @@ function main(){
                 title = planSection[3];
                 text = planSection[4];
                 photoUrl = planSection[5];
-                var popupString = '<h2 class="popupTitle">'+title+'</h2>';
+                if (title === null){
+                    title = 'Step '+(iplan+1);
+                }
+                var popupString = '<h2 class="popupTitle">Step '+(iplan+1)+' : '+title+'</h2>';
                 if (text !== null){
                     popupString = popupString + '<p>'+text+'</p>';
                 }
@@ -452,6 +455,7 @@ function main(){
                     popupString = popupString+ '<a href="' + linkDest + '" target="_blank">More about "'+title+'"</a>';
                 }
                 beginMarker.bindPopup(popupString);
+                beginMarker.bindTooltip('Step '+(iplan+1)+' "'+title+'"<br/>Click for details');
             }
             beginMarkers.push(beginMarker);
 
