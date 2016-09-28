@@ -8,6 +8,9 @@
 
 body { margin: 0; }
 
+#pause, #reset, #global{
+    z-index: 1000;
+}
 #pause {
   position: absolute;
   right: 30px;
