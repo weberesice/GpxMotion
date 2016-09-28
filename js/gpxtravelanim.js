@@ -10,6 +10,7 @@ var markers = [];
 var polylines = [];
 // used to add permanent steps markers
 var beginMarkers = [];
+var globalBounds;
 
 function Timer(callback, delay) {
     var timerId, start, remaining = delay;
@@ -129,14 +130,12 @@ function displayCompleteTravel(){
     for (var i=0; i<beginMarkers.length; i++){
         beginMarkers[i].addTo(map);
     }
-
-    var globalBounds = polylines[0].getBounds();
     for (var i=0; i<polylines.length; i++){
         polylines[i].addTo(map);
-        globalBounds.extend(polylines[i].getBounds());
     }
     // zoom on whole travel
-    map.fitBounds(globalBounds, {animate:true, padding: [100,100]});
+    //map.fitBounds(globalBounds, {animate:true, padding: [100,100]});
+    map.flyToBounds(globalBounds, {animate:true, padding: [100,100]});
 }
 
 var vehicule = {
@@ -217,6 +216,7 @@ var normalPinIcon = L.icon({
 
 // map management
 var map = L.map('map').setView([0, 0], 2);
+L.control.mousePosition().addTo(map);
 L.control.scale({metric: true, imperial: true, position:'topleft'}).addTo(map);
 var legendText = '<h3>Line colors</h3><p style="font-size:18px;">'+
 '<b style="color:blue;">plane</b><br/>'+
@@ -232,7 +232,7 @@ var legendText = '<h3>Line colors</h3><p style="font-size:18px;">'+
 '<img src="images/pinblue.png"/>step<br/>'+
 '<img src="images/pinred.png"/>end'+
 '</p>';
-var dialog = L.control.dialog({anchor: [120, 0], position: 'topleft', size: [90,500]})
+var dialog = L.control.dialog({anchor: [110, 0], position: 'topleft', size: [90,500]})
     .setContent(legendText)
     .addTo(map);
 
@@ -351,7 +351,7 @@ L.control.layers(baseLayers, baseOverlays).addTo(map);
 
 
 //############ LOAD JSON PLAN ##############
-$.getJSON('./steps2.json', function( data ) {
+$.getJSON('./steps.json', function( data ) {
     params = data;
     plan = params.plan;
     main();
@@ -359,7 +359,7 @@ $.getJSON('./steps2.json', function( data ) {
 
 // then load gpx file and build our markers, pins...
 function main(){
-    $.ajax('./track2.gpx').done(function(xml) {
+    $.ajax('./track.gpx').done(function(xml) {
         //console.log(toGeoJSON.gpx(xml).features[0].geometry.coordinates[0]);
         var table;
         var ll,mypoly;
@@ -460,11 +460,15 @@ function main(){
             iplan++;
         }
 
+        // get the global bounds to zoom on the whole trip
+        globalBounds = L.latLngBounds(polylines[0].getBounds().getSouthWest(), polylines[0].getBounds().getNorthEast());
+        for (var i=0; i<polylines.length; i++){
+            globalBounds.extend(polylines[i].getBounds());
+        }
+
         // add last pin marker
         var beginMarker = L.marker(table[table.length-1], {icon: endPinIcon});
         beginMarkers.push(beginMarker);
-
-
     });
 }
 
@@ -489,7 +493,7 @@ $(function() {
     function checkKey(e){
         e = e || window.event;
         var kc = e.keyCode;
-        console.log(kc);
+        //console.log(kc);
 
         if (kc === 32){
             e.preventDefault();
