@@ -370,6 +370,7 @@ function main(){
         var nblinesInserted;
         var geogpx = toGeoJSON.gpx(xml);
         var coords = [];
+        var planNamesFromGpxTrk =[];
 
         // used in feature mode only
         // we get the umber of features we want for each plan step
@@ -378,6 +379,7 @@ function main(){
             for (var i=0; i<plan.length; i++){
                 featureNumberPerStep.push(plan[i][0]);
                 plan[i][0] = 0;
+                planNamesFromGpxTrk.push('');
             }
         }
         var iplancoord = 0;
@@ -387,8 +389,10 @@ function main(){
             // if we count the features, get the correct number of segments
             if (params.mode === 'features' && iplancoord < plan.length){
                 plan[iplancoord][0] += geogpx.features[i].geometry.coordinates.length;
+                planNamesFromGpxTrk[iplancoord] += geogpx.features[i].properties.name + '; ';
                 featureNumberPerStep[iplancoord]--;
                 if (featureNumberPerStep[iplancoord] === 0){
+                    planNamesFromGpxTrk[iplancoord] = planNamesFromGpxTrk[iplancoord].replace(/;\s$/g, '');
                     iplancoord++;
                 }
             }
@@ -435,7 +439,10 @@ function main(){
                 text = planSection[4];
                 photoUrl = planSection[5];
                 if (title === null){
-                    title = 'Step '+(iplan+1);
+                    title = '';
+                    if (params.mode === 'features'){
+                        title += ' '+planNamesFromGpxTrk[iplan];
+                    }
                 }
                 var popupString = '<h2 class="popupTitle">Step '+(iplan+1)+' : '+title+'</h2>';
                 if (text !== null){
@@ -455,7 +462,7 @@ function main(){
                     popupString = popupString+ '<a href="' + linkDest + '" target="_blank">More about "'+title+'"</a>';
                 }
                 beginMarker.bindPopup(popupString);
-                beginMarker.bindTooltip('Step '+(iplan+1)+' "'+title+'"<br/>Click for details');
+                beginMarker.bindTooltip('Step '+(iplan+1)+' : '+title+'<br/>Click for details');
             }
             beginMarkers.push(beginMarker);
 

@@ -3,8 +3,8 @@
     "plan": [
         [1, "bike", 3000, "Montpellier, c'est parti !", null, null, null],
         [2, "bike", 2000, "Bedav à Bedarieux", "On reste la nuit", "http://photos.pluton.cassio.pe/upload/2016/09/01/20160901163521-60c27121.jpg", "http://photos.pluton.cassio.pe/index.php?/category/102"],
-        [2, "bike", 2000],
-        [1, "bike", 2000],
-        [1, "bike", 2000]
+        [2, "bike", 2000, null, null, null, null],
+        [1, "bike", 2000, null, null, null, null],
+        [1, "bike", 2000, null, null, null, null]
     ]
 }
