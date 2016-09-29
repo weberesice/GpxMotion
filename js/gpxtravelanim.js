@@ -494,7 +494,7 @@ function main(){
         }
 
         // add last pin marker and tooltip
-        var beginMarker = L.marker(table[table.length-1], {icon: endPinIcon});
+        var lastMarker = L.marker(table[table.length-1], {icon: endPinIcon});
         var lastTooltip = 'Step '+(iplan+1)+' (final)';
         var lastPopup = lastTooltip;
         if (iplan < plan.length && plan[iplan].length > 6 && plan[iplan][3] !== null){
@@ -527,10 +527,10 @@ function main(){
             if (linkDest !== null){
                 lastPopup = lastPopup+ '<a href="' + linkDest + '" target="_blank">More about "'+title+'"</a>';
             }
-            beginMarker.bindPopup(lastPopup);
+            lastMarker.bindPopup(lastPopup);
         }
-        beginMarker.bindTooltip(lastTooltip);
-        beginMarkers.push(beginMarker);
+        lastMarker.bindTooltip(lastTooltip);
+        beginMarkers.push(lastMarker);
     });
 }
 
