@@ -351,7 +351,7 @@ L.control.layers(baseLayers, baseOverlays).addTo(map);
 
 
 //############ LOAD JSON PLAN ##############
-$.getJSON('./steps2.json', function( data ) {
+$.getJSON('./steps.json', function( data ) {
     params = data;
     plan = params.plan;
     main();
@@ -359,7 +359,7 @@ $.getJSON('./steps2.json', function( data ) {
 
 // then load gpx file and build our markers, pins...
 function main(){
-    $.ajax('./track2.gpx').done(function(xml) {
+    $.ajax('./track.gpx').done(function(xml) {
         //console.log(toGeoJSON.gpx(xml).features[0].geometry.coordinates[0]);
         var table;
         var ll,mypoly;
@@ -495,6 +495,11 @@ function main(){
 
         // add last pin marker
         var beginMarker = L.marker(table[table.length-1], {icon: endPinIcon});
+        var lastTooltip = 'End';
+        if (iplan < plan.length && plan[iplan].length > 6 && plan[iplan][3] !== null){
+            lastTooltip = 'End : '+plan[iplan][3];
+        }
+        beginMarker.bindTooltip(lastTooltip);
         beginMarkers.push(beginMarker);
     });
 }
