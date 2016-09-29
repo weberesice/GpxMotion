@@ -351,7 +351,7 @@ L.control.layers(baseLayers, baseOverlays).addTo(map);
 
 
 //############ LOAD JSON PLAN ##############
-$.getJSON('./steps.json', function( data ) {
+$.getJSON('./steps2.json', function( data ) {
     params = data;
     plan = params.plan;
     main();
@@ -359,7 +359,7 @@ $.getJSON('./steps.json', function( data ) {
 
 // then load gpx file and build our markers, pins...
 function main(){
-    $.ajax('./track.gpx').done(function(xml) {
+    $.ajax('./track2.gpx').done(function(xml) {
         //console.log(toGeoJSON.gpx(xml).features[0].geometry.coordinates[0]);
         var table;
         var ll,mypoly;
@@ -420,6 +420,7 @@ function main(){
             thecolor = vehicule[thevehicule].color;
 
             mypoly = L.polyline(table, {color:thecolor});
+            var polyTooltip = 'Step '+(iplan+1)+'-'+(iplan+2);
             polylines.push(mypoly);
 
             marker = L.Marker.movingMarker(mypoly.getLatLngs(), planSection[2],{
@@ -463,7 +464,22 @@ function main(){
                 }
                 beginMarker.bindPopup(popupString);
                 beginMarker.bindTooltip('Step '+(iplan+1)+' : '+title+'<br/>Click for details');
+
+                // polyline tooltip
+                if (title != ''){
+                    if (iplan < plan.length-1){
+                        if (plan[iplan+1].length > 6){
+                            if (plan[iplan+1][3] !== null){
+                                polyTooltip += ' : '+title+' => '+plan[iplan+1][3];
+                            }
+                        }
+                    }
+                    else{
+                        polyTooltip += ' : '+title+' => end';
+                    }
+                }
             }
+            mypoly.bindTooltip(polyTooltip);
             beginMarkers.push(beginMarker);
 
             markers.push(marker);
