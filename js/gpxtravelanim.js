@@ -351,7 +351,7 @@ L.control.layers(baseLayers, baseOverlays).addTo(map);
 
 
 //############ LOAD JSON PLAN ##############
-$.getJSON('./steps.json', function( data ) {
+$.getJSON('./steps2.json', function( data ) {
     params = data;
     plan = params.plan;
     main();
@@ -359,7 +359,7 @@ $.getJSON('./steps.json', function( data ) {
 
 // then load gpx file and build our markers, pins...
 function main(){
-    $.ajax('./track.gpx').done(function(xml) {
+    $.ajax('./track2.gpx').done(function(xml) {
         //console.log(toGeoJSON.gpx(xml).features[0].geometry.coordinates[0]);
         var table;
         var ll,mypoly;
@@ -493,11 +493,41 @@ function main(){
             globalBounds.extend(polylines[i].getBounds());
         }
 
-        // add last pin marker
+        // add last pin marker and tooltip
         var beginMarker = L.marker(table[table.length-1], {icon: endPinIcon});
-        var lastTooltip = 'End';
+        var lastTooltip = 'Step '+(iplan+1)+' (final)';
+        var lastPopup = lastTooltip;
         if (iplan < plan.length && plan[iplan].length > 6 && plan[iplan][3] !== null){
-            lastTooltip = 'End : '+plan[iplan][3];
+            lastTooltip = 'Step '+(iplan+1)+' (final) : '+plan[iplan][3]+'<br/>Click for details';
+
+            linkDest = plan[iplan][6];
+            title = plan[iplan][3];
+            text = plan[iplan][4];
+            photoUrl = plan[iplan][5];
+            if (title === null){
+                title = '';
+                if (params.mode === 'features'){
+                    title += ' '+planNamesFromGpxTrk[iplan];
+                }
+            }
+            lastPopup = '<h2 class="popupTitle">Step '+(iplan+1)+' (final) : '+title+'</h2>';
+            if (text !== null){
+                lastPopup = lastPopup + '<p>'+text+'</p>';
+            }
+            if (photoUrl !== null){
+                if (linkDest !== null){
+                    lastPopup = lastPopup + '<a href="' + linkDest +
+                        '" target="_blank" title="Click to know more about \''+
+                        title+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
+                }
+                else{
+                    lastPopup = lastPopup + '<img class="popupPhoto" src="'+photoUrl+'"/>';
+                }
+            }
+            if (linkDest !== null){
+                lastPopup = lastPopup+ '<a href="' + linkDest + '" target="_blank">More about "'+title+'"</a>';
+            }
+            beginMarker.bindPopup(lastPopup);
         }
         beginMarker.bindTooltip(lastTooltip);
         beginMarkers.push(beginMarker);
