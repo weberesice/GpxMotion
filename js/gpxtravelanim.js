@@ -419,7 +419,7 @@ function main(){
             theicon = vehicule[thevehicule].icon;
             thecolor = vehicule[thevehicule].color;
 
-            mypoly = L.polyline(table, {color:thecolor});
+            mypoly = L.polyline(table, {color:thecolor, weight:5});
             var polyTooltip = 'Step '+(iplan+1)+'-'+(iplan+2);
             polylines.push(mypoly);
 
@@ -479,7 +479,7 @@ function main(){
                     }
                 }
             }
-            mypoly.bindTooltip(polyTooltip);
+            mypoly.bindTooltip(polyTooltip, {sticky:true});
             beginMarkers.push(beginMarker);
 
             markers.push(marker);
