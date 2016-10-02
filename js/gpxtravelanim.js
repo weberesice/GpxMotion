@@ -357,10 +357,10 @@ map.addLayer(baseLayers[default_layer]);
 L.control.layers(baseLayers, baseOverlays).addTo(map);
 
 var drawButton = L.easyButton({
-	position: 'topright',
+	position: 'bottomright',
     states: [{
             stateName: 'draw',   // name the state
-            icon:      'fa-pencil',          // and define its properties
+            icon:      'fa-eye',          // and define its properties
             title:     'Draw complete trip (g)', // like its title
             onClick: function(btn, map) {  // and its callback
 				reset();
@@ -371,10 +371,10 @@ var drawButton = L.easyButton({
 drawButton.addTo(map);
 
 var resetButton = L.easyButton({
-	position: 'topright',
+	position: 'bottomright',
     states: [{
             stateName: 'reset',   // name the state
-            icon:      'fa-eraser',          // and define its properties
+            icon:      'fa-eye-slash',          // and define its properties
             title:     'Reset (i)', // like its title
             onClick: function(btn, map) {  // and its callback
 				reset();
@@ -384,7 +384,7 @@ var resetButton = L.easyButton({
 resetButton.addTo(map);
 
 var playButton = L.easyButton({
-	position: 'topright',
+	position: 'bottomright',
     states: [{
             stateName: 'play',   // name the state
             icon:      'fa-play-circle-o',          // and define its properties
