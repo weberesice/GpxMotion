@@ -47,6 +47,7 @@ String.format = function() {
 
 function nextMarker(){
     if (currentMarkerIndex < markers.length){
+        playButton.state('pause');
 
         // remove marker when it ends
         if (currentMarkerIndex > 0){
@@ -85,6 +86,8 @@ function nextMarker(){
         beginMarkers[currentMarkerIndex].addTo(map);
         currentMarkerIndex = 0;
         currentTimer = null;
+
+        playButton.state('play');
     }
 }
 
@@ -92,10 +95,12 @@ function playPause(){
     if (markers[currentMarkerIndex-1].isPaused()){
         currentTimer.resume();
         markers[currentMarkerIndex-1].resume();
+        playButton.state('pause');
     }
     else{
         currentTimer.pause();
         markers[currentMarkerIndex-1].pause();
+        playButton.state('play');
     }
 }
 
@@ -124,6 +129,7 @@ function reset(){
         markers[i].stop();
         map.removeLayer(markers[i]);
     }
+    playButton.state('play');
 }
 
 function displayCompleteTravel(){
@@ -216,6 +222,7 @@ var normalPinIcon = L.icon({
 
 // map management
 var map = L.map('map').setView([0, 0], 2);
+
 L.control.mousePosition().addTo(map);
 L.control.scale({metric: true, imperial: true, position:'topleft'}).addTo(map);
 var legendText = '<h3>Line colors</h3><p style="font-size:18px;">'+
@@ -349,6 +356,64 @@ default_layer = 'OpenStreetMap France';
 map.addLayer(baseLayers[default_layer]);
 L.control.layers(baseLayers, baseOverlays).addTo(map);
 
+var drawButton = L.easyButton({
+	position: 'topright',
+    states: [{
+            stateName: 'draw',   // name the state
+            icon:      'fa-pencil',          // and define its properties
+            title:     'Draw complete trip (g)', // like its title
+            onClick: function(btn, map) {  // and its callback
+				reset();
+				displayCompleteTravel();
+            }
+        }]
+});
+drawButton.addTo(map);
+
+var resetButton = L.easyButton({
+	position: 'topright',
+    states: [{
+            stateName: 'reset',   // name the state
+            icon:      'fa-eraser',          // and define its properties
+            title:     'Reset (i)', // like its title
+            onClick: function(btn, map) {  // and its callback
+				reset();
+            }
+        }]
+});
+resetButton.addTo(map);
+
+var playButton = L.easyButton({
+	position: 'topright',
+    states: [{
+            stateName: 'play',   // name the state
+            icon:      'fa-play-circle-o',          // and define its properties
+            title:     'Play/Pause animation (spacebar)', // like its title
+            onClick: function(btn, map) {  // and its callback
+				if (currentMarkerIndex === 0){
+					reset();
+					nextMarker();
+				}
+				else{
+					playPause();
+				}
+            }
+        },{
+            stateName: 'pause',   // name the state
+            icon:      'fa-pause-circle-o',          // and define its properties
+            title:     'Play/Pause animation (spacebar)', // like its title
+            onClick: function(btn, map) {  // and its callback
+				if (currentMarkerIndex === 0){
+					reset();
+					nextMarker();
+				}
+				else{
+					playPause();
+				}
+            }
+        }]
+});
+playButton.addTo(map);
 
 //############ LOAD JSON PLAN ##############
 $.getJSON('./steps2.json', function( data ) {
