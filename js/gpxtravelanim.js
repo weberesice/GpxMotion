@@ -485,7 +485,7 @@ function main(){
             thecolor = vehicule[thevehicule].color;
 
             mypoly = L.polyline(table, {color:thecolor, weight:5});
-            var polyTooltip = 'Step '+(iplan+1)+'-'+(iplan+2);
+            var polyTooltip = 'Step '+(iplan+1)+' => '+(iplan+2);
             polylines.push(mypoly);
 
             marker = L.Marker.movingMarker(mypoly.getLatLngs(), planSection[2],{

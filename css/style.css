@@ -8,3 +8,9 @@
 
 body { margin: 0; }
 
+.popupPhoto{
+    width: 300px;
+}
+.popupTitle{
+    text-align: center;
+}
