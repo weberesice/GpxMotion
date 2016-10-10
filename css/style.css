@@ -14,3 +14,7 @@ body { margin: 0; }
 .popupTitle{
     text-align: center;
 }
+
+.easy-button-button{
+    background-color: lightcoral !important;
+}
