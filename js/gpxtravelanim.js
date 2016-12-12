@@ -446,17 +446,20 @@ function main(){
             }
         }
         var iplancoord = 0;
-        // concatenate all coordinates in one array
+        // concatenate all tracks/routes coordinates in one array
+        // avoid waypoints
         for (var i=0; i<geogpx.features.length; i++){
-            coords = coords.concat(geogpx.features[i].geometry.coordinates);
-            // if we count the features, get the correct number of segments
-            if (params.elementUnit === 'features' && iplancoord < plan.length){
-                plan[iplancoord]['nbElements'] += geogpx.features[i].geometry.coordinates.length;
-                planNamesFromGpxTrk[iplancoord] += geogpx.features[i].properties.name + '; ';
-                featureNumberPerStep[iplancoord]--;
-                if (featureNumberPerStep[iplancoord] === 0){
-                    planNamesFromGpxTrk[iplancoord] = planNamesFromGpxTrk[iplancoord].replace(/;\s$/g, '');
-                    iplancoord++;
+            if (geogpx.features[i].geometry.type !== 'Point'){
+                coords = coords.concat(geogpx.features[i].geometry.coordinates);
+                // if we count the features, get the correct number of segments
+                if (params.elementUnit === 'features' && iplancoord < plan.length){
+                    plan[iplancoord]['nbElements'] += geogpx.features[i].geometry.coordinates.length;
+                    planNamesFromGpxTrk[iplancoord] += geogpx.features[i].properties.name + '; ';
+                    featureNumberPerStep[iplancoord]--;
+                    if (featureNumberPerStep[iplancoord] === 0){
+                        planNamesFromGpxTrk[iplancoord] = planNamesFromGpxTrk[iplancoord].replace(/;\s$/g, '');
+                        iplancoord++;
+                    }
                 }
             }
         }

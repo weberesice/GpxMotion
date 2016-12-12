@@ -40,10 +40,32 @@
     "beginDescription": "desc4444",
     "beginPictureUrl": "picturl4",
     "beginDetailUrl": "detailurl4"
+},
+{
+    "nbElements": 1,
+    "vehicule": "plane",
+    "time": 3000,
+    "beginTitle": "555555",
+    "beginDescription": "desc5555",
+    "beginPictureUrl": "picturl5",
+    "beginDetailUrl": "detailurl5555"
+},
+{
+    "nbElements": 1,
+    "vehicule": "train",
+    "time": 3000,
+    "beginTitle": "6666",
+    "beginDescription": "desc66",
+    "beginPictureUrl": "picturl66",
+    "beginDetailUrl": "detailurl666"
 }
 ]
   </desc>
  </metadata>
+ <wpt lat="44.84029065139799" lon="1.40625">
+     <name>unnamed</name>
+     <sym>Flag, Red</sym>
+ </wpt>
  <trk>
   <name>montp-bedarieux</name>
   <extensions>
