@@ -415,17 +415,15 @@ var playButton = L.easyButton({
 });
 playButton.addTo(map);
 
-//############ LOAD JSON PLAN ##############
-$.getJSON('./steps2.json', function( data ) {
-    params = data;
-    plan = params.plan;
-    main();
-});
-
-// then load gpx file and build our markers, pins...
+// load gpx file with plan and build our markers, pins...
 function main(){
     $.ajax('./track2.gpx').done(function(xml) {
         //console.log(toGeoJSON.gpx(xml).features[0].geometry.coordinates[0]);
+        var desc = $(xml).find('gpx>metadata>desc').text();
+        var jsondesc = $.parseJSON('{'+desc+'}');
+        params = jsondesc;
+        plan = params.plan;
+
         var table;
         var ll,mypoly;
         var marker;
@@ -643,6 +641,8 @@ $(function() {
         }
     }
     document.onkeydown = checkKey;
+
+    main();
 
 });
 }());

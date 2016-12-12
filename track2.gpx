@@ -2,6 +2,16 @@
 <gpx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:rmc="urn:net:trekbuddy:1.0:nmea:rmc" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/WaypointExtension/v1 http://www.garmin.com/xmlschemas/WaypointExtensionv1.xsd http://www.qlandkarte.org/xmlschemas/v1.1 http://www.qlandkarte.org/xmlschemas/v1.1/ql-extensions.xsd" xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" creator="QLandkarteGT 1.8.1 http://www.qlandkarte.org/" xmlns:ql="http://www.qlandkarte.org/xmlschemas/v1.1">
  <metadata>
   <time>2016-09-07T09:16:46Z</time>
+  <desc>
+    "mode": "features",
+    "plan": [
+        [1, "bike", 3000, "Montpellier, c'est partoche !", null, null, null],
+        [2, "bike", 2000, "Bedav à Bedarieux", "On reste la nuit", "http://photos.pluton.cassio.pe/upload/2016/09/01/20160901163521-60c27121.jpg", "http://photos.pluton.cassio.pe/index.php?/category/102"],
+        [2, "bike", 2000, "Night 2", null, null, null],
+        [1, "bike", 2000, "Night 3", null, null, null],
+        [1, "bike", 2000, "Night 4", "in da mud", "http://photos.pluton.cassio.pe/upload/2016/09/01/20160901163521-60c27121.jpg", "https://qwant.com"]
+    ]
+  </desc>
  </metadata>
  <trk>
   <name>montp-bedarieux</name>
