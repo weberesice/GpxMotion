@@ -438,7 +438,7 @@ function main(){
         // used in feature unit only
         // we get the number of features we want for each plan step
         var featureNumberPerStep = [];
-        if (params.elementUnit === 'features'){
+        if (params.elementUnit === 'track'){
             for (var i=0; i<plan.length; i++){
                 featureNumberPerStep.push(plan[i]['nbElements']);
                 plan[i]['nbElements'] = 0;
@@ -450,10 +450,21 @@ function main(){
         // avoid waypoints
         for (var i=0; i<geogpx.features.length; i++){
             if (geogpx.features[i].geometry.type !== 'Point'){
-                coords = coords.concat(geogpx.features[i].geometry.coordinates);
+                //alert(geogpx.features[i].geometry.type);
+                var featureLength = 0;
+                if (geogpx.features[i].geometry.type === 'MultiLineString'){
+                    for(var j=0; j<geogpx.features[i].geometry.coordinates.length; j++){
+                        coords = coords.concat(geogpx.features[i].geometry.coordinates[j]);
+                        featureLength += geogpx.features[i].geometry.coordinates[j].length;
+                    }
+                }
+                else{
+                    coords = coords.concat(geogpx.features[i].geometry.coordinates);
+                    featureLength = geogpx.features[i].geometry.coordinates.length;
+                }
                 // if we count the features, get the correct number of segments
-                if (params.elementUnit === 'features' && iplancoord < plan.length){
-                    plan[iplancoord]['nbElements'] += geogpx.features[i].geometry.coordinates.length;
+                if (params.elementUnit === 'track' && iplancoord < plan.length){
+                    plan[iplancoord]['nbElements'] += featureLength;
                     planNamesFromGpxTrk[iplancoord] += geogpx.features[i].properties.name + '; ';
                     featureNumberPerStep[iplancoord]--;
                     if (featureNumberPerStep[iplancoord] === 0){
@@ -507,7 +518,7 @@ function main(){
                 photoUrl = planSection['beginPictureUrl'];
                 if (!title){
                     title = '';
-                    if (params.elementUnit === 'features'){
+                    if (params.elementUnit === 'track'){
                         title += ' '+planNamesFromGpxTrk[iplan];
                     }
                 }
@@ -572,7 +583,7 @@ function main(){
             photoUrl = plan[iplan]['beginPictureUrl'];
             if (!title){
                 title = '';
-                if (params.elementUnit === 'features'){
+                if (params.elementUnit === 'track'){
                     title += ' '+planNamesFromGpxTrk[iplan];
                 }
             }

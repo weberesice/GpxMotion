@@ -3,7 +3,7 @@
  <metadata>
   <time>2016-09-07T09:16:46Z</time>
   <desc>
-"elementUnit": "features",
+"elementUnit": "track",
 "plan": [
 {
     "nbElements": 1,
@@ -62,7 +62,7 @@
 ]
   </desc>
  </metadata>
- <wpt lat="44.84029065139799" lon="1.40625">
+ <wpt lat="31.84029065139799" lon="1.40625">
      <name>unnamed</name>
      <sym>Flag, Red</sym>
  </wpt>
@@ -91,6 +91,8 @@
     <ele>61.6</ele>
     <time>2016-09-05T15:26:59.000Z</time>
    </trkpt>
+  </trkseg>
+  <trkseg>
    <trkpt lat="43.69852066" lon="3.86052799">
     <ele>60.6</ele>
     <time>2016-09-05T15:27:13.000Z</time>
@@ -151,6 +153,8 @@
     <ele>69.4</ele>
     <time>2016-09-05T15:31:06.000Z</time>
    </trkpt>
+  </trkseg>
+  <trkseg>
    <trkpt lat="43.70199203" lon="3.85404301">
     <ele>69.4</ele>
     <time>2016-09-05T15:31:07.000Z</time>
