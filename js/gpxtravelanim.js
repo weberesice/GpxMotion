@@ -226,12 +226,12 @@ var map = L.map('map').setView([0, 0], 2);
 L.control.mousePosition().addTo(map);
 L.control.scale({metric: true, imperial: true, position:'topleft'}).addTo(map);
 var legendText = '<h3>Line colors</h3><p style="font-size:18px;">'+
-'<b style="color:blue;">plane</b><br/>'+
-'<b style="color:green;">bike</b><br/>'+
-'<b style="color:yellow;">foot</b><br/>'+
-'<b style="color:purple;">car</b><br/>'+
-'<b style="color:purple;">bus</b><br/>'+
-'<b style="color:red;">train</b><br/>'+
+'<b style="color:blue;"><img class="dialogicon" src="images/plane2.png"/>plane</b><br/>'+
+'<b style="color:green;"><img class="dialogicon" src="images/bike2.png"/>bike</b><br/>'+
+'<b style="color:yellow;"><img class="dialogicon" src="images/hike2.png"/>foot</b><br/>'+
+'<b style="color:purple;"><img class="dialogicon" src="images/car2.png"/>car</b><br/>'+
+'<b style="color:purple;"><img class="dialogicon" src="images/bus2.png"/>bus</b><br/>'+
+'<b style="color:red;"><img class="dialogicon" src="images/train2.png"/>train</b><br/>'+
 '</p>'+
 '<h3>Pins</h3>'+
 '<p>'+
@@ -239,7 +239,7 @@ var legendText = '<h3>Line colors</h3><p style="font-size:18px;">'+
 '<img src="images/pinblue.png"/>step<br/>'+
 '<img src="images/pinred.png"/>end'+
 '</p>';
-var dialog = L.control.dialog({anchor: [110, 0], position: 'topleft', size: [90,500]})
+var dialog = L.control.dialog({anchor: [110, 0], position: 'topleft', size: [110,500]})
     .setContent(legendText)
     .addTo(map);
 
@@ -417,7 +417,7 @@ playButton.addTo(map);
 
 // load gpx file with plan and build our markers, pins...
 function main(){
-    $.ajax('./track2.gpx').done(function(xml) {
+    $.ajax('./track.gpx').done(function(xml) {
         //console.log(toGeoJSON.gpx(xml).features[0].geometry.coordinates[0]);
         var desc = $(xml).find('gpx>metadata>desc').text();
         var jsondesc = $.parseJSON('{'+desc+'}');
