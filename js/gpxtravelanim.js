@@ -426,6 +426,7 @@ function main(){
 
         var table;
         var ll,mypoly;
+        var popupString, linePopupString;
         var marker;
         var iplan = 0;
         var planSection, thecoord;
@@ -497,7 +498,6 @@ function main(){
             thecolor = vehicule[thevehicule].color;
 
             mypoly = L.polyline(table, {color:thecolor, weight:5});
-            var polyTooltip = 'Step '+(iplan+1)+' => '+(iplan+2);
             polylines.push(mypoly);
 
             marker = L.Marker.movingMarker(mypoly.getLatLngs(), planSection['time'],{
@@ -510,19 +510,55 @@ function main(){
                 pinIcon = beginPinIcon;
             }
             var beginMarker = L.marker(table[0], {icon: pinIcon});
-            // popup
-            if (planSection.hasOwnProperty('beginTitle')){
-                linkDest = planSection['beginDetailUrl'];
-                title = planSection['beginTitle'];
-                text = planSection['beginDescription'];
-                photoUrl = planSection['beginPictureUrl'];
+            linePopupString = '';
+            popupString = '';
+
+            // popup for line
+            if (planSection.hasOwnProperty('title')){
+                linkDest = planSection['detailUrl'];
+                title = planSection['title'];
+                text = planSection['description'];
+                photoUrl = planSection['pictureUrl'];
                 if (!title){
                     title = '';
                     if (params.elementUnit === 'track'){
                         title += ' '+planNamesFromGpxTrk[iplan];
                     }
                 }
-                var popupString = '<h2 class="popupTitle">Step '+(iplan+1)+' : '+title+'</h2>';
+                linePopupString = '<h2 class="popupTitle">Step '+(iplan+1)+' : '+title+'</h2>';
+                if (text){
+                    linePopupString = linePopupString + '<p>'+text+'</p>';
+                }
+                if (photoUrl){
+                    if (linkDest){
+                        linePopupString = linePopupString + '<a href="' + linkDest +
+                            '" target="_blank" title="Click to know more about \''+
+                            beginTitle+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
+                    }
+                    else{
+                        linePopupString = linePopupString + '<img class="popupPhoto" src="'+photoUrl+'"/>';
+                    }
+                }
+                if (linkDest){
+                    linePopupString = linePopupString+ '<a href="' + linkDest + '" target="_blank">More about "'+beginTitle+'"</a>';
+                }
+
+                mypoly.bindPopup(linePopupString);
+                mypoly.bindTooltip('Step '+(iplan+1)+' : '+title+'<br/>Click for details', {sticky: true});
+            }
+            // popup for begin pin
+            if (planSection.hasOwnProperty('beginTitle')){
+                linkDest = planSection['beginDetailUrl'];
+                beginTitle = planSection['beginTitle'];
+                text = planSection['beginDescription'];
+                photoUrl = planSection['beginPictureUrl'];
+                if (!beginTitle){
+                    beginTitle = '';
+                    if (params.elementUnit === 'track'){
+                        beginTitle += ' '+planNamesFromGpxTrk[iplan];
+                    }
+                }
+                popupString = '<h2 class="popupTitle">Step '+(iplan+1)+' : '+beginTitle+'</h2>';
                 if (text){
                     popupString = popupString + '<p>'+text+'</p>';
                 }
@@ -530,33 +566,22 @@ function main(){
                     if (linkDest){
                         popupString = popupString + '<a href="' + linkDest +
                             '" target="_blank" title="Click to know more about \''+
-                            title+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
+                            beginTitle+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
                     }
                     else{
                         popupString = popupString + '<img class="popupPhoto" src="'+photoUrl+'"/>';
                     }
                 }
                 if (linkDest){
-                    popupString = popupString+ '<a href="' + linkDest + '" target="_blank">More about "'+title+'"</a>';
+                    popupString = popupString+ '<a href="' + linkDest + '" target="_blank">More about "'+beginTitle+'"</a>';
                 }
                 beginMarker.bindPopup(popupString);
-                beginMarker.bindTooltip('Step '+(iplan+1)+' : '+title+'<br/>Click for details');
-
-                // polyline tooltip
-                if (title != ''){
-                    if (iplan < plan.length-1){
-                        if (plan[iplan+1].hasOwnProperty('beginTitle')){
-                            if (plan[iplan+1]['beginTitle']){
-                                polyTooltip += ' : '+title+' => '+plan[iplan+1]['beginTitle'];
-                            }
-                        }
-                    }
-                    else{
-                        polyTooltip += ' : '+title+' => end';
-                    }
-                }
+                beginMarker.bindTooltip('Step '+(iplan+1)+' : '+beginTitle+'<br/>Click for details');
             }
-            mypoly.bindTooltip(polyTooltip, {sticky:true});
+            else{
+                beginMarkers.bindPopup(linePopupString);
+            }
+
             beginMarkers.push(beginMarker);
 
             markers.push(marker);
@@ -578,16 +603,16 @@ function main(){
             lastTooltip = 'Step '+(iplan+1)+' (final) : '+plan[iplan]['beginTitle']+'<br/>Click for details';
 
             linkDest = plan[iplan]['beginDetailUrl'];
-            title = plan[iplan]['beginTitle'];
+            beginTitle = plan[iplan]['beginTitle'];
             text = plan[iplan]['beginDescription'];
             photoUrl = plan[iplan]['beginPictureUrl'];
-            if (!title){
-                title = '';
+            if (!beginTitle){
+                beginTitle = '';
                 if (params.elementUnit === 'track'){
-                    title += ' '+planNamesFromGpxTrk[iplan];
+                    beginTitle += ' '+planNamesFromGpxTrk[iplan];
                 }
             }
-            lastPopup = '<h2 class="popupTitle">Step '+(iplan+1)+' (final) : '+title+'</h2>';
+            lastPopup = '<h2 class="popupTitle">Step '+(iplan+1)+' (final) : '+beginTitle+'</h2>';
             if (text !== null){
                 lastPopup = lastPopup + '<p>'+text+'</p>';
             }
@@ -595,14 +620,14 @@ function main(){
                 if (linkDest !== null){
                     lastPopup = lastPopup + '<a href="' + linkDest +
                         '" target="_blank" title="Click to know more about \''+
-                        title+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
+                        beginTitle+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
                 }
                 else{
                     lastPopup = lastPopup + '<img class="popupPhoto" src="'+photoUrl+'"/>';
                 }
             }
             if (linkDest !== null){
-                lastPopup = lastPopup+ '<a href="' + linkDest + '" target="_blank">More about "'+title+'"</a>';
+                lastPopup = lastPopup+ '<a href="' + linkDest + '" target="_blank">More about "'+beginTitle+'"</a>';
             }
             lastMarker.bindPopup(lastPopup);
         }
