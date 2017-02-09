@@ -21,3 +21,10 @@ body { margin: 0; }
 .dialogicon{
     width: 20px;
 }
+#summary{
+    height: 300px;
+}
+.leaflet-control-dialog-inner{
+    padding: 0 !important;
+    z-index: 999999;
+}

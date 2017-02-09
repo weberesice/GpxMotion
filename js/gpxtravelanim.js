@@ -243,6 +243,11 @@ var dialog = L.control.dialog({anchor: [110, 0], position: 'topleft', size: [110
     .setContent(legendText)
     .addTo(map);
 
+var summaryText = '<div id="summary"></div>';
+//var summaryDialog = L.control.dialog({anchor: [50, -160], position: 'topright', size: [190,410]})
+//    .setContent(summaryText)
+//    .addTo(map);
+
 var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 var osmAttribution = 'Map data &copy; 2013 <a href="http://openstreetmap'+
 '.org">OpenStreetMap</a> contributors';
@@ -435,6 +440,8 @@ function main(){
         var geogpx = toGeoJSON.gpx(xml);
         var coords = [];
         var planNamesFromGpxTrk =[];
+        var pinSummaryContent = '';
+        var lineSummaryContent = '';
 
         // used in feature unit only
         // we get the number of features we want for each plan step
@@ -540,11 +547,15 @@ function main(){
                     }
                 }
                 if (linkDest){
-                    linePopupString = linePopupString+ '<a href="' + linkDest + '" target="_blank">More about "'+beginTitle+'"</a>';
+                    linePopupString = linePopupString+ '<a href="' + linkDest + '" target="_blank">More about "'+title+'"</a>';
                 }
 
                 mypoly.bindPopup(linePopupString);
                 mypoly.bindTooltip('Step '+(iplan+1)+' : '+title+'<br/>Click for details', {sticky: true});
+                lineSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+' : '+title+'</td></tr>';
+            }
+            else{
+                lineSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+'</td></tr>';
             }
             // popup for begin pin
             if (planSection.hasOwnProperty('beginTitle')){
@@ -577,9 +588,11 @@ function main(){
                 }
                 beginMarker.bindPopup(popupString);
                 beginMarker.bindTooltip('Step '+(iplan+1)+' : '+beginTitle+'<br/>Click for details');
+                pinSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+' : '+beginTitle+'</td></tr>';
             }
             else{
                 beginMarkers.bindPopup(linePopupString);
+                pinSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+'</td></tr>';
             }
 
             beginMarkers.push(beginMarker);
@@ -633,6 +646,8 @@ function main(){
         }
         lastMarker.bindTooltip(lastTooltip);
         beginMarkers.push(lastMarker);
+
+        //$('#summary').html('<p><table id="pinSummaryTable">'+pinSummaryContent+'</table><br/><table id="lineSummaryTable">'+lineSummaryContent+'</table></p>');
     });
 }
 
