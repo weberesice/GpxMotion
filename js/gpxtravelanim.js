@@ -392,7 +392,8 @@ var playButton = L.easyButton({
 	position: 'bottomright',
     states: [{
             stateName: 'play',   // name the state
-            icon:      'fa-play-circle-o',          // and define its properties
+            icon:      'fa-spinner',          // and define its properties
+            //icon:      'fa-play-circle-o',          // and define its properties
             title:     'Play/Pause animation (spacebar)', // like its title
             onClick: function(btn, map) {  // and its callback
 				if (currentMarkerIndex === 0){
@@ -419,6 +420,8 @@ var playButton = L.easyButton({
         }]
 });
 playButton.addTo(map);
+$('span.fa-spinner').addClass('fa-pulse');
+$('span.fa-spinner').parent().parent().prop("disabled",true);
 
 // load gpx file with plan and build our markers, pins...
 function main(){
@@ -648,6 +651,10 @@ function main(){
         beginMarkers.push(lastMarker);
 
         //$('#summary').html('<p><table id="pinSummaryTable">'+pinSummaryContent+'</table><br/><table id="lineSummaryTable">'+lineSummaryContent+'</table></p>');
+
+        // stop loading animation
+        $('span.fa-spinner').parent().parent().prop("disabled",false);
+        $('span.fa-spinner').removeClass('fa-spinner fa-pulse').addClass('fa-play-circle-o');
     });
 }
 
