@@ -11,6 +11,7 @@ var polylines = [];
 // used to add permanent steps markers
 var beginMarkers = [];
 var globalBounds;
+var ready = false;
 
 function Timer(callback, delay) {
     var timerId, start, remaining = delay;
@@ -437,8 +438,10 @@ var drawButton = L.easyButton({
             icon:      'fa-eye',          // and define its properties
             title:     'Draw complete trip (g)', // like its title
             onClick: function(btn, map) {  // and its callback
-				reset();
-				displayCompleteTravel();
+                if (ready){
+                    reset();
+                    displayCompleteTravel();
+                }
             }
         }]
 });
@@ -451,7 +454,9 @@ var resetButton = L.easyButton({
             icon:      'fa-eye-slash',          // and define its properties
             title:     'Reset (i)', // like its title
             onClick: function(btn, map) {  // and its callback
-				reset();
+                if (ready){
+                    reset();
+                }
             }
         }]
 });
@@ -492,239 +497,258 @@ playButton.addTo(map);
 $('span.fa-spinner').addClass('fa-pulse');
 $('span.fa-spinner').parent().parent().prop("disabled",true);
 
-// load gpx file with plan and build our markers, pins...
-function main(){
-    $.ajax('./track.gpx').done(function(xml) {
-        //console.log(toGeoJSON.gpx(xml).features[0].geometry.coordinates[0]);
-        var desc = $(xml).find('gpx>metadata>desc').text();
-        var jsondesc = $.parseJSON('{'+desc+'}');
-        params = jsondesc;
-        plan = params.plan;
+function processXml(xml) {
+    //console.log(toGeoJSON.gpx(xml).features[0].geometry.coordinates[0]);
+    var desc = $(xml).find('gpx>metadata>desc').text();
+    var jsondesc = $.parseJSON('{'+desc+'}');
+    params = jsondesc;
+    plan = params.plan;
 
-        var table;
-        var ll,mypoly;
-        var popupString, linePopupString;
-        var marker;
-        var iplan = 0;
-        var planSection, thecoord;
-        var iline = 0;
-        var nblinesInserted;
-        var geogpx = toGeoJSON.gpx(xml);
-        var coords = [];
-        var planNamesFromGpxTrk =[];
-        var pinSummaryContent = '';
-        var lineSummaryContent = '';
+    var table;
+    var ll,mypoly;
+    var popupString, linePopupString;
+    var marker;
+    var iplan = 0;
+    var planSection, thecoord;
+    var iline = 0;
+    var nblinesInserted;
+    var geogpx = toGeoJSON.gpx(xml);
+    var coords = [];
+    var planNamesFromGpxTrk =[];
+    var pinSummaryContent = '';
+    var lineSummaryContent = '';
 
-        // used in feature unit only
-        // we get the number of features we want for each plan step
-        var featureNumberPerStep = [];
-        if (params.elementUnit === 'track'){
-            for (var i=0; i<plan.length; i++){
-                featureNumberPerStep.push(plan[i]['nbElements']);
-                plan[i]['nbElements'] = 0;
-                planNamesFromGpxTrk.push('');
+    // used in feature unit only
+    // we get the number of features we want for each plan step
+    var featureNumberPerStep = [];
+    if (params.elementUnit === 'track'){
+        for (var i=0; i<plan.length; i++){
+            featureNumberPerStep.push(plan[i]['nbElements']);
+            plan[i]['nbElements'] = 0;
+            planNamesFromGpxTrk.push('');
+        }
+    }
+    var iplancoord = 0;
+    // concatenate all tracks/routes coordinates in one array
+    // avoid waypoints
+    for (var i=0; i<geogpx.features.length; i++){
+        if (geogpx.features[i].geometry.type !== 'Point'){
+            //alert(geogpx.features[i].geometry.type);
+            var featureLength = 0;
+            if (geogpx.features[i].geometry.type === 'MultiLineString'){
+                for(var j=0; j<geogpx.features[i].geometry.coordinates.length; j++){
+                    coords = coords.concat(geogpx.features[i].geometry.coordinates[j]);
+                    featureLength += geogpx.features[i].geometry.coordinates[j].length;
+                }
+            }
+            else{
+                coords = coords.concat(geogpx.features[i].geometry.coordinates);
+                featureLength = geogpx.features[i].geometry.coordinates.length;
+            }
+            // if we count the features, get the correct number of segments
+            if (params.elementUnit === 'track' && iplancoord < plan.length){
+                plan[iplancoord]['nbElements'] += featureLength;
+                planNamesFromGpxTrk[iplancoord] += geogpx.features[i].properties.name + '; ';
+                featureNumberPerStep[iplancoord]--;
+                if (featureNumberPerStep[iplancoord] === 0){
+                    planNamesFromGpxTrk[iplancoord] = planNamesFromGpxTrk[iplancoord].replace(/;\s$/g, '');
+                    iplancoord++;
+                }
             }
         }
-        var iplancoord = 0;
-        // concatenate all tracks/routes coordinates in one array
-        // avoid waypoints
-        for (var i=0; i<geogpx.features.length; i++){
-            if (geogpx.features[i].geometry.type !== 'Point'){
-                //alert(geogpx.features[i].geometry.type);
-                var featureLength = 0;
-                if (geogpx.features[i].geometry.type === 'MultiLineString'){
-                    for(var j=0; j<geogpx.features[i].geometry.coordinates.length; j++){
-                        coords = coords.concat(geogpx.features[i].geometry.coordinates[j]);
-                        featureLength += geogpx.features[i].geometry.coordinates[j].length;
-                    }
+    }
+    while (iplan < plan.length && iline < coords.length){
+        planSection = plan[iplan];
+        nblinesInserted = 0;
+        table = [];
+        while (nblinesInserted < planSection['nbElements']+1 && iline < coords.length){
+            thecoord = coords[iline];
+            ll = L.latLng(thecoord[1], thecoord[0]);
+            //console.log('section '+iplan+' : '+thecoord[1]+' ; '+ thecoord[0]);
+            table.push(ll);
+            iline++;
+            nblinesInserted++;
+        }
+        // if this is the last coord, there is nothing to link with after
+        // else : we artificialy put the last point we took as the start of next section
+        if (iline !== coords.length){
+            iline--;
+        }
+
+        thevehicule = planSection['vehicule'];
+        theicon = vehicule[thevehicule].icon;
+        thecolor = vehicule[thevehicule].color;
+
+        mypoly = L.polyline(table, {color:thecolor, weight:5});
+        polylines.push(mypoly);
+
+        marker = L.Marker.movingMarker(mypoly.getLatLngs(), planSection['time'],{
+            autostart: false,
+            icon: theicon
+        }
+        );
+        var pinIcon = normalPinIcon;
+        if (iplan === 0){
+            pinIcon = beginPinIcon;
+        }
+        var beginMarker = L.marker(table[0], {icon: pinIcon});
+        linePopupString = '';
+        popupString = '';
+
+        // popup for line
+        if (planSection.hasOwnProperty('title')){
+            linkDest = planSection['detailUrl'];
+            title = planSection['title'];
+            text = planSection['description'];
+            photoUrl = planSection['pictureUrl'];
+            if (!title){
+                title = '';
+                if (params.elementUnit === 'track'){
+                    title += ' '+planNamesFromGpxTrk[iplan];
+                }
+            }
+            linePopupString = '<h2 class="popupTitle">Step '+(iplan+1)+' : '+title+'</h2>';
+            if (text){
+                linePopupString = linePopupString + '<p>'+text+'</p>';
+            }
+            if (photoUrl){
+                if (linkDest){
+                    linePopupString = linePopupString + '<a href="' + linkDest +
+                        '" target="_blank" title="Click to know more about \''+
+                        beginTitle+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
                 }
                 else{
-                    coords = coords.concat(geogpx.features[i].geometry.coordinates);
-                    featureLength = geogpx.features[i].geometry.coordinates.length;
-                }
-                // if we count the features, get the correct number of segments
-                if (params.elementUnit === 'track' && iplancoord < plan.length){
-                    plan[iplancoord]['nbElements'] += featureLength;
-                    planNamesFromGpxTrk[iplancoord] += geogpx.features[i].properties.name + '; ';
-                    featureNumberPerStep[iplancoord]--;
-                    if (featureNumberPerStep[iplancoord] === 0){
-                        planNamesFromGpxTrk[iplancoord] = planNamesFromGpxTrk[iplancoord].replace(/;\s$/g, '');
-                        iplancoord++;
-                    }
+                    linePopupString = linePopupString + '<img class="popupPhoto" src="'+photoUrl+'"/>';
                 }
             }
+            if (linkDest){
+                linePopupString = linePopupString+ '<a href="' + linkDest + '" target="_blank">More about "'+title+'"</a>';
+            }
+
+            mypoly.bindPopup(linePopupString);
+            mypoly.bindTooltip('Step '+(iplan+1)+' : '+title+'<br/>Click for details', {sticky: true});
+            lineSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+' : '+title+'</td></tr>';
         }
-        while (iplan < plan.length && iline < coords.length){
-            planSection = plan[iplan];
-            nblinesInserted = 0;
-            table = [];
-            while (nblinesInserted < planSection['nbElements']+1 && iline < coords.length){
-                thecoord = coords[iline];
-                ll = L.latLng(thecoord[1], thecoord[0]);
-                //console.log('section '+iplan+' : '+thecoord[1]+' ; '+ thecoord[0]);
-                table.push(ll);
-                iline++;
-                nblinesInserted++;
-            }
-            // if this is the last coord, there is nothing to link with after
-            // else : we artificialy put the last point we took as the start of next section
-            if (iline !== coords.length){
-                iline--;
-            }
-
-            thevehicule = planSection['vehicule'];
-            theicon = vehicule[thevehicule].icon;
-            thecolor = vehicule[thevehicule].color;
-
-            mypoly = L.polyline(table, {color:thecolor, weight:5});
-            polylines.push(mypoly);
-
-            marker = L.Marker.movingMarker(mypoly.getLatLngs(), planSection['time'],{
-                autostart: false,
-                icon: theicon
-            }
-            );
-            var pinIcon = normalPinIcon;
-            if (iplan === 0){
-                pinIcon = beginPinIcon;
-            }
-            var beginMarker = L.marker(table[0], {icon: pinIcon});
-            linePopupString = '';
-            popupString = '';
-
-            // popup for line
-            if (planSection.hasOwnProperty('title')){
-                linkDest = planSection['detailUrl'];
-                title = planSection['title'];
-                text = planSection['description'];
-                photoUrl = planSection['pictureUrl'];
-                if (!title){
-                    title = '';
-                    if (params.elementUnit === 'track'){
-                        title += ' '+planNamesFromGpxTrk[iplan];
-                    }
-                }
-                linePopupString = '<h2 class="popupTitle">Step '+(iplan+1)+' : '+title+'</h2>';
-                if (text){
-                    linePopupString = linePopupString + '<p>'+text+'</p>';
-                }
-                if (photoUrl){
-                    if (linkDest){
-                        linePopupString = linePopupString + '<a href="' + linkDest +
-                            '" target="_blank" title="Click to know more about \''+
-                            beginTitle+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
-                    }
-                    else{
-                        linePopupString = linePopupString + '<img class="popupPhoto" src="'+photoUrl+'"/>';
-                    }
-                }
-                if (linkDest){
-                    linePopupString = linePopupString+ '<a href="' + linkDest + '" target="_blank">More about "'+title+'"</a>';
-                }
-
-                mypoly.bindPopup(linePopupString);
-                mypoly.bindTooltip('Step '+(iplan+1)+' : '+title+'<br/>Click for details', {sticky: true});
-                lineSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+' : '+title+'</td></tr>';
-            }
-            else{
-                lineSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+'</td></tr>';
-            }
-            // popup for begin pin
-            if (planSection.hasOwnProperty('beginTitle')){
-                linkDest = planSection['beginDetailUrl'];
-                beginTitle = planSection['beginTitle'];
-                text = planSection['beginDescription'];
-                photoUrl = planSection['beginPictureUrl'];
-                if (!beginTitle){
-                    beginTitle = '';
-                    if (params.elementUnit === 'track'){
-                        beginTitle += ' '+planNamesFromGpxTrk[iplan];
-                    }
-                }
-                popupString = '<h2 class="popupTitle">Step '+(iplan+1)+' : '+beginTitle+'</h2>';
-                if (text){
-                    popupString = popupString + '<p>'+text+'</p>';
-                }
-                if (photoUrl){
-                    if (linkDest){
-                        popupString = popupString + '<a href="' + linkDest +
-                            '" target="_blank" title="Click to know more about \''+
-                            beginTitle+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
-                    }
-                    else{
-                        popupString = popupString + '<img class="popupPhoto" src="'+photoUrl+'"/>';
-                    }
-                }
-                if (linkDest){
-                    popupString = popupString+ '<a href="' + linkDest + '" target="_blank">More about "'+beginTitle+'"</a>';
-                }
-                beginMarker.bindPopup(popupString);
-                beginMarker.bindTooltip('Step '+(iplan+1)+' : '+beginTitle+'<br/>Click for details');
-                pinSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+' : '+beginTitle+'</td></tr>';
-            }
-            else{
-                beginMarkers.bindPopup(linePopupString);
-                pinSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+'</td></tr>';
-            }
-
-            beginMarkers.push(beginMarker);
-
-            markers.push(marker);
-
-            iplan++;
+        else{
+            lineSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+'</td></tr>';
         }
-
-        // get the global bounds to zoom on the whole trip
-        globalBounds = L.latLngBounds(polylines[0].getBounds().getSouthWest(), polylines[0].getBounds().getNorthEast());
-        for (var i=0; i<polylines.length; i++){
-            globalBounds.extend(polylines[i].getBounds());
-        }
-
-        // add last pin marker and tooltip
-        var lastMarker = L.marker(table[table.length-1], {icon: endPinIcon});
-        var lastTooltip = 'Step '+(iplan+1)+' (final)';
-        var lastPopup = lastTooltip;
-        if (iplan < plan.length && plan[iplan].hasOwnProperty('beginTitle')){
-            lastTooltip = 'Step '+(iplan+1)+' (final) : '+plan[iplan]['beginTitle']+'<br/>Click for details';
-
-            linkDest = plan[iplan]['beginDetailUrl'];
-            beginTitle = plan[iplan]['beginTitle'];
-            text = plan[iplan]['beginDescription'];
-            photoUrl = plan[iplan]['beginPictureUrl'];
+        // popup for begin pin
+        if (planSection.hasOwnProperty('beginTitle')){
+            linkDest = planSection['beginDetailUrl'];
+            beginTitle = planSection['beginTitle'];
+            text = planSection['beginDescription'];
+            photoUrl = planSection['beginPictureUrl'];
             if (!beginTitle){
                 beginTitle = '';
                 if (params.elementUnit === 'track'){
                     beginTitle += ' '+planNamesFromGpxTrk[iplan];
                 }
             }
-            lastPopup = '<h2 class="popupTitle">Step '+(iplan+1)+' (final) : '+beginTitle+'</h2>';
-            if (text !== null){
-                lastPopup = lastPopup + '<p>'+text+'</p>';
+            popupString = '<h2 class="popupTitle">Step '+(iplan+1)+' : '+beginTitle+'</h2>';
+            if (text){
+                popupString = popupString + '<p>'+text+'</p>';
             }
-            if (photoUrl !== null){
-                if (linkDest !== null){
-                    lastPopup = lastPopup + '<a href="' + linkDest +
+            if (photoUrl){
+                if (linkDest){
+                    popupString = popupString + '<a href="' + linkDest +
                         '" target="_blank" title="Click to know more about \''+
                         beginTitle+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
                 }
                 else{
-                    lastPopup = lastPopup + '<img class="popupPhoto" src="'+photoUrl+'"/>';
+                    popupString = popupString + '<img class="popupPhoto" src="'+photoUrl+'"/>';
                 }
             }
-            if (linkDest !== null){
-                lastPopup = lastPopup+ '<a href="' + linkDest + '" target="_blank">More about "'+beginTitle+'"</a>';
+            if (linkDest){
+                popupString = popupString+ '<a href="' + linkDest + '" target="_blank">More about "'+beginTitle+'"</a>';
             }
-            lastMarker.bindPopup(lastPopup);
+            beginMarker.bindPopup(popupString);
+            beginMarker.bindTooltip('Step '+(iplan+1)+' : '+beginTitle+'<br/>Click for details');
+            pinSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+' : '+beginTitle+'</td></tr>';
         }
-        lastMarker.bindTooltip(lastTooltip);
-        beginMarkers.push(lastMarker);
+        else{
+            beginMarkers.bindPopup(linePopupString);
+            pinSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+'</td></tr>';
+        }
 
-        //$('#summary').html('<p><table id="pinSummaryTable">'+pinSummaryContent+'</table><br/><table id="lineSummaryTable">'+lineSummaryContent+'</table></p>');
+        beginMarkers.push(beginMarker);
 
-        // stop loading animation
-        $('span.fa-spinner').parent().parent().prop("disabled",false);
-        $('span.fa-spinner').removeClass('fa-spinner fa-pulse').addClass('fa-play-circle-o');
-    });
+        markers.push(marker);
+
+        iplan++;
+    }
+
+    // get the global bounds to zoom on the whole trip
+    globalBounds = L.latLngBounds(polylines[0].getBounds().getSouthWest(), polylines[0].getBounds().getNorthEast());
+    for (var i=0; i<polylines.length; i++){
+        globalBounds.extend(polylines[i].getBounds());
+    }
+
+    // add last pin marker and tooltip
+    var lastMarker = L.marker(table[table.length-1], {icon: endPinIcon});
+    var lastTooltip = 'Step '+(iplan+1)+' (final)';
+    var lastPopup = lastTooltip;
+    if (iplan < plan.length && plan[iplan].hasOwnProperty('beginTitle')){
+        lastTooltip = 'Step '+(iplan+1)+' (final) : '+plan[iplan]['beginTitle']+'<br/>Click for details';
+
+        linkDest = plan[iplan]['beginDetailUrl'];
+        beginTitle = plan[iplan]['beginTitle'];
+        text = plan[iplan]['beginDescription'];
+        photoUrl = plan[iplan]['beginPictureUrl'];
+        if (!beginTitle){
+            beginTitle = '';
+            if (params.elementUnit === 'track'){
+                beginTitle += ' '+planNamesFromGpxTrk[iplan];
+            }
+        }
+        lastPopup = '<h2 class="popupTitle">Step '+(iplan+1)+' (final) : '+beginTitle+'</h2>';
+        if (text !== null){
+            lastPopup = lastPopup + '<p>'+text+'</p>';
+        }
+        if (photoUrl !== null){
+            if (linkDest !== null){
+                lastPopup = lastPopup + '<a href="' + linkDest +
+                    '" target="_blank" title="Click to know more about \''+
+                    beginTitle+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
+            }
+            else{
+                lastPopup = lastPopup + '<img class="popupPhoto" src="'+photoUrl+'"/>';
+            }
+        }
+        if (linkDest !== null){
+            lastPopup = lastPopup+ '<a href="' + linkDest + '" target="_blank">More about "'+beginTitle+'"</a>';
+        }
+        lastMarker.bindPopup(lastPopup);
+    }
+    lastMarker.bindTooltip(lastTooltip);
+    beginMarkers.push(lastMarker);
+
+    //$('#summary').html('<p><table id="pinSummaryTable">'+pinSummaryContent+'</table><br/><table id="lineSummaryTable">'+lineSummaryContent+'</table></p>');
+
+    // stop loading animation
+    $('span.fa-spinner').parent().parent().prop("disabled",false);
+    $('span.fa-spinner').removeClass('fa-spinner fa-pulse').addClass('fa-play-circle-o');
+
+    $('div#summary').text('Ready to play !!!');
+    ready = true;
+}
+
+// load gpx file with plan and build our markers, pins...
+function main(){
+    $.ajax({
+        async: true,
+        url: './track.gpx',
+        xhr: function(){
+            var xhr = new window.XMLHttpRequest();
+            xhr.addEventListener("progress", function(evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = evt.loaded / evt.total * 100;
+                    $('div#summary').text('Loading : '+parseInt(percentComplete)+'%');
+                }
+            }, false);
+
+            return xhr;
+        }
+    }).done(processXml);
 }
 
 $(function() {
@@ -752,12 +776,14 @@ $(function() {
 
         if (kc === 32){
             e.preventDefault();
-            if (currentMarkerIndex === 0){
-                reset();
-                nextMarker();
-            }
-            else{
-                playPause();
+            if (ready){
+                if (currentMarkerIndex === 0){
+                    reset();
+                    nextMarker();
+                }
+                else{
+                    playPause();
+                }
             }
         }
         if (kc === 78){
@@ -770,12 +796,16 @@ $(function() {
         }
         if (kc === 73){
             e.preventDefault();
-            reset();
+            if (ready){
+                reset();
+            }
         }
         if (kc === 71){
             e.preventDefault();
-            reset();
-            displayCompleteTravel();
+            if (ready){
+                reset();
+                displayCompleteTravel();
+            }
         }
     }
     document.onkeydown = checkKey;
