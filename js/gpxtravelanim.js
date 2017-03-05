@@ -55,6 +55,9 @@ function nextMarker(){
             map.removeLayer(markers[currentMarkerIndex-1]);
         }
 
+        // update current title
+        $('div#summary').text(plan[currentMarkerIndex]['title']);
+
         // add next marker pin at start point and get its time
         var timeout = plan[currentMarkerIndex]['time'];
         beginMarkers[currentMarkerIndex].addTo(map);
@@ -105,6 +108,9 @@ function playPause(){
 }
 
 function reset(){
+    // empty title
+    $('div#summary').text('');
+
     // stop scheduler
     if (currentTimer !== null){
         currentTimer.pause();
@@ -281,9 +287,9 @@ var dialog = L.control.dialog({anchor: [110, 0], position: 'topleft', size: [110
     .addTo(map);
 
 var summaryText = '<div id="summary"></div>';
-//var summaryDialog = L.control.dialog({anchor: [50, -160], position: 'topright', size: [190,410]})
-//    .setContent(summaryText)
-//    .addTo(map);
+var summaryDialog = L.control.dialog({anchor: [0, map.getSize().x * 0.2], position: 'topleft', size: [map.getSize().x * 0.6, 20]})
+    .setContent(summaryText)
+    .addTo(map);
 
 var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 var osmAttribution = 'Map data &copy; 2013 <a href="http://openstreetmap'+

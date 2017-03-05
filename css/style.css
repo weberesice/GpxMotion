@@ -22,7 +22,9 @@ body { margin: 0; }
     width: 20px;
 }
 #summary{
-    height: 300px;
+    /*height: 300px;*/
+    font-weight: bold;
+    text-align: center;
 }
 .leaflet-control-dialog-inner{
     padding: 0 !important;
