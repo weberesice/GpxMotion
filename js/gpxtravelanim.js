@@ -144,6 +144,43 @@ function displayCompleteTravel(){
     map.flyToBounds(globalBounds, {animate:true, padding: [100,100]});
 }
 
+function nextStep(){
+    if (currentMarkerIndex === 0){
+        return;
+    }
+
+    currentTimer.pause();
+    window.clearTimeout(currentTimer);
+    currentTimer = null;
+    nextMarker();
+}
+
+function prevStep(){
+    if (currentMarkerIndex === 0){
+        return;
+    }
+
+    currentTimer.pause();
+    window.clearTimeout(currentTimer);
+    currentTimer = null;
+
+    // remove current marker
+    if (currentMarkerIndex > 0){
+        markers[currentMarkerIndex-1].stop();
+        map.removeLayer(markers[currentMarkerIndex-1]);
+    }
+
+    // rewind
+    if (currentMarkerIndex <= 1){
+        currentMarkerIndex = 0;
+    }
+    else{
+        currentMarkerIndex -= 2;
+    }
+
+    nextMarker();
+}
+
 var vehicule = {
     plane : {
         icon: L.icon({
@@ -360,6 +397,32 @@ var baseOverlays = {
 default_layer = 'OpenStreetMap France';
 map.addLayer(baseLayers[default_layer]);
 L.control.layers(baseLayers, baseOverlays).addTo(map);
+
+var nextButton = L.easyButton({
+	position: 'bottomright',
+    states: [{
+            stateName: 'next',   // name the state
+            icon:      'fa-fast-forward',          // and define its properties
+            title:     'Next step (right)', // like its title
+            onClick: function(btn, map) {  // and its callback
+                nextStep();
+            }
+        }]
+});
+nextButton.addTo(map);
+
+var prevButton = L.easyButton({
+	position: 'bottomright',
+    states: [{
+            stateName: 'prev',   // name the state
+            icon:      'fa-fast-backward',          // and define its properties
+            title:     'Previous step (left)', // like its title
+            onClick: function(btn, map) {  // and its callback
+                prevStep();
+            }
+        }]
+});
+prevButton.addTo(map);
 
 var drawButton = L.easyButton({
 	position: 'bottomright',
@@ -690,6 +753,14 @@ $(function() {
             else{
                 playPause();
             }
+        }
+        if (kc === 78){
+            e.preventDefault();
+            nextStep();
+        }
+        if (kc === 80){
+            e.preventDefault();
+            prevStep();
         }
         if (kc === 73){
             e.preventDefault();
