@@ -732,8 +732,21 @@ function processXml(xml) {
     ready = true;
 }
 
+function drawslider(ossz, meik){
+    var slidertext=Math.round((meik*100)/ossz);
+    document.getElementById("sliderbar").style.width=slidertext+'%';
+    document.getElementById("slidertext").innerHTML='Loading '+slidertext+'%';
+}
+
 // load gpx file with plan and build our markers, pins...
 function main(){
+    $('div#summary').html('<div id="slider">'+
+        '<div id="sliderbar">'+
+        '</div>'+
+        '<div id="slidertext">'+
+        '</div>'+
+        '</div>');
+
     $.ajax({
         async: true,
         url: './track.gpx',
@@ -742,7 +755,7 @@ function main(){
             xhr.addEventListener("progress", function(evt) {
                 if (evt.lengthComputable) {
                     var percentComplete = evt.loaded / evt.total * 100;
-                    $('div#summary').text('Loading : '+parseInt(percentComplete)+'%');
+                    drawslider(100, parseInt(percentComplete));
                 }
             }, false);
 
