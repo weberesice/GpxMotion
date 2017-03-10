@@ -269,7 +269,7 @@ var map = L.map('map').setView([0, 0], 2);
 
 L.control.mousePosition().addTo(map);
 L.control.scale({metric: true, imperial: true, position:'topleft'}).addTo(map);
-var legendText = '<h3>Line colors</h3><p style="font-size:18px;">'+
+var legendText = '<h3>Line colors</h3><p class="legendVehicules">'+
 '<b style="color:blue;"><img class="dialogicon" src="images/plane2.png"/>plane</b><br/>'+
 '<b style="color:green;"><img class="dialogicon" src="images/bike2.png"/>bike</b><br/>'+
 '<b style="color:yellow;"><img class="dialogicon" src="images/hike2.png"/>foot</b><br/>'+
@@ -283,12 +283,24 @@ var legendText = '<h3>Line colors</h3><p style="font-size:18px;">'+
 '<img src="images/pinblue.png"/>step<br/>'+
 '<img src="images/pinred.png"/>end'+
 '</p>';
-var dialog = L.control.dialog({anchor: [110, 0], position: 'topleft', size: [110,500]})
+var dialog = L.control.dialog({
+                anchor: [110, 0],
+                position: 'topleft',
+                minSize: [30, 20],
+                maxSize: [900, 900],
+                size: [120, parseInt(map.getSize().y - 140)]
+            })
     .setContent(legendText)
     .addTo(map);
 
 var summaryText = '<div id="summary"></div>';
-var summaryDialog = L.control.dialog({anchor: [0, map.getSize().x * 0.2], position: 'topleft', size: [map.getSize().x * 0.6, 20]})
+var summaryDialog = L.control.dialog({
+                        anchor: [0, parseInt(map.getSize().x * 0.2)],
+                        position: 'topleft',
+                        minSize: [30, 20],
+                        maxSize: [900, 900],
+                        size: [parseInt(map.getSize().x * 0.6), 20]
+                    })
     .setContent(summaryText)
     .addTo(map);
 
@@ -738,6 +750,13 @@ function drawslider(ossz, meik){
     document.getElementById("slidertext").innerHTML='Loading '+slidertext+'%';
 }
 
+function updateDisplaySizes(){
+    summaryDialog.setLocation([0, parseInt(map.getSize().x * 0.2)]);
+    summaryDialog.setSize([parseInt(map.getSize().x * 0.6), 20]);
+
+    dialog.setSize([120, parseInt(map.getSize().y - 140)]);
+}
+
 // load gpx file with plan and build our markers, pins...
 function main(){
     $('div#summary').html('<div id="slider">'+
@@ -822,6 +841,8 @@ $(function() {
         }
     }
     document.onkeydown = checkKey;
+
+    map.on('resize',updateDisplaySizes);
 
     main();
 
