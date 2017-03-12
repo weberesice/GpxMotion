@@ -41,6 +41,7 @@ body { margin: 0; }
     height:20px;
     /*border-right: 1px solid #000000;*/
     background: lightcoral;
+    border-radius: 5px;
 }
 #slidertext {
     color: #000000;
