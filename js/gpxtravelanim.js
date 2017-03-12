@@ -754,7 +754,7 @@ function processXml(xml) {
     var totsec = Math.floor(totalTime/1000);
     var minutes = Math.floor(totsec/60);
     var remsec = totsec%60;
-    $('div#summary').text('Ready to play !!! Animation time is '+minutes+' min '+remsec+' sec');
+    $('div#summary').text('Ready to play !!! ('+minutes+' min '+remsec+' sec)');
     ready = true;
 }
 

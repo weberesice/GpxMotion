@@ -22,9 +22,10 @@ body { margin: 0; }
     width: 17px;
 }
 #summary{
-    /*height: 300px;*/
     font-weight: bold;
     text-align: center;
+    overflow: auto;
+    max-height: 20px;
 }
 .leaflet-control-dialog-inner{
     padding: 0 !important;
@@ -50,7 +51,7 @@ body { margin: 0; }
     font-weight: bold;
     left: 25px;
     position: relative;
-    top: -18px;
+    top: -20px;
 }
 .legendVehicules{
     font-size: 16px;
