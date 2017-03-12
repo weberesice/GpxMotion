@@ -46,6 +46,9 @@ String.format = function() {
     return theString;
 }
 
+function long2tile(lon,zoom) { return (Math.floor((lon+180)/360*Math.pow(2,zoom))); }
+function lat2tile(lat,zoom)  { return (Math.floor((1-Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2 *Math.pow(2,zoom))); }
+
 function nextMarker(){
     if (currentMarkerIndex < markers.length){
         playButton.state('pause');
@@ -71,8 +74,15 @@ function nextMarker(){
 
         // draw a line for current marker
         polylines[currentMarkerIndex].addTo(map);
-        // zoom on current section
-        map.fitBounds(polylines[currentMarkerIndex].getBounds(), {animate:true, padding: [100,100]});
+
+        // preload tiles needed for next marker
+        if (currentMarkerIndex+1 < markers.length){
+            preloadTiles(polylines[currentMarkerIndex+1]);
+        }
+
+        // zoom on current section with 20% padding
+        var b = polylines[currentMarkerIndex].getBounds().pad(0.2);
+        map.fitBounds(b, {animate:true});
 
         currentMarkerIndex++;
 
@@ -309,7 +319,7 @@ var osmAttribution = 'Map data &copy; 2013 <a href="http://openstreetmap'+
 '.org">OpenStreetMap</a> contributors';
 var osm = new L.TileLayer(osmUrl, {maxZoom: 18, attribution: osmAttribution});
 
-var osmfrUrl = 'http://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png';
+var osmfrUrl = 'https://a.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png';
 var osmfr = new L.TileLayer(osmfrUrl,
     {maxZoom: 20, attribution: osmAttribution});
 var osmfr2 = new L.TileLayer(osmfrUrl,
@@ -755,6 +765,30 @@ function updateDisplaySizes(){
     summaryDialog.setSize([parseInt(map.getSize().x * 0.6), 20]);
 
     dialog.setSize([120, parseInt(map.getSize().y - 140)]);
+}
+
+// preload tiles needed when a polyline is displayed
+function preloadTiles(poly){
+    var bounds = poly.getBounds().pad(0.2);
+    var zoom = map.getBoundsZoom(bounds);
+    var east = bounds.getEast();
+    var west = bounds.getWest();
+    var north = bounds.getNorth();
+    var south = bounds.getSouth();
+
+    var dataEast = long2tile(east, zoom);
+    var dataWest = long2tile(west, zoom);
+    var dataNorth = lat2tile(north, zoom);
+    var dataSouth = lat2tile(south, zoom);
+
+    var width = (dataEast - dataWest + 1) * 129;
+    for(var y = dataNorth; y < dataSouth + 1; y++) {
+        for(var x = dataWest; x < dataEast + 1; x++) {
+            var url = 'https://a.tile.openstreetmap.fr/osmfr/' + zoom + '/' + x + '/' + y + '.png';
+            var img=new Image();
+            img.src=url;
+        }
+    }
 }
 
 // load gpx file with plan and build our markers, pins...
