@@ -539,6 +539,7 @@ function processXml(xml) {
     var planNamesFromGpxTrk =[];
     var pinSummaryContent = '';
     var lineSummaryContent = '';
+    var totalTime = 0;
 
     // used in feature unit only
     // we get the number of features we want for each plan step
@@ -604,11 +605,11 @@ function processXml(xml) {
         mypoly = L.polyline(table, {color:thecolor, weight:5});
         polylines.push(mypoly);
 
+        totalTime += planSection['time'];
         marker = L.Marker.movingMarker(mypoly.getLatLngs(), planSection['time'],{
             autostart: false,
             icon: theicon
-        }
-        );
+        });
         var pinIcon = normalPinIcon;
         if (iplan === 0){
             pinIcon = beginPinIcon;
@@ -750,7 +751,10 @@ function processXml(xml) {
     $('span.fa-spinner').parent().parent().prop("disabled",false);
     $('span.fa-spinner').removeClass('fa-spinner fa-pulse').addClass('fa-play-circle-o');
 
-    $('div#summary').text('Ready to play !!!');
+    var totsec = Math.floor(totalTime/1000);
+    var minutes = Math.floor(totsec/60);
+    var remsec = totsec%60;
+    $('div#summary').text('Ready to play !!! Animation time is '+minutes+' min '+remsec+' sec');
     ready = true;
 }
 
@@ -781,7 +785,6 @@ function preloadTiles(poly){
     var dataNorth = lat2tile(north, zoom);
     var dataSouth = lat2tile(south, zoom);
 
-    var width = (dataEast - dataWest + 1) * 129;
     for(var y = dataNorth; y < dataSouth + 1; y++) {
         for(var x = dataWest; x < dataEast + 1; x++) {
             var url = 'https://a.tile.openstreetmap.fr/osmfr/' + zoom + '/' + x + '/' + y + '.png';
