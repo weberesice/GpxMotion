@@ -60,7 +60,7 @@ function nextMarker(){
         }
 
         // update current title
-        $('div#summary').text(plan[currentMarkerIndex]['title']);
+        $('div#summary').text(plan[currentMarkerIndex]['title']+' ('+(currentMarkerIndex+1)+'/'+markers.length+')');
 
         // add next marker pin at start point and get its time
         var timeout = plan[currentMarkerIndex]['time'];
