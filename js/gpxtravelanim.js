@@ -182,10 +182,12 @@ function prevStep(){
     window.clearTimeout(currentTimer);
     currentTimer = null;
 
-    // remove current marker
+    // remove current marker and polyline and begin marker
     if (currentMarkerIndex > 0){
         markers[currentMarkerIndex-1].stop();
         map.removeLayer(markers[currentMarkerIndex-1]);
+        map.removeLayer(polylines[currentMarkerIndex-1]);
+        map.removeLayer(beginMarkers[currentMarkerIndex-1]);
     }
 
     // rewind
