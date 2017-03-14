@@ -2,6 +2,7 @@
 
 (function(){
 
+var border = true;
 var currentTimer = null;
 var params;
 var plan;
@@ -527,7 +528,7 @@ function processXml(xml) {
     plan = params.plan;
 
     var table;
-    var ll,mypoly;
+    var ll,mypoly, borderLine, featGroup;
     var popupString, linePopupString;
     var marker;
     var iplan = 0;
@@ -603,7 +604,15 @@ function processXml(xml) {
         thecolor = vehicule[thevehicule].color;
 
         mypoly = L.polyline(table, {color:thecolor, weight:5});
-        polylines.push(mypoly);
+        if (border){
+            borderLine = L.polyline(table,
+                {opacity:1, weight: parseInt(5*1.6), color:'black'});
+            featGroup = L.featureGroup([borderLine, mypoly]);
+        }
+        else{
+            featGroup = L.featureGroup([mypoly]);
+        }
+        polylines.push(featGroup);
 
         totalTime += planSection['time'];
         marker = L.Marker.movingMarker(mypoly.getLatLngs(), planSection['time'],{
@@ -648,8 +657,8 @@ function processXml(xml) {
                 linePopupString = linePopupString+ '<a href="' + linkDest + '" target="_blank">More about "'+title+'"</a>';
             }
 
-            mypoly.bindPopup(linePopupString);
-            mypoly.bindTooltip('Step '+(iplan+1)+' : '+title+'<br/>Click for details', {sticky: true});
+            featGroup.bindPopup(linePopupString);
+            featGroup.bindTooltip('Step '+(iplan+1)+' : '+title+'<br/>Click for details', {sticky: true});
             lineSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+' : '+title+'</td></tr>';
         }
         else{
