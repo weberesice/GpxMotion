@@ -3,6 +3,7 @@
 (function(){
 
 var border = true;
+var allStepTotalDistance = 0;
 var currentTimer = null;
 var params;
 var plan;
@@ -50,6 +51,15 @@ String.format = function() {
 function long2tile(lon,zoom) { return (Math.floor((lon+180)/360*Math.pow(2,zoom))); }
 function lat2tile(lat,zoom)  { return (Math.floor((1-Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2 *Math.pow(2,zoom))); }
 
+function formatDistance(d){
+    if (d > 1000){
+        return ((d/1000).toFixed(2)+'km');
+    }
+    else{
+        return (parseInt(d)+'m');
+    }
+}
+
 function nextMarker(){
     if (currentMarkerIndex < markers.length){
         playButton.state('pause');
@@ -61,7 +71,9 @@ function nextMarker(){
         }
 
         // update current title
-        $('div#summary').text(plan[currentMarkerIndex]['title']+' ('+(currentMarkerIndex+1)+'/'+markers.length+')');
+        $('div#summary').text(plan[currentMarkerIndex]['title']+
+            ' (~'+formatDistance(plan[currentMarkerIndex]['totalDistance'])+
+            ' ; step '+(currentMarkerIndex+1)+'/'+markers.length+')');
 
         // add next marker pin at start point and get its time
         var timeout = plan[currentMarkerIndex]['time'];
@@ -605,6 +617,13 @@ function processXml(xml) {
         theicon = vehicule[thevehicule].icon;
         thecolor = vehicule[thevehicule].color;
 
+        // calculate approximate plan section total distance
+        planSection['totalDistance'] = 0;
+        for (var ii = 0; ii < table.length - 1; ii++){
+            planSection['totalDistance'] += map.distance(table[ii], table[ii+1]);
+        }
+        allStepTotalDistance += planSection['totalDistance'];
+
         mypoly = L.polyline(table, {color:thecolor, weight:5});
         if (border){
             borderLine = L.polyline(table,
@@ -765,7 +784,8 @@ function processXml(xml) {
     var totsec = Math.floor(totalTime/1000);
     var minutes = Math.floor(totsec/60);
     var remsec = totsec%60;
-    $('div#summary').text('Ready to play !!! ('+minutes+' min '+remsec+' sec)');
+    $('div#summary').text('Ready to play !!! ('+minutes+' min '+remsec+' sec ; '+
+        formatDistance(allStepTotalDistance)+')');
     ready = true;
 }
 
