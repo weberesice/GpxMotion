@@ -447,7 +447,7 @@ var nextButton = L.easyButton({
     states: [{
             stateName: 'next',   // name the state
             icon:      'fa-fast-forward',          // and define its properties
-            title:     'Next step (right)', // like its title
+            title:     'Next step (n)', // like its title
             onClick: function(btn, map) {  // and its callback
                 nextStep();
             }
@@ -460,7 +460,7 @@ var prevButton = L.easyButton({
     states: [{
             stateName: 'prev',   // name the state
             icon:      'fa-fast-backward',          // and define its properties
-            title:     'Previous step (left)', // like its title
+            title:     'Previous step (p)', // like its title
             onClick: function(btn, map) {  // and its callback
                 prevStep();
             }
