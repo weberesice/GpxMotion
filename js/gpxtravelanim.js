@@ -69,6 +69,14 @@ function nextMarker(){
         if (currentMarkerIndex > 0){
             markers[currentMarkerIndex-1].stop();
             map.removeLayer(markers[currentMarkerIndex-1]);
+            // add the line for the skipped step
+            map.addLayer(polylines[currentMarkerIndex-1]);
+            // remove the partial drawing
+            map.removeLayer(drawPolylines[currentMarkerIndex-1]);
+            // reset the partial drawing
+            drawPolylines[currentMarkerIndex-1].eachLayer( function (l) {
+                l.setLatLngs([]);
+            });
         }
 
         // update current title
@@ -193,14 +201,6 @@ function nextStep(){
     currentTimer.pause();
     window.clearTimeout(currentTimer);
     currentTimer = null;
-    // add the line for the skipped step
-    map.addLayer(polylines[currentMarkerIndex-1]);
-    // remove the partial drawing
-    map.removeLayer(drawPolylines[currentMarkerIndex-1]);
-    // reset the partial drawing
-    drawPolylines[currentMarkerIndex-1].eachLayer( function (l) {
-        l.setLatLngs([]);
-    });
     nextMarker();
 }
 
