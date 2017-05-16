@@ -69,7 +69,7 @@ function nextMarker(){
         if (currentMarkerIndex > 0){
             markers[currentMarkerIndex-1].stop();
             map.removeLayer(markers[currentMarkerIndex-1]);
-            // add the line for the skipped step
+            // add the line for the previous step
             map.addLayer(polylines[currentMarkerIndex-1]);
             // remove the partial drawing
             map.removeLayer(drawPolylines[currentMarkerIndex-1]);
@@ -121,6 +121,14 @@ function nextMarker(){
         // we remove the last marker
         markers[currentMarkerIndex-1].stop();
         map.removeLayer(markers[currentMarkerIndex-1]);
+        // add the line for the last step
+        map.addLayer(polylines[currentMarkerIndex-1]);
+        // remove the partial drawing
+        map.removeLayer(drawPolylines[currentMarkerIndex-1]);
+        // reset the partial drawing
+        drawPolylines[currentMarkerIndex-1].eachLayer( function (l) {
+            l.setLatLngs([]);
+        });
         // add last pin marker
         beginMarkers[currentMarkerIndex].addTo(map);
         currentMarkerIndex = 0;
