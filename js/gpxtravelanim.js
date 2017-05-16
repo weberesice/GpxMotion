@@ -10,6 +10,7 @@ var plan;
 var currentMarkerIndex = 0;
 var markers = [];
 var polylines = [];
+var drawPolylines = [];
 // used to add permanent steps markers
 var beginMarkers = [];
 var globalBounds;
@@ -86,7 +87,10 @@ function nextMarker(){
         markers[currentMarkerIndex].start();
 
         // draw a line for current marker
-        polylines[currentMarkerIndex].addTo(map);
+        drawPolylines[currentMarkerIndex].addTo(map);
+        drawPolylines[currentMarkerIndex].eachLayer(function (l){
+            l.addLatLng(beginMarkers[currentMarkerIndex].getLatLng());
+        });
 
         // preload tiles needed for next marker
         if (currentMarkerIndex+1 < markers.length){
@@ -150,12 +154,19 @@ function reset(){
     }
 
     // remove polylines
-    for (i=0; i < polylines.length; i++){
+    for (i = 0; i < polylines.length; i++){
         map.removeLayer(polylines[i]);
+    }
+    // remove draw polylines
+    for (i=0; i < drawPolylines.length; i++){
+        map.removeLayer(drawPolylines[i]);
+        drawPolylines[i].eachLayer( function (l) {
+            l.setLatLngs([]);
+        });
     }
 
     // remove moving markers
-    for (i=0; i < markers.length; i++){
+    for (i = 0; i < markers.length; i++){
         markers[i].stop();
         map.removeLayer(markers[i]);
     }
@@ -166,7 +177,7 @@ function displayCompleteTravel(){
     for (var i=0; i<beginMarkers.length; i++){
         beginMarkers[i].addTo(map);
     }
-    for (var i=0; i<polylines.length; i++){
+    for (var i = 0; i < polylines.length; i++){
         polylines[i].addTo(map);
     }
     // zoom on whole travel
@@ -182,6 +193,14 @@ function nextStep(){
     currentTimer.pause();
     window.clearTimeout(currentTimer);
     currentTimer = null;
+    // add the line for the skipped step
+    map.addLayer(polylines[currentMarkerIndex-1]);
+    // remove the partial drawing
+    map.removeLayer(drawPolylines[currentMarkerIndex-1]);
+    // reset the partial drawing
+    drawPolylines[currentMarkerIndex-1].eachLayer( function (l) {
+        l.setLatLngs([]);
+    });
     nextMarker();
 }
 
@@ -198,8 +217,21 @@ function prevStep(){
     if (currentMarkerIndex > 0){
         markers[currentMarkerIndex-1].stop();
         map.removeLayer(markers[currentMarkerIndex-1]);
+        // in case it was added by nextStep
         map.removeLayer(polylines[currentMarkerIndex-1]);
+        map.removeLayer(drawPolylines[currentMarkerIndex-1]);
+        drawPolylines[currentMarkerIndex-1].eachLayer( function (l) {
+            l.setLatLngs([]);
+        });
         map.removeLayer(beginMarkers[currentMarkerIndex-1]);
+        // remove the previous step
+        if (currentMarkerIndex > 1){
+            map.removeLayer(polylines[currentMarkerIndex-2]);
+            map.removeLayer(drawPolylines[currentMarkerIndex-2]);
+            drawPolylines[currentMarkerIndex-2].eachLayer( function (l) {
+                l.setLatLngs([]);
+            });
+        }
     }
 
     // rewind
@@ -543,6 +575,7 @@ function processXml(xml) {
 
     var table;
     var ll,mypoly, borderLine, featGroup;
+    var emptyPoly, emptyBorderLine, drawFeatGroup;
     var popupString, linePopupString;
     var marker;
     var iplan = 0;
@@ -635,10 +668,18 @@ function processXml(xml) {
         }
         polylines.push(featGroup);
 
+        // empty elements to be drawn progressively
+        emptyPoly = L.polyline([], {color:thecolor, weight:5});
+        emptyBorderLine = L.polyline([],
+            {opacity:1, weight: parseInt(5*1.6), color:'black'});
+        drawFeatGroup = L.featureGroup([emptyBorderLine, emptyPoly]);
+        drawPolylines.push(drawFeatGroup);
+
         totalTime += planSection['time'];
         marker = L.Marker.movingMarker(mypoly.getLatLngs(), planSection['time'],{
             autostart: false,
-            icon: theicon
+            icon: theicon,
+            snakeGroup: drawFeatGroup
         });
         var pinIcon = normalPinIcon;
         if (iplan === 0){

@@ -19,6 +19,7 @@ L.Marker.MovingMarker = L.Marker.extend({
     options: {
         autostart: false,
         loop: false,
+        snakeGroup: null,
     },
 
     initialize: function (latlngs, durations, options) {
@@ -223,6 +224,15 @@ L.Marker.MovingMarker = L.Marker.extend({
     _updateLine: function(timestamp) {
         // time elapsed since the last latlng
         var elapsedTime = timestamp - this._startTimeStamp;
+
+        if (this.isRunning() && elapsedTime > 0){
+            var ll = this.getLatLng();
+            if (this.options.snakeGroup !== null) {
+                this.options.snakeGroup.eachLayer( function (l) {
+                    l.addLatLng(ll);
+                });
+            }
+        }
 
         // not enough time to update the line
         if (elapsedTime <= this._currentDuration) {
