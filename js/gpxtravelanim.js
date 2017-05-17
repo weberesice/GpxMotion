@@ -61,6 +61,16 @@ function formatDistance(d){
     }
 }
 
+// add coordinates to the current snake line when marker moves
+function updateSnakeLine(e) {
+    var ll = e.target.getLatLng();
+    if (currentMarkerIndex > 0) {
+        drawPolylines[currentMarkerIndex-1].eachLayer( function (l) {
+            l.addLatLng(ll);
+        });
+    }
+}
+
 function nextMarker(){
     if (currentMarkerIndex < markers.length){
         playButton.state('pause');
@@ -686,9 +696,9 @@ function processXml(xml) {
         totalTime += planSection['time'];
         marker = L.Marker.movingMarker(mypoly.getLatLngs(), planSection['time'],{
             autostart: false,
-            icon: theicon,
-            snakeGroup: drawFeatGroup
+            icon: theicon
         });
+        marker.on('move', updateSnakeLine);
         var pinIcon = normalPinIcon;
         if (iplan === 0){
             pinIcon = beginPinIcon;
@@ -959,7 +969,7 @@ $(function() {
     }
     document.onkeydown = checkKey;
 
-    map.on('resize',updateDisplaySizes);
+    map.on('resize', updateDisplaySizes);
 
     main();
 
