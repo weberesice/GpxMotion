@@ -97,3 +97,42 @@ body { margin: 0; }
     display: grid;
     grid-template: 1fr 1fr 1fr / 50% 50%;
 }
+.marker-icon-plane, .marker-icon-bike, .marker-icon-hike, .marker-icon-car, .marker-icon-bus, .marker-icon-train {
+    background-size: 40px 52px !important;
+    background-repeat: no-repeat !important;
+    width: 40px !important;
+    height: 52px !important;
+}
+.marker-icon-pin, .marker-icon-pinblue, .marker-icon-pinred {
+    background-size: 25px 39px !important;
+    background-repeat: no-repeat !important;
+    width: 25px !important;
+    height: 39px !important;
+}
+.marker-icon-plane{
+    background-image: url('gpxmotion_images/plane2.png') !important;
+}
+.marker-icon-bike {
+    background-image: url('gpxmotion_images/bike2.png') !important;
+}
+.marker-icon-train{
+    background-image: url('gpxmotion_images/train2.png') !important;
+}
+.marker-icon-bus {
+    background-image: url('gpxmotion_images/bus2.png') !important;
+}
+.marker-icon-car{
+    background-image: url('gpxmotion_images/car2.png') !important;
+}
+.marker-icon-hike {
+    background-image: url('gpxmotion_images/hike2.png') !important;
+}
+.marker-icon-pin {
+    background-image: url('gpxmotion_images/pin.png') !important;
+}
+.marker-icon-pinblue{
+    background-image: url('gpxmotion_images/pinblue.png') !important;
+}
+.marker-icon-pinred {
+    background-image: url('gpxmotion_images/pinred.png') !important;
+}

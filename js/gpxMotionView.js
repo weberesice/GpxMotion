@@ -270,78 +270,60 @@
     function load_map() {
         gpxMotionView.vehicule = {
             plane : {
-                icon: L.icon({
-                    iconUrl: 'images/plane2.png',
-                    iconSize: [40, 52],
-                    iconAnchor: [20, 52],
-                    shadowUrl: null
+                icon: L.divIcon({
+                    className: 'marker-icon-plane',
+                    iconAnchor: [20, 52]
                 }),
                 color : 'blue'
             },
             train : {
-                icon: L.icon({
-                    iconUrl: 'images/train2.png',
-                    iconSize: [40, 52],
-                    iconAnchor: [20, 52],
-                    shadowUrl: null
+                icon: L.divIcon({
+                    className: 'marker-icon-train',
+                    iconAnchor: [20, 52]
                 }),
                 color : 'red'
             },
             bus : {
-                icon: L.icon({
-                    iconUrl: 'images/bus2.png',
-                    iconSize: [40, 52],
-                    iconAnchor: [20, 52],
-                    shadowUrl: null
+                icon: L.divIcon({
+                    className: 'marker-icon-bus',
+                    iconAnchor: [20, 52]
                 }),
                 color : 'purple'
             },
             hike : {
-                icon: L.icon({
-                    iconUrl: 'images/hike2.png',
-                    iconSize: [40, 52],
-                    iconAnchor: [20, 52],
-                    shadowUrl: null
+                icon: L.divIcon({
+                    className: 'marker-icon-hike',
+                    iconAnchor: [20, 52]
                 }),
                 color : 'yellow'
             },
             car : {
-                icon: L.icon({
-                    iconUrl: 'images/car2.png',
-                    iconSize: [40, 52],
-                    iconAnchor: [20, 52],
-                    shadowUrl: null
+                icon: L.divIcon({
+                    className: 'marker-icon-car',
+                    iconAnchor: [20, 52]
                 }),
                 color : 'purple'
             },
             bike : {
-                icon: L.icon({
-                    iconUrl: 'images/bike2.png',
-                    iconSize: [40, 52],
-                    iconAnchor: [20, 52],
-                    shadowUrl: null
+                icon: L.divIcon({
+                    className: 'marker-icon-bike',
+                    iconAnchor: [20, 52]
                 }),
                 color : 'green'
             }
         }
 
-        gpxMotionView.beginPinIcon = L.icon({
-            iconUrl: 'images/pin.png',
-            iconSize: [25, 39],
+        gpxMotionView.beginPinIcon = L.divIcon({
+            className: 'marker-icon-pin',
             iconAnchor: [5, 39],
-            shadowUrl: null
         });
-        gpxMotionView.endPinIcon = L.icon({
-            iconUrl: 'images/pinred.png',
-            iconSize: [25, 39],
+        gpxMotionView.endPinIcon = L.divIcon({
+            className: 'marker-icon-pinred',
             iconAnchor: [5, 39],
-            shadowUrl: null
         });
-        gpxMotionView.normalPinIcon = L.icon({
-            iconUrl: 'images/pinblue.png',
-            iconSize: [25, 39],
+        gpxMotionView.normalPinIcon = L.divIcon({
+            className: 'marker-icon-pinblue',
             iconAnchor: [5, 39],
-            shadowUrl: null
         });
 
         // map management
@@ -510,7 +492,7 @@
         });
         nextButton.addTo(gpxMotionView.map);
 
-        var prevButton = L.easyButton({
+        gpxMotionView.prevButton = L.easyButton({
             position: 'bottomright',
             states: [{
                 stateName: 'prev',   // name the state
@@ -521,9 +503,9 @@
                 }
             }]
         });
-        prevButton.addTo(gpxMotionView.map);
+        gpxMotionView.prevButton.addTo(gpxMotionView.map);
 
-        var drawButton = L.easyButton({
+        gpxMotionView.drawButton = L.easyButton({
             position: 'bottomright',
             states: [{
                 stateName: 'draw',   // name the state
@@ -537,7 +519,7 @@
                 }
             }]
         });
-        drawButton.addTo(gpxMotionView.map);
+        gpxMotionView.drawButton.addTo(gpxMotionView.map);
 
         var resetButton = L.easyButton({
             position: 'bottomright',
