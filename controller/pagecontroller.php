@@ -231,54 +231,95 @@ class PageController extends Controller {
     }
 
     /**
+     * Handle public link
+     *
      * @NoAdminRequired
+     * @NoCSRFRequired
+     * @PublicPage
      */
-    public function getfoldergpxs($path, $type) {
-        $userFolder = \OC::$server->getUserFolder();
-        $cleanpath = str_replace(array('../', '..\\'), '',  $path);
-        $gpxs = Array();
-        if ($userFolder->nodeExists($cleanpath)){
-            $folder = $userFolder->get($cleanpath);
-            if ($folder->getType() === \OCP\Files\FileInfo::TYPE_FOLDER){
-                foreach ($folder->getDirectoryListing() as $file) {
-                    if ($file->getType() === \OCP\Files\FileInfo::TYPE_FILE) {
-                        if (    ($type === 'all' or $type === '.gpx')
-                            and (endswith($file->getName(), '.GPX') or endswith($file->getName(), '.gpx'))
-                        ){
-                            $gpxContent = $file->getContent();
-                            array_push($gpxs, $gpxContent);
-                        }
-                        else if (getProgramPath('gpsbabel') !== null and
-                            (
-                                (    ($type === 'all' or $type === '.kml')
-                                 and (endswith($file->getName(), '.KML') or endswith($file->getName(), '.kml'))
-                                )
-                                or
-                                (    ($type === 'all' or $type === '.jpg')
-                                 and (endswith($file->getName(), '.JPG') or endswith($file->getName(), '.jpg'))
-                                )
-                                or
-                                (    ($type === 'all' or $type === '.csv')
-                                 and (endswith($file->getName(), '.CSV') or endswith($file->getName(), '.csv'))
-                                )
-                            )
-                        ){
-                            $gpxContent = $this->toGpx($file);
-                            array_push($gpxs, $gpxContent);
-                        }
+    public function publicview() {
+        if (!empty($_GET)){
+            $dbconnection = \OC::$server->getDatabaseConnection();
+            $token = $_GET['token'];
+            $path = '';
+            $filename = '';
+            if (isset($_GET['path'])){
+                $path = $_GET['path'];
+            }
+            if (isset($_GET['filename'])){
+                $filename = $_GET['filename'];
+            }
+
+            if ($path && $filename){
+                if ($path !== '/'){
+                    $dlpath = rtrim($path, '/');
+                }
+                else{
+                    $dlpath = $path;
+                }
+                $dl_url = $token.'/download?path='.$dlpath;
+                $dl_url .= '&files='.$filename;
+            }
+            else{
+                $dl_url = $token.'/download';
+            }
+
+            $share = $this->shareManager->getShareByToken($token);
+            $user = $share->getSharedBy();
+            $passwd = $share->getPassword();
+            $shareNode = $share->getNode();
+            $nodeid = $shareNode->getId();
+            $uf = \OC::$server->getUserFolder($user);
+
+            if ($passwd === null){
+                if ($path && $filename){
+                    if ($shareNode->nodeExists($path.'/'.$filename)){
+                        $theid = $shareNode->get($path.'/'.$filename)->getId();
+                        // we get the node for the user who shared
+                        // (the owner may be different if the file is shared from user to user)
+                        $thefile = $uf->getById($theid)[0];
+                    }
+                    else{
+                        return 'This file is not a public share';
                     }
                 }
+                else{
+                    $thefile = $uf->getById($nodeid)[0];
+                }
+
+                if ($thefile->getType() === \OCP\Files\FileInfo::TYPE_FILE){
+                    $userfolder_path = $uf->getPath();
+                    $rel_file_path = str_replace($userfolder_path, '', $thefile->getPath());
+                    $gpxContent = $thefile->getContent();
+
+                }
+                else{
+                    return 'This file is not a public share';
+                }
+            }
+            else{
+                return 'This file is not a public share';
             }
         }
 
-        $response = new DataResponse(
-            [
-                'gpxs'=>$gpxs
-            ]
-        );
+        // PARAMS to send to template
+
+        require_once('tileservers.php');
+        $params = [
+            'basetileservers'=>$baseTileServers,
+            'tileservers'=>Array(),
+            'overlayservers'=>Array(),
+            'publicgpx'=>$gpxContent,
+            'token'=>$dl_url,
+            'gpxmotion_version'=>$this->appVersion
+        ];
+        $response = new TemplateResponse('gpxmotion', 'view', $params);
         $csp = new ContentSecurityPolicy();
         $csp->addAllowedImageDomain('*')
             ->addAllowedMediaDomain('*')
+            ->addAllowedChildSrcDomain('*')
+            ->addAllowedObjectDomain('*')
+            ->addAllowedScriptDomain('*')
             ->addAllowedConnectDomain('*');
         $response->setContentSecurityPolicy($csp);
         return $response;

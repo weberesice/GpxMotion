@@ -877,35 +877,48 @@
 
     // load gpx file with plan and build our markers, pins...
     function main(){
-        var pathGet = getUrlParameter('path');
-        var req = {
-            path: pathGet
+        var token = getUrlParameter('token');
+        // public file
+        if (token) {
+            var gpxtxt = $('#publicgpx').html();
+            gpxtxt = $('<div/>').html(gpxtxt).text();
+            var xml = {
+                gpx: gpxtxt
+            };
+            processXml(xml);
         }
-        var url = OC.generateUrl('/apps/gpxmotion/getgpx');
-        $('div#summary').html('<div id="slider">'+
-            '<div id="sliderbar">'+
-                '</div>'+
-                '<div id="slidertext">'+
-                '</div>'+
-                '</div>');
-
-        $.ajax({
-            type: 'POST',
-            async: true,
-            url: url,
-            data: req,
-            xhr: function(){
-                var xhr = new window.XMLHttpRequest();
-                xhr.addEventListener("progress", function(evt) {
-                    if (evt.lengthComputable) {
-                        var percentComplete = evt.loaded / evt.total * 100;
-                        drawslider(100, parseInt(percentComplete));
-                    }
-                }, false);
-
-                return xhr;
+        // normal file
+        else {
+            var pathGet = getUrlParameter('path');
+            var req = {
+                path: pathGet
             }
-        }).done(processXml);
+            var url = OC.generateUrl('/apps/gpxmotion/getgpx');
+            $('div#summary').html('<div id="slider">'+
+                '<div id="sliderbar">'+
+                    '</div>'+
+                    '<div id="slidertext">'+
+                    '</div>'+
+                    '</div>');
+
+            $.ajax({
+                type: 'POST',
+                async: true,
+                url: url,
+                data: req,
+                xhr: function(){
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.addEventListener("progress", function(evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total * 100;
+                            drawslider(100, parseInt(percentComplete));
+                        }
+                    }, false);
+
+                    return xhr;
+                }
+            }).done(processXml);
+        }
     }
 
     function getUrlParameter(sParam) {
