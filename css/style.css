@@ -138,7 +138,9 @@ body { margin: 0; }
 }
 .easy-button-button {
     margin: 0 !important;
+    padding: 0 !important;
 }
 .easy-button-button span.fa{
-    display:block;
+    margin-top: auto;
+    margin-bottom: auto;
 }
