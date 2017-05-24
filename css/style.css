@@ -18,8 +18,42 @@ body { margin: 0; }
 .easy-button-button{
     background-color: lightcoral !important;
 }
+.legendPins div{
+    width: 20px;
+    height: 28px;
+    background-size: 20px 28px;
+}
+.legendPins div[icon=pin]{
+    background-image: url(gpxmotion_images/pin.png);
+}
+.legendPins div[icon=pinblue]{
+    background-image: url(gpxmotion_images/pinblue.png);
+}
+.legendPins div[icon=pinred]{
+    background-image: url(gpxmotion_images/pinred.png);
+}
 .dialogicon{
-    width: 17px;
+    width: 20px;
+    height: 28px;
+    background-size: 20px 28px;
+}
+.dialogicon[icon=plane] {
+    background-image: url(gpxmotion_images/plane2.png);
+}
+.dialogicon[icon=train] {
+    background-image: url(gpxmotion_images/train2.png);
+}
+.dialogicon[icon=bike] {
+    background-image: url(gpxmotion_images/bike2.png);
+}
+.dialogicon[icon=hike] {
+    background-image: url(gpxmotion_images/hike2.png);
+}
+.dialogicon[icon=car] {
+    background-image: url(gpxmotion_images/car2.png);
+}
+.dialogicon[icon=bus] {
+    background-image: url(gpxmotion_images/bus2.png);
 }
 #summary{
     font-weight: bold;
@@ -55,4 +89,11 @@ body { margin: 0; }
 }
 .legendVehicules{
     font-size: 16px;
+    display: grid;
+    grid-template: 1fr 1fr 1fr 1fr 1fr 1fr / 50% 50%;
+}
+.legendPins{
+    font-size: 16px;
+    display: grid;
+    grid-template: 1fr 1fr 1fr / 50% 50%;
 }

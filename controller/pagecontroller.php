@@ -164,52 +164,38 @@ class PageController extends Controller {
         return $response;
     }
 
-
     /**
-     * convert the given file (csv or kml) to gpx and return its content
+     * view page.
+     * @NoAdminRequired
+     * @NoCSRFRequired
      */
-    private function toGpx($file){
-        $gpsbabel_path = getProgramPath('gpsbabel');
-        $data_folder = $this->userAbsoluteDataPath;
-        $tempdir = $data_folder.'/../cache/'.rand();
-        mkdir($tempdir);
+    public function view() {
+        $userFolder = \OC::$server->getUserFolder();
+        $userfolder_path = $userFolder->getPath();
 
-        $filename = $file->getName();
-        $filecontent = $file->getContent();
-        $file_clear_path = $tempdir.'/'.$filename;
-        $gpx_target_clear_path = $tempdir.'/'.$filename.'.gpx';
-        file_put_contents($file_clear_path, $filecontent);
+        $tss = $this->getUserTileServers('tile');
+        $oss = $this->getUserTileServers('overlay');
 
-        if (endswith($file->getName(), '.KML') or endswith($file->getName(), '.kml')){
-            $fmt = 'kml';
-        }
-        else if (endswith($file->getName(), '.csv') or endswith($file->getName(), '.CSV')){
-            $fmt = 'unicsv';
-        }
-        else if (endswith($file->getName(), '.jpg') or endswith($file->getName(), '.JPG')){
-            $fmt = 'exif';
-        }
-        $args = Array('-i', $fmt, '-f', $file_clear_path, '-o',
-            'gpx', '-F', $gpx_target_clear_path);
-        $cmdparams = '';
-        foreach($args as $arg){
-            $shella = escapeshellarg($arg);
-            $cmdparams .= " $shella";
-        }
-        exec(
-            $gpsbabel_path.' '.$cmdparams,
-            $output, $returnvar
-        );
-        if (file_exists($gpx_target_clear_path)){
-            $gpx_clear_content = file_get_contents($gpx_target_clear_path);
-        }
-        else{
-            $gpx_clear_content = '';
-        }
+        // PARAMS to view
 
-        delTree($tempdir);
-
-        return $gpx_clear_content;
+		require_once('tileservers.php');
+        $params = [
+            'username'=>$this->userId,
+			'basetileservers'=>$baseTileServers,
+			'tileservers'=>$tss,
+			'overlayservers'=>$oss,
+            'gpxmotion_version'=>$this->appVersion
+        ];
+        $response = new TemplateResponse('gpxmotion', 'view', $params);
+        $csp = new ContentSecurityPolicy();
+        $csp->addAllowedImageDomain('*')
+            ->addAllowedMediaDomain('*')
+            ->addAllowedChildSrcDomain('*')
+            ->addAllowedObjectDomain('*')
+            ->addAllowedScriptDomain('*')
+            ->addAllowedConnectDomain('*');
+        $response->setContentSecurityPolicy($csp);
+        return $response;
     }
 
     /**
@@ -224,13 +210,6 @@ class PageController extends Controller {
             if ($file->getType() === \OCP\Files\FileInfo::TYPE_FILE){
                 if (endswith($file->getName(), '.GPX') or endswith($file->getName(), '.gpx')){
                     $gpxContent = $file->getContent();
-                }
-                else if (getProgramPath('gpsbabel') !== null and
-                    (endswith($file->getName(), '.KML') or endswith($file->getName(), '.kml') or
-                    endswith($file->getName(), '.JPG') or endswith($file->getName(), '.jpg') or
-                    endswith($file->getName(), '.CSV') or endswith($file->getName(), '.csv'))
-                ){
-                    $gpxContent = $this->toGpx($file);
                 }
             }
             else{
