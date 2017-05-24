@@ -136,3 +136,9 @@ body { margin: 0; }
 .marker-icon-pinred {
     background-image: url('gpxmotion_images/pinred.png') !important;
 }
+.easy-button-button {
+    margin: 0 !important;
+}
+.easy-button-button span.fa{
+    display:block;
+}
