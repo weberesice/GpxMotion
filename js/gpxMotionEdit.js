@@ -4,6 +4,12 @@
     var gpxmotion = {
         map: null,
         vehicule: null,
+        currentAjax: null,
+        featureGroup: new L.featureGroup()
+    }
+
+    function endsWith(str, suffix) {
+        return str.indexOf(suffix, str.length - suffix.length) !== -1;
     }
 
     function getUrlParameter(sParam) {
@@ -95,6 +101,8 @@
         gpxmotion.activeLayers.addTo(gpxmotion.map);
 
         gpxmotion.map.on('baselayerchange', saveOptions);
+
+        gpxmotion.map.addLayer(gpxmotion.featureGroup);
     }
 
     function saveOptions() {
@@ -205,6 +213,138 @@
         });
     }
 
+    function showLoadingAnimation() {
+        $('#loading').show();
+    }
+
+    function hideLoadingAnimation() {
+        $('#loading').hide();
+    }
+
+
+    function loadAction(path) {
+        if (!endsWith(path, '.gpx') && !endsWith(path, '.GPX')) { 
+            OC.dialogs.alert( 
+                t('gpxmotion', 'Impossible to load this file. ') + 
+                t('gpxmotion', 'Supported formats is gpx'), 
+                t('gpxmotion', 'Load error') 
+            ); 
+            return; 
+        } 
+ 
+        loadFile(path);
+		// set save name
+        var spl = path.split('/');
+        var basename = spl[spl.length - 1];
+        $('input#saveName').val(
+            basename.replace(/\.jpg$/, '.gpx')
+            .replace(/\.kml$/, '.gpx')
+            .replace(/\.csv$/, '.gpx')
+        );
+    }
+
+    function loadFile(file) {
+        var req = {
+            path: file
+        };
+        var url = OC.generateUrl('/apps/gpxmotion/getgpx');
+        $('#loadingpc').text('0');
+        showLoadingAnimation();
+        gpxmotion.currentAjax = $.ajax({
+            type: 'POST',
+            async: true,
+            url: url,
+            data: req,
+            xhr: function() {
+                var xhr = new window.XMLHttpRequest();
+                xhr.addEventListener('progress', function(evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total * 100;
+                        $('#loadingpc').text(parseInt(percentComplete));
+                    }
+                }, false);
+
+                return xhr;
+            }
+        }).done(function(response) {
+            //if ($('#clearbeforeload').is(':checked')) {
+            //    clear();
+            //}
+            if (response.gpx === '') {
+                OC.dialogs.alert('The file does not exist or it is not supported',
+                                 'Load error');
+            }
+            else {
+                clearTrack();
+                parseGpx(response.gpx);
+                try {
+                    var bounds = gpxmotion.featureGroup.getBounds();
+                    gpxmotion.map.fitBounds(
+                        bounds,
+                        {
+                            animate: true,
+                            paddingTopLeft: [parseInt($('#sidebar').css('width')), 0]
+                        }
+                    );
+                }
+                catch (err) {
+                    console.log('Impossible to fit to bounds \n'+err);
+                }
+            }
+        }).fail(function() {
+            OC.dialogs.alert('Failed to communicate with the server',
+                             'Load error');
+        }).always(function() {
+            hideLoadingAnimation();
+        });
+    }
+
+    function clearSteps() {
+    }
+
+    function clearTrack() {
+        gpxmotion.featureGroup.clearLayers();
+    }
+
+    function parseGpx(xml) {
+        var l;
+        var dom = $(xml);
+        var fileDesc = dom.find('>metadata>desc').text();
+        //parseDesc(fileDesc);
+        dom.find('wpt').each(function() {
+            var lat = $(this).attr('lat');
+            var lon = $(this).attr('lon');
+            var name = $(this).find('name').text();
+            l = L.marker([lat, lon]);
+            l.bindTooltip(name, {permanent: true});
+            gpxmotion.featureGroup.addLayer(l);
+        });
+        dom.find('trk').each(function() {
+            var latlngs = [];
+            var name = $(this).find('>name').text();
+            $(this).find('trkseg').each(function() {
+                $(this).find('trkpt').each(function() {
+                    var lat = $(this).attr('lat');
+                    var lon = $(this).attr('lon');
+                    latlngs.push([lat, lon]);
+                });
+            });
+            l = L.polyline(latlngs);
+            gpxmotion.featureGroup.addLayer(l);
+        });
+        dom.find('rte').each(function() {
+            var latlngs = [];
+            var name = $(this).find('>name').text();
+            $(this).find('rtept').each(function() {
+                var lat = $(this).attr('lat');
+                var lon = $(this).attr('lon');
+                latlngs.push([lat, lon]);
+            });
+            l = L.polyline(latlngs);
+            gpxmotion.featureGroup.addLayer(l);
+        });
+    }
+
     $(document).ready(function() {
         load_map();
 
@@ -220,6 +360,22 @@
         });
         $('#addoverlayserver').click(function() {
             addTileServer('overlay');
+        });
+
+        $('#loadButton').click(function(e) {
+            if (gpxmotion.currentAjax !== null) {
+                gpxmotion.currentAjax.abort();
+                hideLoadingAnimation();
+            }
+            OC.dialogs.filepicker(
+                t('gpxmotion', 'Load file (gpx)'),
+                function(targetPath) {
+                    loadAction(targetPath);
+                },
+                false,
+                null,
+                true
+            );
         });
 
     });
