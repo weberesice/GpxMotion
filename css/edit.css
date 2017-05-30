@@ -903,3 +903,27 @@ label[for=clearbeforeload] {
     grid-column: 1;
     grid-row: 4;
 }
+#addStepButton i {
+    color: green;
+}
+div.step label{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+div.step {
+    display:none;
+    border: 2px solid grey;
+    border-radius: 5px;
+    padding: 0 4px 0 4px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+div.step .zoom i{
+    color: blue;
+}
+div.step .removeStep i{
+    color: red;
+}
+/*div.step .removeStep{
+    grid-column: 1/3;
+}*/

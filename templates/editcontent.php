@@ -34,6 +34,7 @@
     <div style="clear:both"></div>
     <hr/>
     <button id="clearButton"><i class="fa fa-bomb"></i> <?php p($l->t('Clear animation steps'));?></button>
+    <button id="addStepButton"><i class="fa fa-plus-circle"></i> <?php p($l->t('Add animation step'));?></button>
     <div id="saved"><p>
         <i class="fa fa-save fa-spin fa-3x fa-fw"></i>
         <b id="content"></b></p>
@@ -92,8 +93,8 @@ echo '</ul>'."\n";
 <h1 class="sectiontitle"><?php p($l->t('Options')); ?></h1>
 <hr/>
 <div id="optiontop">
-    <input type="checkbox" id="clearbeforeload" checked></input>
-    <label for="clearbeforeload"><?php p($l->t('Clear map before loading'));?></label>
+    <input type="checkbox" id="clearstepsbeforeload" checked></input>
+    <label for="clearstepsbeforeload"><?php p($l->t('Clear steps before loading'));?></label>
 </div>
 <hr/>
     <h3 class="sectiontitle"><?php p($l->t('Custom tile servers')); ?></h3>

@@ -4,6 +4,7 @@
     var gpxmotion = {
         map: null,
         vehicule: null,
+        vehicules: {'plane': '', 'car': '', 'hike': '', 'bike': '', 'train': '', 'bus': ''},
         currentAjax: null,
         featureGroup: new L.featureGroup()
     }
@@ -267,9 +268,9 @@
                 return xhr;
             }
         }).done(function(response) {
-            //if ($('#clearbeforeload').is(':checked')) {
-            //    clear();
-            //}
+            if ($('#clearstepsbeforeload').is(':checked')) {
+                clearSteps();
+            }
             if (response.gpx === '') {
                 OC.dialogs.alert('The file does not exist or it is not supported',
                                  'Load error');
@@ -310,7 +311,7 @@
         var l;
         var dom = $(xml);
         var fileDesc = dom.find('>metadata>desc').text();
-        //parseDesc(fileDesc);
+        parseDesc(fileDesc);
         dom.find('wpt').each(function() {
             var lat = $(this).attr('lat');
             var lon = $(this).attr('lon');
@@ -345,6 +346,95 @@
         });
     }
 
+    function parseDesc(desc) {
+        var json = $.parseJSON('{'+desc+'}');
+        var i, p;
+        if (json.plan) {
+            for (i=0; i < json.plan.length; i++) {
+                p = json.plan[i];
+                addStep(p.nbElements,
+                        p.vehicule,
+                        p.time,
+                        p.title,
+                        p.description,
+                        p.pictureUrl,
+                        p.detailUrl,
+                        p.beginTitle,
+                        p.beginDescription,
+                        p.beginPictureUrl,
+                        p.beginDetailUrl
+                );
+            }
+        }
+    }
+
+    function addStep(nbElements=1,
+                     vehicule="plane",
+                     time=5000,
+                     title="",
+                     description='',
+                     pictureUrl='',
+                     detailUrl='',
+                     beginTitle='',
+                     beginDescription='',
+                     beginPictureUrl='',
+                     beginDetailUrl=''
+    ){
+        var sel, v;
+        var values = {
+            nbElements: nbElements,
+            vehicule: vehicule,
+            time: time,
+            title: title,
+            description: description,
+            pictureUrl: pictureUrl,
+            detailUrl: detailUrl,
+            beginTitle: beginTitle,
+            beginDescription: beginDescription,
+            beginPictureUrl: beginPictureUrl,
+            beginDetailUrl: beginDetailUrl
+        }
+        for (v in values) {
+            if (!values[v]) {
+                values[v] = '';
+            }
+        }
+        var divtxt = '<div class="step">';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Number of elements') + ' :</label>';
+        divtxt = divtxt + '<input role="nbelem" type="text" value="' + escapeHTML(values.nbElements) + '"></input>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Vehicule') + ' :</label>';
+        divtxt = divtxt + '<select role="vehicule">';
+        for (v in gpxmotion.vehicules) {
+            if (v === vehicule) {
+                sel = ' selected';
+            }
+            else {
+                sel = '';
+            }
+            divtxt = divtxt +'<option value="' + escapeHTML(v) + '"' + sel + '>' + v + '</option>';
+        }
+        divtxt = divtxt + '</select>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Duration') + ' :</label>';
+        divtxt = divtxt + '<input role="time" type="text" value="' + escapeHTML(values.time) + '"></input>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Description') + ' :</label>';
+        divtxt = divtxt + '<textarea role="description" value="' + escapeHTML(values.description) + '"/>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Picture URL') + ' :</label>';
+        divtxt = divtxt + '<input role="pictureUrl" type="text" value="' + escapeHTML(values.pictureUrl) + '"></input>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Begin title') + ' :</label>';
+        divtxt = divtxt + '<input role="beginTitle" type="text" value="' + escapeHTML(values.beginTitle) + '"></input>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Begin description') + ' :</label>';
+        divtxt = divtxt + '<input role="beginDescription" type="text" value="' + escapeHTML(values.beginDescription) + '"></input>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Begin picture URL') + ' :</label>';
+        divtxt = divtxt + '<input role="beginPictureUrl" type="text" value="' + escapeHTML(values.beginPictureUrl) + '"></input>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Begin detail URL') + ' :</label>';
+        divtxt = divtxt + '<input role="beginDetailUrl" type="text" value="' + escapeHTML(values.beginDetailUrl) + '"></input>';
+
+        divtxt = divtxt + '<button class="removeStep"><i class="fa fa-trash" aria-hidden="true"></i> Remove step</button>';
+        divtxt = divtxt + '<button class="zoom"><i class="fa fa-search" aria-hidden="true"></i> Zoom on step</button>';
+        divtxt = divtxt + '</div>';
+        $('#addStepButton').before($(divtxt).fadeIn('slow'));
+    }
+
     $(document).ready(function() {
         load_map();
 
@@ -376,6 +466,17 @@
                 null,
                 true
             );
+        });
+
+        $('#addStepButton').click(function(e) {
+            addStep();
+        });
+
+        $('body').on('click', '.removeStep', function(e) {
+            var p = $(this).parent();
+            p.fadeOut('slow', function() {
+                p.remove();
+            });
         });
 
     });
