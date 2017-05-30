@@ -573,7 +573,10 @@
     }
 
     function processXml(xml) {
-        //console.log(toGeoJSON.gpx(xml).features[0].geometry.coordinates[0]);
+        if (xml.gpx === '') {
+            // TODO inform
+            return;
+        }
         var gpxml = $.parseXML(xml.gpx);
         var desc = $(gpxml).find('gpx>metadata>desc').text();
         var jsondesc = $.parseJSON('{'+desc+'}');

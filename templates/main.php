@@ -3,13 +3,13 @@ script('gpxmotion', 'leaflet');
 script('gpxmotion', 'L.Control.MousePosition');
 script('gpxmotion', 'ActiveLayers');
 script('gpxmotion', 'leaflet-sidebar.min');
-script('gpxmotion', 'gpxmotion');
+script('gpxmotion', 'gpxMotionEdit');
 
 style('gpxmotion', 'leaflet');
 style('gpxmotion', 'L.Control.MousePosition');
 style('gpxmotion', 'leaflet-sidebar');
 style('gpxmotion', 'font-awesome.min');
-style('gpxmotion', 'gpxmotion');
+style('gpxmotion', 'edit');
 
 ?>
 
