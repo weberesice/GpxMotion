@@ -707,5 +707,10 @@
             insertStepAfter($(this).parent());
         });
 
+        $('#viewButton').click(function() {
+            var url = OC.generateUrl('apps/gpxmotion/view');
+            window.open(url, '_blank');
+        });
+
     });
 }(jQuery, OC));

@@ -790,17 +790,17 @@ h2.popupTitle{
 #clearButton {
     width: 100%;
 }
-#saveButton i{
+#saveButton i, #previewButton i{
     color: blue;
 }
 #clearButton i{
     color: red;
 }
 
-#saveButton {
+#saveButton, #previewButton {
     width: 100%;
 }
-#loadButton i, #loadFolderButton i{
+#loadButton i, #loadFolderButton i, #viewButton i{
     color: blue;
 }
 #saveNameLabel, #savePathLabel{
@@ -839,9 +839,13 @@ h2.popupTitle{
     display: grid;
     grid-template: 50% 50% / 80px 1fr 1fr;
 }
-#loadButton {
+#viewButton {
     grid-column: 2 / 4;
     grid-row: 1;
+}
+#loadButton {
+    grid-column: 2 / 4;
+    grid-row: 2;
 }
 #loadFolderButton {
     grid-column: 2;

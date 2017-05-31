@@ -590,11 +590,11 @@
         gpxMotionView.playButton = L.easyButton({
             position: 'bottomright',
             states: [{
-                stateName: 'play',   // name the state
-                icon:      'fa-spinner',          // and define its properties
-                //icon:      'fa-play-circle-o',          // and define its properties
-                title:     'Play/Pause animation (spacebar)', // like its title
-                onClick: function(btn, map) {  // and its callback
+                stateName: 'play',
+                //icon:      'fa-spinner',
+                icon:      'fa-play-circle-o',
+                title:     'Play/Pause animation (spacebar)',
+                onClick: function(btn, map) {
                     if (currentMarkerIndex === 0){
                         reset();
                         nextMarker();
@@ -619,8 +619,7 @@
             }]
         });
         gpxMotionView.playButton.addTo(gpxMotionView.map);
-        $('span.fa-spinner').addClass('fa-pulse');
-        $('span.fa-spinner').parent().parent().prop("disabled",true);
+        $('span.fa-play-circle-o').parent().parent().prop('disabled', true);
     }
 
     function processXml(xml) {
@@ -976,8 +975,13 @@
         else {
             if (path === '') {
                 var pathGet = getUrlParameter('path');
-                req = {
-                    path: pathGet
+                if (pathGet) {
+                    req = {
+                        path: pathGet
+                    }
+                }
+                else {
+                    return;
                 }
             }
             else {
@@ -988,6 +992,8 @@
                 window.history.pushState({'html': '', 'pageTitle': ''},'', 'view?path='+encodeURIComponent(path));
             }
             gpxMotionView.currentFilePath = req.path;
+            $('span.fa-play-circle-o').removeClass('fa-play-circle-o').addClass('fa-spinner').addClass('fa-pulse');
+            $('span.fa-spinner').parent().parent().prop('disabled', true);
             var url = OC.generateUrl('/apps/gpxmotion/getgpx');
             $('div#summary').html(
                 '<div id="slider">'+
