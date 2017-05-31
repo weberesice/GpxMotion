@@ -911,12 +911,14 @@ div.step label{
     margin-bottom: auto;
 }
 div.step {
-    display:none;
     border: 2px solid grey;
     border-radius: 5px;
     padding: 0 4px 0 4px;
     display: grid;
     grid-template-columns: 1fr 1fr;
+}
+div.step input{
+    width: 100%;
 }
 div.step .zoom i{
     color: blue;

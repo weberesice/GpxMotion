@@ -579,7 +579,7 @@
         }
         var gpxml = $.parseXML(xml.gpx);
         var desc = $(gpxml).find('gpx>metadata>desc').text();
-        var jsondesc = $.parseJSON('{'+desc+'}');
+        var jsondesc = $.parseJSON(desc);
         params = jsondesc;
         plan = params.plan;
 

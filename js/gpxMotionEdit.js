@@ -6,11 +6,27 @@
         vehicule: null,
         vehicules: {'plane': '', 'car': '', 'hike': '', 'bike': '', 'train': '', 'bus': ''},
         currentAjax: null,
-        featureGroup: new L.featureGroup()
+        featureGroup: new L.featureGroup(),
+        lineList: [],
+        currentGpxDom: null
     }
 
     function endsWith(str, suffix) {
         return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    }
+
+    function xmlToString(xmlData) { 
+
+        var xmlString;
+        //IE
+        if (window.ActiveXObject){
+            xmlString = xmlData.xml;
+        }
+        // code for Mozilla, Firefox, Opera, etc.
+        else{
+            xmlString = (new XMLSerializer()).serializeToString(xmlData);
+        }
+        return xmlString;
     }
 
     function getUrlParameter(sParam) {
@@ -222,6 +238,43 @@
         $('#loading').hide();
     }
 
+    function showFailAnimation(message) {
+        $('#failed').find('b#content').html(message);
+        $('#failed').fadeIn();
+        setTimeout(hideFailedAnimation, 4000);
+    }
+
+    function hideFailedAnimation() {
+        $('#failed').fadeOut();
+    }
+
+    function showSaveSuccessAnimation(path) {
+        $('#saved').find('b#content').html(
+            t('gpxedit', 'File successfully saved as') + '<br/>' + path
+        );
+        $('#saved').fadeIn();
+        setTimeout(hideSaveSuccessAnimation, 4000);
+    }
+
+    function hideSaveSuccessAnimation() {
+        $('#saved').fadeOut();
+    }
+
+    function showExportingAnimation() {
+        $('#exporting').show();
+    }
+
+    function hideExportingAnimation() {
+        $('#exporting').hide();
+    }
+
+    function showSavingAnimation() {
+        $('#saving').show();
+    }
+
+    function hideSavingAnimation() {
+        $('#saving').hide();
+    }
 
     function loadAction(path) {
         if (!endsWith(path, '.gpx') && !endsWith(path, '.GPX')) { 
@@ -309,9 +362,12 @@
 
     function parseGpx(xml) {
         var l;
-        var dom = $(xml);
+        var xxml = $.parseXML(xml);
+        var dom = $(xxml).find('gpx');
+        gpxmotion.currentGpxDom = xxml;
         var fileDesc = dom.find('>metadata>desc').text();
         parseDesc(fileDesc);
+        gpxmotion.lineList = [];
         dom.find('wpt').each(function() {
             var lat = $(this).attr('lat');
             var lon = $(this).attr('lon');
@@ -332,6 +388,7 @@
             });
             l = L.polyline(latlngs);
             gpxmotion.featureGroup.addLayer(l);
+            gpxmotion.lineList.push(l);
         });
         dom.find('rte').each(function() {
             var latlngs = [];
@@ -343,11 +400,12 @@
             });
             l = L.polyline(latlngs);
             gpxmotion.featureGroup.addLayer(l);
+            gpxmotion.lineList.push(l);
         });
     }
 
     function parseDesc(desc) {
-        var json = $.parseJSON('{'+desc+'}');
+        var json = $.parseJSON(desc);
         var i, p;
         if (json.plan) {
             for (i=0; i < json.plan.length; i++) {
@@ -416,6 +474,8 @@
         divtxt = divtxt + '</select>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Duration') + ' :</label>';
         divtxt = divtxt + '<input role="time" type="text" value="' + escapeHTML(values.time) + '"></input>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Step title') + ' :</label>';
+        divtxt = divtxt + '<input role="title" type="text" value="' + escapeHTML(values.title) + '"></input>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Description') + ' :</label>';
         divtxt = divtxt + '<textarea role="description" value="' + escapeHTML(values.description) + '"/>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Picture URL') + ' :</label>';
@@ -432,7 +492,118 @@
         divtxt = divtxt + '<button class="removeStep"><i class="fa fa-trash" aria-hidden="true"></i> Remove step</button>';
         divtxt = divtxt + '<button class="zoom"><i class="fa fa-search" aria-hidden="true"></i> Zoom on step</button>';
         divtxt = divtxt + '</div>';
-        $('#addStepButton').before($(divtxt).fadeIn('slow'));
+        $('#addStepButton').before($(divtxt).fadeIn('slow').css('display', 'grid'));
+    }
+
+    function saveAction(targetPath) {
+        showExportingAnimation();
+        var saveFilePath = targetPath + '/' + $('input#saveName').val();
+        var gpxText = generateGpx();
+        hideExportingAnimation();
+        $('#savingpc').text('0');
+        showSavingAnimation();
+        var req = {
+            path: saveFilePath,
+            content: gpxText 
+        };
+        var url = OC.generateUrl('/apps/gpxmotion/savegpx');
+        $.ajax({
+            type: 'POST',
+            async: true,
+            url: url,
+            data: req,
+            xhr: function() {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener('progress', function(evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total * 100;
+                        //Do something with upload progress here
+                        $('#savingpc').text(parseInt(percentComplete));
+                    }
+                }, false);
+
+                return xhr;
+            }
+        }).done(function (response) {
+            hideSavingAnimation();
+            if (response.status === 'fiw') {
+                showSaveFailAnimation(
+                    saveFilePath,
+                    t('gpxmotion', 'Impossible to write file') + ' : ' +
+                    t('gpxmotion', 'write access denied')
+                );
+            }
+            else if (response.status === 'fu') {
+                showSaveFailAnimation(
+                    saveFilePath,
+                    t('gpxmotion', 'Impossible to write file') + ' : ' +
+                    t('gpxmotion', 'folder does not exist')
+                );
+            }
+            else if (response.status === 'fw') {
+                showSaveFailAnimation(
+                    saveFilePath,
+                    t('gpxmotion', 'Impossible to write file') + ' : ' +
+                    t('gpxmotion', 'folder write access denied')
+                );
+            }
+            else if (response.status === 'bfn') {
+                showSaveFailAnimation(
+                    saveFilePath,
+                    t('gpxmotion', 'Bad file name, must end with ".gpx"')
+                );
+            }
+            else{
+                showSaveSuccessAnimation(saveFilePath);
+            }
+        });
+    }
+
+    function generateGpx() {
+        var desc;
+        if (gpxmotion.currentGpxDom) {
+            desc = generateJsonDescTxt();
+            var xx = $(gpxmotion.currentGpxDom);
+            xx.find('gpx>metadata>desc').html(desc);
+            return xmlToString(gpxmotion.currentGpxDom);
+        }
+        else {
+            return null;
+        }
+    }
+
+    function generateJsonDescTxt() {
+        var json = {};
+        var nbElements,
+            vehicule,
+            time,
+            title,
+            description,
+            pictureUrl,
+            detailUrl,
+            beginTitle,
+            beginDescription,
+            beginPictureUrl,
+            beginDetailUrl;
+        var steplist = [];
+        $('div.step').each(function() {
+            var step = {};
+            step.nbElements = parseInt($(this).find('input[role=nbelem]').val());
+            step.vehicule = $(this).find('select[role=vehicule]').val();
+            step.time = parseInt($(this).find('input[role=time]').val());
+            step.title = $(this).find('input[role=title]').val();
+            step.description = $(this).find('input[role=description]').val();
+            step.pictureUrl = $(this).find('input[role=pictureUrl]').val();
+            step.detailUrl = $(this).find('input[role=detailUrl]').val();
+            step.beginTitle = $(this).find('input[role=beginTitle]').val();
+            step.beginDescription = $(this).find('input[role=beginDescription]').val();
+            step.beginPictureUrl = $(this).find('input[role=beginPictureUrl]').val();
+            step.beginDetailUrl = $(this).find('input[role=beginDetailUrl]').val();
+            steplist.push(step);
+        });
+        json.elementUnit = 'track';
+        json.plan = steplist;
+        return JSON.stringify(json);
     }
 
     $(document).ready(function() {
@@ -477,6 +648,23 @@
             p.fadeOut('slow', function() {
                 p.remove();
             });
+        });
+
+        $('button#saveButton').click(function(e) {
+            if (gpxmotion.lineList.length === 0 || $('div.step').length === 0) {
+                showFailAnimation(t('gpxmotion', 'There is nothing to save'));
+            }
+            else{
+                var filename = $('#saveName').val();
+                OC.dialogs.filepicker(
+                    t('gpxmotion', 'Where to save') +
+                    ' <b>' + filename + '</b>',
+                    function(targetPath) {
+                        saveAction(targetPath);
+                    },
+                    false, "httpd/unix-directory", true
+                );
+            }
         });
 
     });
