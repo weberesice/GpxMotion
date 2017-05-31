@@ -5,7 +5,8 @@
         map: null,
         vehicule: null,
         currentAjax: null,
-        currentFilePath: ''
+        currentFilePath: '',
+        summaryText: '',
     }
 
     var border = true;
@@ -214,6 +215,7 @@
     }
 
     function displayCompleteTravel(){
+        $('div#summary').text(gpxMotionView.summaryText);
         for (var i=0; i<beginMarkers.length; i++){
             beginMarkers[i].addTo(gpxMotionView.map);
         }
@@ -581,6 +583,7 @@
                 onClick: function(btn, map) {  // and its callback
                     if (ready){
                         reset();
+                        $('div#summary').text(gpxMotionView.summaryText);
                     }
                 }
             }]
@@ -887,8 +890,9 @@
         var totsec = Math.floor(totalTime/1000);
         var minutes = Math.floor(totsec/60);
         var remsec = totsec%60;
-        $('div#summary').text('Ready to play !!! ('+minutes+' min '+remsec+' sec ; '+
-            formatDistance(allStepTotalDistance)+')');
+        gpxMotionView.summaryText = 'Ready to play !!! ('+minutes+' min '+remsec+' sec ; '+
+                                    formatDistance(allStepTotalDistance)+')'
+        $('div#summary').text(gpxMotionView.summaryText);
         ready = true;
     }
 
@@ -1089,6 +1093,7 @@
                 e.preventDefault();
                 if (ready){
                     reset();
+                    $('div#summary').text(gpxMotionView.summaryText);
                 }
             }
             if (kc === 71){
