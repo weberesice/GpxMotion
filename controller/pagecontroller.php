@@ -328,6 +328,40 @@ class PageController extends Controller {
     }
 
     /**
+     * Handle preview
+     *
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function preview($gpxContent) {
+        $dbconnection = \OC::$server->getDatabaseConnection();
+        error_log('plop ');
+        error_log('plop '.$gpxContent);
+
+        // PARAMS to send to template
+
+        require_once('tileservers.php');
+        $params = [
+            'basetileservers'=>$baseTileServers,
+            'tileservers'=>Array(),
+            'overlayservers'=>Array(),
+            'publicgpx'=>$gpxContent,
+            'token'=>'',
+            'gpxmotion_version'=>$this->appVersion
+        ];
+        $response = new TemplateResponse('gpxmotion', 'view', $params);
+        $csp = new ContentSecurityPolicy();
+        $csp->addAllowedImageDomain('*')
+            ->addAllowedMediaDomain('*')
+            ->addAllowedChildSrcDomain('*')
+            ->addAllowedObjectDomain('*')
+            ->addAllowedScriptDomain('*')
+            ->addAllowedConnectDomain('*');
+        $response->setContentSecurityPolicy($csp);
+        return $response;
+    }
+
+    /**
      * @NoAdminRequired
      */
     public function savegpx($path, $content) {

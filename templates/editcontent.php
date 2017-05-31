@@ -32,7 +32,12 @@
     </div>
     <div style="clear:both"></div>
     <button id="saveButton"><i class="fa fa-save"></i> <?php p($l->t('Choose directory and save'));?></button>
-    <button id="previewButton"><i class="fa fa-caret-square-o-right"></i> <?php p($l->t('Preview current animation'));?></button>
+    <form method="post" action="" id="previewform" target="_blank">
+        <input type="text" name="gpxContent" style="display:none;"/>
+        <button id="previewButton">
+            <i class="fa fa-caret-square-o-right"></i> <?php p($l->t('Preview current animation'));?>
+        </button>
+    </form>
     <div style="clear:both"></div>
     <hr/>
     <button id="clearButton"><i class="fa fa-bomb"></i> <?php p($l->t('Clear animation steps'));?></button>

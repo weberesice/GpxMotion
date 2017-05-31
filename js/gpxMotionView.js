@@ -881,7 +881,7 @@
         //$('#summary').html('<p><table id="pinSummaryTable">'+pinSummaryContent+'</table><br/><table id="lineSummaryTable">'+lineSummaryContent+'</table></p>');
 
         // stop loading animation
-        $('span.fa-spinner').parent().parent().prop("disabled",false);
+        $('span.fa-spinner').parent().parent().prop('disabled', false);
         $('span.fa-spinner').removeClass('fa-spinner fa-pulse').addClass('fa-play-circle-o');
 
         var totsec = Math.floor(totalTime/1000);
@@ -961,9 +961,8 @@
     function main(path=''){
         clearAll();
         var req;
-        var token = getUrlParameter('token');
-        // public file
-        if (token) {
+        // public file or preview
+        if (isPublicPage()) {
             var gpxtxt = $('#publicgpx').html();
             gpxtxt = $('<div/>').html(gpxtxt).text();
             var xml = {
