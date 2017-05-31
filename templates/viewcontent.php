@@ -26,5 +26,11 @@ foreach($_['basetileservers'] as $ts){
 }
 echo '</ul>'."\n";
 ?>
-<div id="map"></div>
 
+<div id="linkdialog" style="display:none;" title="Public link">
+    <label id="linklabel" for="linkinput"></label>
+    <br/>
+    <input id="linkinput" type="text"></input>
+</div>
+
+<div id="map"></div>

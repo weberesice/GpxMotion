@@ -24,6 +24,7 @@ return [
         ['name' => 'page#publicview', 'url' => '/publicview', 'verb' => 'GET'],
         ['name' => 'page#getgpx', 'url' => '/getgpx', 'verb' => 'POST'],
         ['name' => 'page#savegpx', 'url' => '/savegpx', 'verb' => 'POST'],
+        ['name' => 'page#isFileShareable', 'url' => '/isFileShareable', 'verb' => 'POST'],
         ['name' => 'utils#addTileServer', 'url' => '/addTileServer', 'verb' => 'POST'],
         ['name' => 'utils#deleteTileServer', 'url' => '/deleteTileServer', 'verb' => 'POST'],
         ['name' => 'utils#getOptionsValues', 'url' => '/getOptionsValues', 'verb' => 'POST'],

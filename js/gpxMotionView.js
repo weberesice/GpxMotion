@@ -4,7 +4,8 @@
     var gpxMotionView = {
         map: null,
         vehicule: null,
-        currentAjax: null
+        currentAjax: null,
+        currentFilePath: ''
     }
 
     var border = true;
@@ -439,6 +440,71 @@
         //////// BUTTONS
 
         if (!isPublicPage()) {
+            gpxMotionView.shareButton = L.easyButton({
+                position: 'bottomright',
+                states: [{
+                    stateName: 'prev',
+                    icon:      'fa-share-alt',          // and define its properties
+                    title:     'Share file', // like its title
+                    onClick: function(btn, map) {  // and its callback
+                        var title = t('gpxmotion', 'Public link to') + ' motion file : ' + gpxMotionView.currentFilePath;
+                        var ajaxurl = OC.generateUrl('/apps/gpxmotion/isFileShareable');
+                        var req = {
+                            trackpath: gpxMotionView.currentFilePath
+                        };
+                        var filename;
+                        $.ajax({
+                            type: 'POST',
+                            url: ajaxurl,
+                            data: req,
+                            async: true
+                        }).done(function (response) {
+                            var isShareable = response.response;
+                            var token = response.token;
+                            var path = response.path;
+                            var filename = response.filename;
+                            var txt, url, urlparams;
+
+                            if (isShareable) {
+                                txt = '<i class="fa fa-check-circle" style="color:green;" aria-hidden="true"></i> ';
+                                url = OC.generateUrl('/apps/gpxmotion/publicview?');
+                                urlparams = {token: token};
+                                if (path && filename) {
+                                    urlparams.path = path;
+                                    urlparams.filename = filename;
+                                }
+                                url = url + $.param(urlparams);
+                                url = window.location.origin + url;
+                            }
+                            else{
+                                txt = '<i class="fa fa-times-circle" style="color:red;" aria-hidden="true"></i> ';
+                                txt = txt + t('gpxmotion', 'This public link will work only if "{title}" or one of its parent folder is shared in "files" app by public link without password', {title: name});
+                            }
+
+                            if (url !== '') {
+                                //for (optionName in optionValues) {
+                                //    url = url + '&' + optionName + '=' + optionValues[optionName];
+                                //}
+                                $('#linkinput').val(url);
+                            }
+                            else {
+                                $('#linkinput').val('');
+                            }
+
+                            // fill the fields, show the dialog
+                            $('#linklabel').html(txt);
+                            $('#linkdialog').dialog({
+                                title: title,
+                                closeText: 'show',
+                                width: 400
+                            });
+                            $('#linkinput').select();
+                        });
+                    }
+                }]
+            });
+            gpxMotionView.shareButton.addTo(gpxMotionView.map);
+
             gpxMotionView.loadButton = L.easyButton({
                 position: 'bottomright',
                 states: [{
@@ -448,7 +514,6 @@
                     onClick: function(btn, map) {  // and its callback
                         if (gpxMotionView.currentAjax !== null) {
                             gpxMotionView.currentAjax.abort();
-                            hideLoadingAnimation();
                         }
                         OC.dialogs.filepicker(
                             t('gpxmotion', 'Load file (gpx)'),
@@ -922,6 +987,7 @@
                 document.title = 'GpxMotion - ' + basename(path);
                 window.history.pushState({'html': '', 'pageTitle': ''},'', 'view?path='+encodeURIComponent(path));
             }
+            gpxMotionView.currentFilePath = req.path;
             var url = OC.generateUrl('/apps/gpxmotion/getgpx');
             $('div#summary').html(
                 '<div id="slider">'+
@@ -932,7 +998,7 @@
                 '</div>'
             );
 
-            $.ajax({
+            gpxMotionView.currentAjax = $.ajax({
                 type: 'POST',
                 async: true,
                 url: url,

@@ -1,5 +1,6 @@
 <?php
 script('gpxmotion', 'leaflet');
+script('gpxmotion', 'jquery-ui.min');
 script('gpxmotion', 'togeojson');
 script('gpxmotion', 'L.Control.MousePosition');
 script('gpxmotion', 'ActiveLayers');
@@ -9,6 +10,7 @@ script('gpxmotion', 'easy-button');
 script('gpxmotion', 'gpxMotionView');
 
 style('gpxmotion', 'leaflet');
+style('gpxmotion', 'jquery-ui.min');
 style('gpxmotion', 'L.Control.MousePosition');
 style('gpxmotion', 'leaflet-sidebar');
 style('gpxmotion', 'font-awesome.min');

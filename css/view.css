@@ -144,6 +144,12 @@ body { margin: 0; }
     margin-top: auto;
     margin-bottom: auto;
 }
-.leaflet-control-layers-selector {
+.leaflet-control-layers-selector, button.ui-button {
     min-height: 0px;
+}
+.ui-dialog{
+    z-index: 2001 !important;
+}
+#linkinput {
+    width: 98%;
 }

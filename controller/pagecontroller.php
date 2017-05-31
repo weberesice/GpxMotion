@@ -181,6 +181,8 @@ class PageController extends Controller {
 		require_once('tileservers.php');
         $params = [
             'username'=>$this->userId,
+			'publicgpx'=>'',
+			'token'=>'',
 			'basetileservers'=>$baseTileServers,
 			'tileservers'=>$tss,
 			'overlayservers'=>$oss,
@@ -401,6 +403,93 @@ class PageController extends Controller {
         }
         $req->closeCursor();
         return $tss;
+    }
+
+    /**
+     * @NoAdminRequired
+     */
+    public function isFileShareable($trackpath) {
+        $uf = \OC::$server->getUserFolder($this->userId);
+        $isIt = false;
+
+        if ($uf->nodeExists($trackpath)){
+            $thefile = $uf->get($trackpath);
+            $publinkParameters = $this->getPublinkParameters($thefile, $this->userId);
+            if ($publinkParameters !== null){
+                $isIt = true;
+            }
+            else{
+                $publinkParameters = Array('token'=>'','path'=>'','filename'=>'');
+            }
+        }
+
+        $response = new DataResponse(
+            [
+                'response'=>$isIt,
+                'token'=>$publinkParameters['token'],
+                'path'=>$publinkParameters['path'],
+                'filename'=>$publinkParameters['filename']
+            ]
+        );
+        $csp = new ContentSecurityPolicy();
+        $csp->addAllowedImageDomain('*')
+            ->addAllowedMediaDomain('*')
+            ->addAllowedConnectDomain('*');
+        $response->setContentSecurityPolicy($csp);
+        return $response;
+    }
+
+    /**
+     * @return null if the file is not shared or inside a shared folder
+     */
+    private function getPublinkParameters($file, $username){
+        $uf = \OC::$server->getUserFolder($username);
+        $paramArray = null;
+
+        // CHECK if file is shared
+        $shares = $this->shareManager->getSharesBy($username,
+            \OCP\Share::SHARE_TYPE_LINK, $file, false, 1, 0);
+        if (count($shares) > 0){
+            foreach($shares as $share){
+                if ($share->getPassword() === null){
+                    $paramArray = Array('token'=>$share->getToken(), 'path'=>'', 'filename'=>'');
+                    break;
+                }
+            }
+        }
+
+        if ($paramArray === null){
+            // CHECK if file is inside a shared folder
+            $tmpfolder = $file->getParent();
+            while ($tmpfolder->getPath() !== $uf->getPath() and
+                $tmpfolder->getPath() !== "/" and $paramArray === null){
+                $shares_folder = $this->shareManager->getSharesBy($username,
+                    \OCP\Share::SHARE_TYPE_LINK, $tmpfolder, false, 1, 0);
+                if (count($shares_folder) > 0){
+                    foreach($shares_folder as $share){
+                        if ($share->getPassword() === null){
+                            // one folder above the file is shared without passwd
+                            $token = $share->getToken();
+                            $subpath = str_replace($tmpfolder->getPath(), '', $file->getPath());
+                            $filename = basename($subpath);
+                            $subpath = dirname($subpath);
+                            if ($subpath !== '/'){
+                                $subpath = rtrim($subpath, '/');
+                            }
+                            $paramArray = Array(
+                                'token'=>$token,
+                                'path'=>$subpath,
+                                'filename'=>$filename
+                            );
+                            break;
+                        }
+                    }
+                }
+                $tmpfolder = $tmpfolder->getParent();
+            }
+        }
+
+        return $paramArray;
     }
 
 }
