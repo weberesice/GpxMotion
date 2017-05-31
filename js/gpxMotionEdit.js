@@ -715,7 +715,6 @@
         $('#previewform').attr('action', OC.generateUrl('/apps/gpxmotion/preview'));
         $('#previewButton').click(function() {
             $('#previewform input[name=gpxContent]').val(generateGpx());
-            console.log($('#previewform input[name=gpxContent]').val());
             $('#previewform').submit();
         });
     });

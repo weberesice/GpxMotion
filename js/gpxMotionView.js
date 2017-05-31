@@ -968,6 +968,8 @@
             var xml = {
                 gpx: gpxtxt
             };
+            $('span.fa-play-circle-o').removeClass('fa-play-circle-o').addClass('fa-spinner').addClass('fa-pulse');
+            $('span.fa-spinner').parent().parent().prop('disabled', true);
             processXml(xml);
         }
         // normal file
