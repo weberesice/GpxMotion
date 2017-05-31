@@ -14,7 +14,7 @@ style('gpxmotion', 'leaflet-sidebar');
 style('gpxmotion', 'font-awesome.min');
 style('gpxmotion', 'easy-button');
 style('gpxmotion', 'Leaflet.Dialog');
-style('gpxmotion', 'style');
+style('gpxmotion', 'view');
 
 ?>
 

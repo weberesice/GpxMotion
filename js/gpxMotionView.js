@@ -4,6 +4,7 @@
     var gpxMotionView = {
         map: null,
         vehicule: null,
+        currentAjax: null
     }
 
     var border = true;
@@ -19,6 +20,14 @@
     var beginMarkers = [];
     var globalBounds;
     var ready = false;
+
+    function basename(str) {
+        var base = new String(str).substring(str.lastIndexOf('/') + 1);
+        if (base.lastIndexOf(".") !== -1) {
+            base = base.substring(0, base.lastIndexOf("."));
+        }
+        return base;
+    }
 
     function Timer(callback, delay) {
         var timerId, start, remaining = delay;
@@ -331,19 +340,20 @@
 
         L.control.mousePosition().addTo(gpxMotionView.map);
         L.control.scale({metric: true, imperial: true, position:'topleft'}).addTo(gpxMotionView.map);
-        var legendText = '<h3>Line colors</h3><div class="legendVehicules">'+
-            '<div class="dialogicon" icon="plane">  </div><b style="color:blue;">  plane</b>'+
-            '<div class="dialogicon" icon="bike"> </div>  <b style="color:green;"> bike</b>'+
-            '<div class="dialogicon" icon="hike"> </div>  <b style="color:yellow;">foot</b>'+
-            '<div class="dialogicon" icon="car">  </div>  <b style="color:purple;">car</b>'+
-            '<div class="dialogicon" icon="bus">  </div>  <b style="color:purple;">bus</b>'+
-            '<div class="dialogicon" icon="train"></div>  <b style="color:red;">   train</b>'+
-            '</div>'+
-            '<h3>Pins</h3>'+
-            '<div class="legendPins">'+
-            '<div icon="pin"></div><b>start</b>'+
-            '<div icon="pinblue"></div><b>step</b>'+
-            '<div icon="pinred"></div><b>end</b>'+
+        var legendText =
+            '<h3>Line colors</h3><div class="legendVehicules">' +
+            '<div class="dialogicon" icon="plane">  </div><b style="color:blue;">  plane</b>' +
+            '<div class="dialogicon" icon="bike"> </div>  <b style="color:green;"> bike</b>' +
+            '<div class="dialogicon" icon="hike"> </div>  <b style="color:yellow;">foot</b>' +
+            '<div class="dialogicon" icon="car">  </div>  <b style="color:purple;">car</b>' +
+            '<div class="dialogicon" icon="bus">  </div>  <b style="color:purple;">bus</b>' +
+            '<div class="dialogicon" icon="train"></div>  <b style="color:red;">   train</b>' +
+            '</div>' +
+            '<h3>Pins</h3>' +
+            '<div class="legendPins">' +
+            '<div icon="pin"></div><b>start</b>' +
+            '<div icon="pinblue"></div><b>step</b>' +
+            '<div icon="pinred"></div><b>end</b>' +
             '</div>';
         gpxMotionView.dialog = L.control.dialog({
             anchor: [110, 0],
@@ -366,118 +376,94 @@
             .setContent(summaryText)
             .addTo(gpxMotionView.map);
 
-        var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-        var osmAttribution = 'Map data &copy; 2013 <a href="http://openstreetmap'+
-            '.org">OpenStreetMap</a> contributors';
-        var osm = new L.TileLayer(osmUrl, {maxZoom: 18, attribution: osmAttribution});
+        ////////////////// TILE LAYERS
 
-        var osmfrUrl = 'https://a.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png';
-        var osmfr = new L.TileLayer(osmfrUrl,
-            {maxZoom: 20, attribution: osmAttribution});
-        var osmfr2 = new L.TileLayer(osmfrUrl,
-            {minZoom: 0, maxZoom: 13, attribution: osmAttribution});
+        // change meta to send referrer
+        // usefull for IGN tiles authentication !
+        $('meta[name=referrer]').attr('content', 'origin');
 
-        var openmapsurferUrl = 'http://openmapsurfer.uni-hd.de/tiles/roads/'+
-            'x={x}&y={y}&z={z}';
-        var openmapsurferAttribution = 'Imagery from <a href="http://giscience.uni'+
-            '-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; '+
-            'Map data &copy; <a href="http://www.openstreetmap.org/copyright">'+
-            'OpenStreetMap</a>';
-        var openmapsurfer = new L.TileLayer(openmapsurferUrl,
-            {maxZoom: 18, attribution: openmapsurferAttribution});
+        var layer = getUrlParameter('layer');
+        var default_layer = 'OpenStreetMap';
+        if (typeof layer !== 'undefined') {
+            default_layer = decodeURIComponent(layer);
+        }
 
-        var transportUrl = 'http://a.tile2.opencyclemap.org/transport/{z}/{x}/{y}.'+
-            'png';
-        var transport = new L.TileLayer(transportUrl,
-            {maxZoom: 18, attribution: osmAttribution});
+        var baseLayers = {};
 
-        var pisteUrl = 'http://tiles.openpistemap.org/nocontours/{z}/{x}/{y}.png';
-        var piste = new L.TileLayer(pisteUrl,
-            {maxZoom: 18, attribution: osmAttribution});
+        // add base layers
+        $('#basetileservers li[type=tile]').each(function() {
+            var sname = $(this).attr('name');
+            var surl = $(this).attr('url');
+            var minz = parseInt($(this).attr('minzoom'));
+            var maxz = parseInt($(this).attr('maxzoom'));
+            var sattrib = $(this).attr('attribution');
+            baseLayers[sname] = new L.TileLayer(surl, {minZoom: minz, maxZoom: maxz, attribution: sattrib});
+        });
+        // add custom layers
+        $('#tileserverlist li').each(function() {
+            var sname = $(this).attr('name');
+            var surl = $(this).attr('title');
+            baseLayers[sname] = new L.TileLayer(surl,
+                    {maxZoom: 18, attribution: 'custom tile server'});
+        });
+        gpxMotionView.baseLayers = baseLayers;
 
-        var hikebikeUrl = 'http://toolserver.org/tiles/hikebike/{z}/{x}/{y}.png';
-        var hikebike = new L.TileLayer(hikebikeUrl,
-            {maxZoom: 18, attribution: osmAttribution});
+        var baseOverlays = {};
 
-        var osmCycleUrl = 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png';
-        var osmCycleAttrib = '&copy; <a href="http://www.opencyclemap.org">'+
-            'OpenCycleMap</a>, &copy; <a href="http://www.openstreetmap.org/copyright">'+
-            'OpenStreetMap</a>';
-        var osmCycle = new L.TileLayer(osmCycleUrl,
-            {maxZoom: 18, attribution: osmCycleAttrib});
+        // add base overlays
+        $('#basetileservers li[type=overlay]').each(function() {
+            var sname = $(this).attr('name');
+            var surl = $(this).attr('url');
+            var minz = parseInt($(this).attr('minzoom'));
+            var maxz = parseInt($(this).attr('maxzoom'));
+            var sattrib = $(this).attr('attribution');
+            baseOverlays[sname] = new L.TileLayer(surl, {minZoom: minz, maxZoom: maxz, attribution: sattrib});
+        });
+        // add custom overlays
+        $('#overlayserverlist li').each(function() {
+            var sname = $(this).attr('name');
+            var surl = $(this).attr('title');
+            baseOverlays[sname] = new L.TileLayer(surl,
+                    {maxZoom: 18, attribution: 'custom overlay server'});
+        });
+        gpxMotionView.overlayLayers = baseOverlays;
 
-        var darkUrl = 'http://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png';
-        var darkAttrib = '&copy; Map tiles by CartoDB, under CC BY 3.0. Data by'+
-            ' OpenStreetMap, under ODbL.';
-        var dark = new L.TileLayer(darkUrl, {maxZoom: 18, attribution: darkAttrib});
-
-        var esriTopoUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World'+
-            '_Topo_Map/MapServer/tile/{z}/{y}/{x}';
-        var esriTopoAttrib = 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, '+
-            'TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ord'+
-            'nance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User'+
-            ' Community';
-        var esriTopo = new L.TileLayer(esriTopoUrl,
-            {maxZoom: 18, attribution: esriTopoAttrib});
-
-        var esriAerialUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services'+
-            '/World_Imagery/MapServer/tile/{z}/{y}/{x}';
-        var esriAerialAttrib = 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, '+
-            'USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the'+
-            ' GIS User Community';
-        var esriAerial = new L.TileLayer(esriAerialUrl,
-            {maxZoom: 18, attribution: esriAerialAttrib});
-
-        var tonerUrl = 'http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.jpg';
-        var stamenAttribution = '<a href="http://leafletjs.com" title="A JS library'+
-            ' for interactive maps">Leaflet</a> | © Map tiles by <a href="http://stamen'+
-            '.com">Stamen Design</a>, under <a href="http://creativecommons.org/license'+
-            's/by/3.0">CC BY 3.0</a>, Data by <a href="http://openstreetmap.org">OpenSt'+
-            'reetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0"'+
-            '>CC BY SA</a>.';
-        var toner = new L.TileLayer(tonerUrl,
-            {maxZoom: 18, attribution: stamenAttribution});
-
-        var watercolorUrl = 'http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg';
-        var watercolor = new L.TileLayer(watercolorUrl,
-            {maxZoom: 18, attribution: stamenAttribution});
-
-        var routeUrl = 'http://{s}.tile.openstreetmap.fr/route500/{z}/{x}/{y}.png';
-        var routeAttrib = '&copy, Tiles © <a href="http://www.openstreetmap.fr">O'+
-            'penStreetMap France</a>';
-        var route = new L.TileLayer(routeUrl,
-            {minZoom: 1, maxZoom: 20, attribution: routeAttrib});
-
-        var baseLayers = {
-            'OpenStreetMap': osm,
-            'OpenCycleMap': osmCycle,
-            'OpenMapSurfer Roads': openmapsurfer,
-            'Hike & bike': hikebike,
-            'OSM Transport': transport,
-            'ESRI Aerial': esriAerial,
-            'ESRI Topo with relief': esriTopo,
-            'Dark' : dark,
-            'Toner' : toner,
-            'Watercolor' : watercolor,
-            'OpenStreetMap France': osmfr
-        };
-
-        var baseOverlays = {
-            'OsmFr Route500': route,
-            'OpenPisteMap Relief':
-                L.tileLayer('http://tiles2.openpistemap.org/landshaded/{z}/{x}/{y}.png',
-                    {
-                        attribution: '&copy, Tiles © <a href="http://www.o'+
-                            'penstreetmap.fr">OpenStreetMap France</a>',
-                        minZoom: 1,
-                        maxZoom: 15
-                    }
-                ),
-            'OpenPisteMap pistes' : piste
-        };
-        var default_layer = 'OpenStreetMap France';
+        if (! baseLayers.hasOwnProperty(default_layer)) {
+            default_layer = 'OpenStreetMap';
+        }
         gpxMotionView.map.addLayer(baseLayers[default_layer]);
-        L.control.layers(baseLayers, baseOverlays).addTo(gpxMotionView.map);
+
+        gpxMotionView.activeLayers = L.control.activeLayers(baseLayers, baseOverlays);
+        gpxMotionView.activeLayers.addTo(gpxMotionView.map);
+
+        //////// BUTTONS
+
+        if (!isPublicPage()) {
+            gpxMotionView.loadButton = L.easyButton({
+                position: 'bottomright',
+                states: [{
+                    stateName: 'prev',   // name the state
+                    icon:      'fa-file-o',          // and define its properties
+                    title:     'Load file', // like its title
+                    onClick: function(btn, map) {  // and its callback
+                        if (gpxMotionView.currentAjax !== null) {
+                            gpxMotionView.currentAjax.abort();
+                            hideLoadingAnimation();
+                        }
+                        OC.dialogs.filepicker(
+                            t('gpxmotion', 'Load file (gpx)'),
+                            function(targetPath) {
+                                main(targetPath);
+                            },
+                            false,
+                            null,
+                            true
+                        );
+                    }
+                }]
+            });
+            gpxMotionView.loadButton.addTo(gpxMotionView.map);
+        }
 
         var nextButton = L.easyButton({
             position: 'bottomright',
@@ -878,8 +864,39 @@
         }
     }
 
+    function clearMap(m) {
+        for(i in m._layers) {
+            if (m._layers[i] instanceof L.Marker || m._layers[i] instanceof L.Polyline) {
+                try {
+                    m.removeLayer(m._layers[i]);
+                }
+                catch(e) {
+                    console.log("problem with " + e + m._layers[i]);
+                }
+            }
+        }
+    }
+
+    function clearAll() {
+        clearMap(gpxMotionView.map);
+        allStepTotalDistance = 0;
+        currentTimer = null;
+        params;
+        plan;
+        currentMarkerIndex = 0;
+        markers = [];
+        polylines = [];
+        drawPolylines = [];
+        beginMarkers = [];
+        globalBounds = null;
+        ready = false;
+        gpxMotionView.map.setView([0, 0], 2);
+    }
+
     // load gpx file with plan and build our markers, pins...
-    function main(){
+    function main(path=''){
+        clearAll();
+        var req;
         var token = getUrlParameter('token');
         // public file
         if (token) {
@@ -892,17 +909,28 @@
         }
         // normal file
         else {
-            var pathGet = getUrlParameter('path');
-            var req = {
-                path: pathGet
+            if (path === '') {
+                var pathGet = getUrlParameter('path');
+                req = {
+                    path: pathGet
+                }
+            }
+            else {
+                req = {
+                    path: path
+                }
+                document.title = 'GpxMotion - ' + basename(path);
+                window.history.pushState({'html': '', 'pageTitle': ''},'', 'view?path='+encodeURIComponent(path));
             }
             var url = OC.generateUrl('/apps/gpxmotion/getgpx');
-            $('div#summary').html('<div id="slider">'+
+            $('div#summary').html(
+                '<div id="slider">'+
                 '<div id="sliderbar">'+
-                    '</div>'+
-                    '<div id="slidertext">'+
-                    '</div>'+
-                    '</div>');
+                '</div>'+
+                '<div id="slidertext">'+
+                '</div>'+
+                '</div>'
+            );
 
             $.ajax({
                 type: 'POST',
@@ -937,6 +965,9 @@
         }
     }
 
+    function isPublicPage() {
+        return ($('#publicgpx').html() !== '');
+    }
     $(document).ready(function() {
         load_map();
         $('#global').click(function() {

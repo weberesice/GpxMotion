@@ -144,3 +144,6 @@ body { margin: 0; }
     margin-top: auto;
     margin-bottom: auto;
 }
+.leaflet-control-layers-selector {
+    min-height: 0px;
+}
