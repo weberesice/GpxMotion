@@ -3,7 +3,7 @@
  <metadata>
   <time>2016-09-07T09:16:46Z</time>
   <desc>
-"elementUnit": "track",
+{"elementUnit": "track",
 "plan": [
 {
     "nbElements": 2,
@@ -57,7 +57,7 @@
     "beginPictureUrl": "",
     "beginDetailUrl": ""
 }
-]
+]}
   </desc>
  </metadata>
  <trk>

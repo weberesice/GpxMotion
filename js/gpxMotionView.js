@@ -807,11 +807,11 @@
                 }
             }
             lastPopup = '<h2 class="popupTitle">Step '+(iplan+1)+' (final) : '+beginTitle+'</h2>';
-            if (text !== null){
+            if (text){
                 lastPopup = lastPopup + '<p>'+text+'</p>';
             }
-            if (photoUrl !== null){
-                if (linkDest !== null){
+            if (photoUrl){
+                if (linkDest){
                     lastPopup = lastPopup + '<a href="' + linkDest +
                         '" target="_blank" title="Click to know more about \''+
                         beginTitle+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
@@ -820,7 +820,7 @@
                     lastPopup = lastPopup + '<img class="popupPhoto" src="'+photoUrl+'"/>';
                 }
             }
-            if (linkDest !== null){
+            if (linkDest){
                 lastPopup = lastPopup+ '<a href="' + linkDest + '" target="_blank">More about "'+beginTitle+'"</a>';
             }
             lastMarker.bindPopup(lastPopup);
