@@ -354,6 +354,19 @@
     }
 
     function clearSteps() {
+        $('div.step').each(function() {
+            $(this).fadeOut('slow', function() {
+                $(this).remove();
+            });
+        });
+    }
+
+    function insertStepBefore(elem) {
+        addStep(1, 'plane', 5000, '', '', '', '', '', '', '', '', false, elem);
+    }
+
+    function insertStepAfter(elem) {
+        addStep(1, 'plane', 5000, '', '', '', '', '', '', '', '', true, elem);
     }
 
     function clearTrack() {
@@ -420,7 +433,9 @@
                         p.beginTitle,
                         p.beginDescription,
                         p.beginPictureUrl,
-                        p.beginDetailUrl
+                        p.beginDetailUrl,
+                        false,
+                        $('#addStepButton')
                 );
             }
         }
@@ -429,15 +444,21 @@
     function addStep(nbElements=1,
                      vehicule="plane",
                      time=5000,
-                     title="",
+                     title='',
                      description='',
                      pictureUrl='',
                      detailUrl='',
                      beginTitle='',
                      beginDescription='',
                      beginPictureUrl='',
-                     beginDetailUrl=''
+                     beginDetailUrl='',
+                     after=false,
+                     what=null
     ){
+        var insertNextTo = what;
+        if (!what) {
+            insertNextTo = $('#addStepButton');
+        }
         var sel, v;
         var values = {
             nbElements: nbElements,
@@ -491,8 +512,15 @@
 
         divtxt = divtxt + '<button class="removeStep"><i class="fa fa-trash" aria-hidden="true"></i> Remove step</button>';
         divtxt = divtxt + '<button class="zoom"><i class="fa fa-search" aria-hidden="true"></i> Zoom on step</button>';
+        divtxt = divtxt + '<button class="insertStepBefore"><i class="fa fa-arrow-up" aria-hidden="true"></i> Insert step before</button>';
+        divtxt = divtxt + '<button class="insertStepAfter"><i class="fa fa-arrow-down" aria-hidden="true"></i> Insert step after</button>';
         divtxt = divtxt + '</div>';
-        $('#addStepButton').before($(divtxt).fadeIn('slow').css('display', 'grid'));
+        if (after) {
+            insertNextTo.after($(divtxt).fadeIn('slow').css('display', 'grid'));
+        }
+        else {
+            insertNextTo.before($(divtxt).fadeIn('slow').css('display', 'grid'));
+        }
     }
 
     function saveAction(targetPath) {
@@ -643,6 +671,10 @@
             addStep();
         });
 
+        $('#clearButton').click(function(e) {
+            clearSteps();
+        });
+
         $('body').on('click', '.removeStep', function(e) {
             var p = $(this).parent();
             p.fadeOut('slow', function() {
@@ -665,6 +697,14 @@
                     false, "httpd/unix-directory", true
                 );
             }
+        });
+
+        $('body').on('click', '.insertStepBefore', function(e) {
+            insertStepBefore($(this).parent());
+        });
+
+        $('body').on('click', '.insertStepAfter', function(e) {
+            insertStepAfter($(this).parent());
         });
 
     });

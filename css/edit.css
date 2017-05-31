@@ -917,7 +917,7 @@ div.step {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
-div.step input{
+div.step input, div.step textarea{
     width: 100%;
 }
 div.step .zoom i{
@@ -925,6 +925,9 @@ div.step .zoom i{
 }
 div.step .removeStep i{
     color: red;
+}
+div.step .insertStepAfter i, div.step .insertStepBefore i{
+    color: green;
 }
 /*div.step .removeStep{
     grid-column: 1/3;
