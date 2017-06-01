@@ -31,6 +31,10 @@
         return base;
     }
 
+    function endsWith(str, suffix) {
+        return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    }
+
     function Timer(callback, delay) {
         var timerId, start, remaining = delay;
 
@@ -441,14 +445,29 @@
 
         //////// BUTTONS
 
+        if (isPreviewPage()) {
+            gpxMotionView.closeButton = L.easyButton({
+                position: 'topright',
+                states: [{
+                    stateName: 'prev',
+                    icon:      'fa-close',
+                    title:     'Close preview',
+                    onClick: function(btn, map) {
+                        window.close();
+                    }
+                }]
+            });
+            gpxMotionView.closeButton.addTo(gpxMotionView.map);
+        }
+
         if (!isPublicPage()) {
             gpxMotionView.shareButton = L.easyButton({
                 position: 'bottomright',
                 states: [{
                     stateName: 'prev',
-                    icon:      'fa-share-alt',          // and define its properties
-                    title:     'Share file', // like its title
-                    onClick: function(btn, map) {  // and its callback
+                    icon:      'fa-share-alt',
+                    title:     'Share file',
+                    onClick: function(btn, map) {
                         var title = t('gpxmotion', 'Public link to') + ' motion file : ' + gpxMotionView.currentFilePath;
                         var ajaxurl = OC.generateUrl('/apps/gpxmotion/isFileShareable');
                         var req = {
@@ -1045,6 +1064,11 @@
     function isPublicPage() {
         return ($('#publicgpx').html() !== '');
     }
+
+    function isPreviewPage() {
+        return (endsWith(window.location.href, '/preview'));
+    }
+
     $(document).ready(function() {
         load_map();
         $('#global').click(function() {
