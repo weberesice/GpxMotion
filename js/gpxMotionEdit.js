@@ -11,6 +11,18 @@
         currentGpxDom: null
     }
 
+    var normalStyle = {
+        weight: 6,
+        opacity: 1,
+        color: 'blue'
+    };
+
+    var zoomStyle = {
+        weight: 6,
+        opacity: 1,
+        color: 'red'
+    };
+
     function endsWith(str, suffix) {
         return str.indexOf(suffix, str.length - suffix.length) !== -1;
     }
@@ -357,6 +369,7 @@
         $('div.step').each(function() {
             $(this).fadeOut('slow', function() {
                 $(this).remove();
+                updateStepNumbers();
             });
         });
     }
@@ -399,7 +412,7 @@
                     latlngs.push([lat, lon]);
                 });
             });
-            l = L.polyline(latlngs);
+            l = L.polyline(latlngs, normalStyle);
             gpxmotion.featureGroup.addLayer(l);
             gpxmotion.lineList.push(l);
         });
@@ -411,7 +424,7 @@
                 var lon = $(this).attr('lon');
                 latlngs.push([lat, lon]);
             });
-            l = L.polyline(latlngs);
+            l = L.polyline(latlngs, normalStyle);
             gpxmotion.featureGroup.addLayer(l);
             gpxmotion.lineList.push(l);
         });
@@ -479,6 +492,7 @@
             }
         }
         var divtxt = '<div class="step">';
+        divtxt = divtxt + '<h3 step=""></h3>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Number of elements') + ' :</label>';
         divtxt = divtxt + '<input role="nbelem" type="text" value="' + escapeHTML(values.nbElements) + '"></input>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Vehicule') + ' :</label>';
@@ -521,6 +535,15 @@
         else {
             insertNextTo.before($(divtxt).fadeIn('slow').css('display', 'grid'));
         }
+        updateStepNumbers();
+    }
+
+    function updateStepNumbers() {
+        var i = 1;
+        $('div.step').each(function() {
+            $(this).find('h3').text('Step ' + i).attr('step', i);
+            i++;
+        });
     }
 
     function saveAction(targetPath) {
@@ -634,6 +657,39 @@
         return JSON.stringify(json);
     }
 
+    function zoomOnStep(stepdiv) {
+        var stepnum = parseInt(stepdiv.find('h3').attr('step'));
+        var nbelems = parseInt(stepdiv.find('input[role=nbelem]').val());
+        var featgr = new L.featureGroup();
+        // get the first line we need
+        var i = 0;
+        $('div.step').each(function() {
+            if (stepnum > parseInt($(this).find('h3').attr('step'))) {
+                i = i + parseInt($(this).find('input[role=nbelem]').val());
+            }
+        });
+        var cpt = 0;
+        while (i < gpxmotion.lineList.length && cpt < nbelems) {
+            featgr.addLayer(gpxmotion.lineList[i]);
+            i++;
+            cpt++;
+        }
+        gpxmotion.map.fitBounds(featgr.getBounds(),
+            {animate: true, paddingTopLeft: [parseInt($('#sidebar').css('width')),0]}
+        );
+        //for (i = 0; i < gpxmotion.lineList.length; i++) {
+        //    gpxmotion.lineList[i].setStyle(normalStyle);
+        //}
+        gpxmotion.featureGroup.setStyle(normalStyle);
+        gpxmotion.featureGroup.eachLayer(function(l) {
+            l.unbindTooltip();
+        });
+        featgr.eachLayer(function(l) {
+            l.setStyle(zoomStyle);
+            l.bindTooltip('Step '+stepnum, {permanent: true});
+        });
+    }
+
     $(document).ready(function() {
         load_map();
 
@@ -679,6 +735,7 @@
             var p = $(this).parent();
             p.fadeOut('slow', function() {
                 p.remove();
+                updateStepNumbers();
             });
         });
 
@@ -705,6 +762,10 @@
 
         $('body').on('click', '.insertStepAfter', function(e) {
             insertStepAfter($(this).parent());
+        });
+
+        $('body').on('click', '.zoom', function(e) {
+            zoomOnStep($(this).parent());
         });
 
         $('#viewButton').click(function() {
