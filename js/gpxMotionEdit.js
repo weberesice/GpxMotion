@@ -511,7 +511,7 @@
         divtxt = divtxt + '<input role="time" type="text" value="' + escapeHTML(values.time) + '"></input>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Step title') + ' :</label>';
         divtxt = divtxt + '<input role="title" type="text" value="' + escapeHTML(values.title) + '"></input>';
-        divtxt = divtxt + '<p class="morebutton"><i class="fa fa-angle-double-down"></i> more</p>';
+        divtxt = divtxt + '<p class="morebutton"><i class="fa fa-angle-double-down"></i> <b>more</b></p>';
         divtxt = divtxt + '<div class="stepmore">';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Description') + ' :</label>';
         divtxt = divtxt + '<textarea role="description" value="' + escapeHTML(values.description) + '"/>';
@@ -782,10 +782,12 @@
             if (stepmore.is(':visible')) {
                 stepmore.slideUp('slow').css('display', 'grid');
                 $(this).find('i').removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
+                $(this).find('b').text('more');
             }
             else {
                 stepmore.slideDown('slow').css('display', 'grid');
                 $(this).find('i').removeClass('fa-angle-double-down').addClass('fa-angle-double-up');
+                $(this).find('b').text('less');
             }
         })
 

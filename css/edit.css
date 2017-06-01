@@ -907,6 +907,9 @@ label[for=clearbeforeload] {
     grid-column: 1;
     grid-row: 4;
 }
+#addStepButton {
+    width: 100%;
+}
 #addStepButton i {
     color: green;
 }
