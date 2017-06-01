@@ -918,6 +918,19 @@ div.step label{
     margin-top: auto;
     margin-bottom: auto;
 }
+.morebutton {
+    grid-column: 1/3;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+div.stepmore {
+    grid-column: 1/3;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    display: none;
+}
 div.step {
     border: 2px solid grey;
     border-radius: 5px;

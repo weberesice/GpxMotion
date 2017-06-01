@@ -511,6 +511,8 @@
         divtxt = divtxt + '<input role="time" type="text" value="' + escapeHTML(values.time) + '"></input>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Step title') + ' :</label>';
         divtxt = divtxt + '<input role="title" type="text" value="' + escapeHTML(values.title) + '"></input>';
+        divtxt = divtxt + '<p class="morebutton"><i class="fa fa-angle-double-down"></i> more</p>';
+        divtxt = divtxt + '<div class="stepmore">';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Description') + ' :</label>';
         divtxt = divtxt + '<textarea role="description" value="' + escapeHTML(values.description) + '"/>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Picture URL') + ' :</label>';
@@ -523,6 +525,7 @@
         divtxt = divtxt + '<input role="beginPictureUrl" type="text" value="' + escapeHTML(values.beginPictureUrl) + '"></input>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Begin detail URL') + ' :</label>';
         divtxt = divtxt + '<input role="beginDetailUrl" type="text" value="' + escapeHTML(values.beginDetailUrl) + '"></input>';
+        divtxt = divtxt + '</div>';
 
         divtxt = divtxt + '<button class="removeStep"><i class="fa fa-trash" aria-hidden="true"></i> Remove step</button>';
         divtxt = divtxt + '<button class="zoom"><i class="fa fa-search" aria-hidden="true"></i> Zoom on step</button>';
@@ -772,6 +775,19 @@
             var url = OC.generateUrl('apps/gpxmotion/view');
             window.open(url, '_blank');
         });
+
+        $('body').on('click', '.morebutton', function(e) {
+            var stepdiv = $(this).parent();
+            var stepmore = stepdiv.find('.stepmore');
+            if (stepmore.is(':visible')) {
+                stepmore.slideUp('slow').css('display', 'grid');
+                $(this).find('i').removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
+            }
+            else {
+                stepmore.slideDown('slow').css('display', 'grid');
+                $(this).find('i').removeClass('fa-angle-double-down').addClass('fa-angle-double-up');
+            }
+        })
 
         $('#previewform').attr('action', OC.generateUrl('/apps/gpxmotion/preview'));
         $('#previewButton').click(function() {
