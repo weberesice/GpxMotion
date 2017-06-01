@@ -920,6 +920,7 @@ div.step h3 {
 div.step label{
     margin-top: auto;
     margin-bottom: auto;
+    text-align: center;
 }
 .morebutton {
     grid-column: 1/3;
