@@ -91,8 +91,8 @@ echo '</ul>'."\n";
 <h1 class="sectiontitle"><?php p($l->t('Options')); ?></h1>
 <hr/>
 <div id="optiontop">
-    <input type="checkbox" id="clearstepsbeforeload" checked></input>
     <label for="clearstepsbeforeload"><?php p($l->t('Clear steps before loading'));?></label>
+    <input type="checkbox" id="clearstepsbeforeload" checked></input>
 </div>
 <hr/>
     <h3 class="sectiontitle"><?php p($l->t('Custom tile servers')); ?></h3>

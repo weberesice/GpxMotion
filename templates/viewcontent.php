@@ -8,6 +8,29 @@ echo '</p>'."\n";
 echo '<p id="gpxmotion_version" style="display:none">';
 p($_['gpxmotion_version']);
 echo '</p>'."\n";
+
+echo '<ul id="overlayserverlist" style="display:none">';
+foreach($_['overlayservers'] as $name=>$url){
+    echo '<li name="';
+    p($name);
+    echo '" title="';
+    p($url);
+    echo '">';
+    echo '</li>';
+}
+echo '</ul>'."\n";
+
+echo '<ul id="tileserverlist" style="display:none">';
+foreach($_['tileservers'] as $name=>$url){
+    echo '<li name="';
+    p($name);
+    echo '" title="';
+    p($url);
+    echo '">';
+    echo '</li>';
+}
+echo '</ul>'."\n";
+
 echo '<ul id="basetileservers" style="display:none">';
 foreach($_['basetileservers'] as $ts){
     echo '<li name="';

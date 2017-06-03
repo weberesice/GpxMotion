@@ -865,7 +865,7 @@ div#ho button {
 }
 #optiontop {
     display: grid;
-    grid-template: 1fr 1fr 1fr 1fr / 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     text-align: center;
 }
 #optiontop label, #optiontop input[type=checkbox] {
@@ -874,38 +874,6 @@ div#ho button {
 }
 #optiontop input[type=checkbox] {
     margin-right: auto;
-}
-label[for=markerstyleselect] {
-    grid-column: 1;
-    grid-row: 1;
-}
-#markerstyleselect {
-    grid-column: 2;
-    grid-row: 1;
-}
-label[for=tooltipstyleselect] {
-    grid-column: 1;
-    grid-row: 2;
-}
-#tooltipstyleselect {
-    grid-column: 2;
-    grid-row: 2;
-}
-#symboloverwrite {
-    grid-column: 2;
-    grid-row: 3;
-}
-label[for=symboloverwrite] {
-    grid-column: 1;
-    grid-row: 3;
-}
-#clearbeforeload {
-    grid-column: 2;
-    grid-row: 4;
-}
-label[for=clearbeforeload] {
-    grid-column: 1;
-    grid-row: 4;
 }
 #addStepButton {
     width: 100%;
@@ -928,6 +896,8 @@ div.step label{
     width: 100%;
     text-align: center;
     cursor: pointer;
+    background-color: #F7F7F7;
+    border: solid 1px lightgrey;
 }
 div.stepmore {
     grid-column: 1/3;
