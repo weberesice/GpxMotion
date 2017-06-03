@@ -930,6 +930,8 @@
 
     // preload tiles needed when a polyline is displayed
     function preloadTiles(poly){
+        var url, img, x, y;
+        var currentTileUrl = gpxMotionView.activeLayers.getActiveBaseLayer().layer._url.replace('{s}', 'a');
         var bounds = poly.getBounds().pad(0.2);
         var zoom = gpxMotionView.map.getBoundsZoom(bounds);
         var east = bounds.getEast();
@@ -942,12 +944,16 @@
         var dataNorth = lat2tile(north, zoom);
         var dataSouth = lat2tile(south, zoom);
 
-        for(var y = dataNorth; y < dataSouth + 1; y++) {
-            for(var x = dataWest; x < dataEast + 1; x++) {
-                var url = 'https://a.tile.openstreetmap.fr/osmfr/' + zoom + '/' + x + '/' + y + '.png';
-                var img=new Image();
-                img.src=url;
+        try{
+            for(y = dataNorth; y < dataSouth + 1; y++) {
+                for(x = dataWest; x < dataEast + 1; x++) {
+                    url = currentTileUrl.replace('{z}', zoom).replace('{x}', x).replace('{y}', y);
+                    img = new Image();
+                    img.src = url;
+                }
             }
+        }
+        catch(err) {
         }
     }
 
