@@ -489,7 +489,8 @@
                             if (isShareable) {
                                 txt = '<i class="fa fa-check-circle" style="color:green;" aria-hidden="true"></i> ';
                                 url = OC.generateUrl('/apps/gpxmotion/publicview?');
-                                urlparams = {token: token};
+                                var activeLayerName = gpxMotionView.activeLayers.getActiveBaseLayer().name;
+                                urlparams = {token: token, layer: encodeURIComponent(activeLayerName)};
                                 if (path && filename) {
                                     urlparams.path = path;
                                     urlparams.filename = filename;
