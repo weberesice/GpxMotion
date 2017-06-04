@@ -290,7 +290,7 @@
                     className: 'marker-icon-plane',
                     iconAnchor: [20, 52]
                 }),
-                color : 'blue'
+                color : 'purple'
             },
             train : {
                 icon: L.divIcon({
@@ -304,7 +304,7 @@
                     className: 'marker-icon-bus',
                     iconAnchor: [20, 52]
                 }),
-                color : 'purple'
+                color : 'cyan'
             },
             hike : {
                 icon: L.divIcon({
@@ -318,7 +318,7 @@
                     className: 'marker-icon-car',
                     iconAnchor: [20, 52]
                 }),
-                color : 'purple'
+                color : 'blue'
             },
             bike : {
                 icon: L.divIcon({
@@ -349,11 +349,11 @@
         L.control.scale({metric: true, imperial: true, position:'topleft'}).addTo(gpxMotionView.map);
         var legendText =
             '<h3>' + t('gpxmotion', 'Legend') + '</h3><div class="legendVehicules">' +
-            '<div class="dialogicon" icon="plane">  </div><b style="color:blue;">  ' + t('gpxmotion', 'plane') + '</b>' +
+            '<div class="dialogicon" icon="plane">  </div><b style="color:purple;">  ' + t('gpxmotion', 'plane') + '</b>' +
             '<div class="dialogicon" icon="bike"> </div>  <b style="color:green;"> ' + t('gpxmotion', 'bike') + '</b>' +
             '<div class="dialogicon" icon="hike"> </div>  <b style="color:yellow;">' + t('gpxmotion', 'foot') + '</b>' +
-            '<div class="dialogicon" icon="car">  </div>  <b style="color:purple;">' + t('gpxmotion', 'car') + '</b>' +
-            '<div class="dialogicon" icon="bus">  </div>  <b style="color:purple;">' + t('gpxmotion', 'bus') + '</b>' +
+            '<div class="dialogicon" icon="car">  </div>  <b style="color:blue;">' + t('gpxmotion', 'car') + '</b>' +
+            '<div class="dialogicon" icon="bus">  </div>  <b style="color:cyan;">' + t('gpxmotion', 'bus') + '</b>' +
             '<div class="dialogicon" icon="train"></div>  <b style="color:red;">   ' + t('gpxmotion', 'train') + '</b>' +
             '</div>' +
             '<h3>Pins</h3>' +
