@@ -493,7 +493,7 @@
         }
         var divtxt = '<div class="step">';
         divtxt = divtxt + '<h3 step=""></h3>';
-        divtxt = divtxt + '<label>' + t('gpxmotion', 'Number of elements') + ' :</label>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Number of tracks/routes') + ' :</label>';
         divtxt = divtxt + '<input role="nbelem" type="text" value="' + escapeHTML(values.nbElements) + '"></input>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Vehicule') + ' :</label>';
         divtxt = divtxt + '<select role="vehicule">';
