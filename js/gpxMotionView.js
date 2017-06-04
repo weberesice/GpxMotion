@@ -348,19 +348,19 @@
         L.control.mousePosition().addTo(gpxMotionView.map);
         L.control.scale({metric: true, imperial: true, position:'topleft'}).addTo(gpxMotionView.map);
         var legendText =
-            '<h3>Line colors</h3><div class="legendVehicules">' +
-            '<div class="dialogicon" icon="plane">  </div><b style="color:blue;">  plane</b>' +
-            '<div class="dialogicon" icon="bike"> </div>  <b style="color:green;"> bike</b>' +
-            '<div class="dialogicon" icon="hike"> </div>  <b style="color:yellow;">foot</b>' +
-            '<div class="dialogicon" icon="car">  </div>  <b style="color:purple;">car</b>' +
-            '<div class="dialogicon" icon="bus">  </div>  <b style="color:purple;">bus</b>' +
-            '<div class="dialogicon" icon="train"></div>  <b style="color:red;">   train</b>' +
+            '<h3>' + t('gpxmotion', 'Legend') + '</h3><div class="legendVehicules">' +
+            '<div class="dialogicon" icon="plane">  </div><b style="color:blue;">  ' + t('gpxmotion', 'plane') + '</b>' +
+            '<div class="dialogicon" icon="bike"> </div>  <b style="color:green;"> ' + t('gpxmotion', 'bike') + '</b>' +
+            '<div class="dialogicon" icon="hike"> </div>  <b style="color:yellow;">' + t('gpxmotion', 'foot') + '</b>' +
+            '<div class="dialogicon" icon="car">  </div>  <b style="color:purple;">' + t('gpxmotion', 'car') + '</b>' +
+            '<div class="dialogicon" icon="bus">  </div>  <b style="color:purple;">' + t('gpxmotion', 'bus') + '</b>' +
+            '<div class="dialogicon" icon="train"></div>  <b style="color:red;">   ' + t('gpxmotion', 'train') + '</b>' +
             '</div>' +
             '<h3>Pins</h3>' +
             '<div class="legendPins">' +
-            '<div icon="pin"></div><b>start</b>' +
-            '<div icon="pinblue"></div><b>step</b>' +
-            '<div icon="pinred"></div><b>end</b>' +
+            '<div icon="pin"></div><b>' + t('gpxmotion', 'start') + '</b>' +
+            '<div icon="pinblue"></div><b>' + t('gpxmotion', 'intermediate') + '</b>' +
+            '<div icon="pinred"></div><b>' + t('gpxmotion', 'end') + '</b>' +
             '</div>';
         gpxMotionView.dialog = L.control.dialog({
             anchor: [110, 0],
@@ -466,7 +466,7 @@
                 states: [{
                     stateName: 'prev',
                     icon:      'fa-share-alt',
-                    title:     'Share file',
+                    title:     t('gpxmotion', 'Share current file'),
                     onClick: function(btn, map) {
                         var title = t('gpxmotion', 'Public link to') + ' motion file : ' + gpxMotionView.currentFilePath;
                         var ajaxurl = OC.generateUrl('/apps/gpxmotion/isFileShareable');
@@ -530,10 +530,10 @@
             gpxMotionView.loadButton = L.easyButton({
                 position: 'bottomright',
                 states: [{
-                    stateName: 'prev',   // name the state
-                    icon:      'fa-file-o',          // and define its properties
-                    title:     'Load file', // like its title
-                    onClick: function(btn, map) {  // and its callback
+                    stateName: 'prev',
+                    icon:      'fa-file-o',
+                    title:     t('gpxmotion', 'Load file'),
+                    onClick: function(btn, map) {
                         if (gpxMotionView.currentAjax !== null) {
                             gpxMotionView.currentAjax.abort();
                         }
@@ -555,10 +555,10 @@
         var nextButton = L.easyButton({
             position: 'bottomright',
             states: [{
-                stateName: 'next',   // name the state
-                icon:      'fa-fast-forward',          // and define its properties
-                title:     'Next step (n)', // like its title
-                onClick: function(btn, map) {  // and its callback
+                stateName: 'next',
+                icon:      'fa-fast-forward',
+                title:     t('gpxmotion', 'Next step (n)'),
+                onClick: function(btn, map) {
                     nextStep();
                 }
             }]
@@ -568,10 +568,10 @@
         gpxMotionView.prevButton = L.easyButton({
             position: 'bottomright',
             states: [{
-                stateName: 'prev',   // name the state
-                icon:      'fa-fast-backward',          // and define its properties
-                title:     'Previous step (p)', // like its title
-                onClick: function(btn, map) {  // and its callback
+                stateName: 'prev',
+                icon:      'fa-fast-backward',
+                title:     t('gpxmotion', 'Previous step (p)'),
+                onClick: function(btn, map) {
                     prevStep();
                 }
             }]
@@ -581,10 +581,10 @@
         gpxMotionView.drawButton = L.easyButton({
             position: 'bottomright',
             states: [{
-                stateName: 'draw',   // name the state
-                icon:      'fa-eye',          // and define its properties
-                title:     'Draw complete trip (g)', // like its title
-                onClick: function(btn, map) {  // and its callback
+                stateName: 'draw',
+                icon:      'fa-eye',
+                title:     t('gpxmotion', 'Draw complete trip (g)'),
+                onClick: function(btn, map) {
                     if (ready){
                         reset();
                         displayCompleteTravel();
@@ -597,10 +597,10 @@
         var resetButton = L.easyButton({
             position: 'bottomright',
             states: [{
-                stateName: 'reset',   // name the state
-                icon:      'fa-eye-slash',          // and define its properties
-                title:     'Reset (i)', // like its title
-                onClick: function(btn, map) {  // and its callback
+                stateName: 'reset',
+                icon:      'fa-eye-slash',
+                title:     t('gpxmotion', 'Reset (i)'),
+                onClick: function(btn, map) {
                     if (ready){
                         reset();
                         $('div#summary').text(gpxMotionView.summaryText);
@@ -616,7 +616,7 @@
                 stateName: 'play',
                 //icon:      'fa-spinner',
                 icon:      'fa-play-circle-o',
-                title:     'Play/Pause animation (spacebar)',
+                title:     t('gpxmotion', 'Play/Pause animation (spacebar)'),
                 onClick: function(btn, map) {
                     if (currentMarkerIndex === 0){
                         reset();
@@ -627,10 +627,10 @@
                     }
                 }
             },{
-                stateName: 'pause',   // name the state
-                icon:      'fa-pause-circle-o',          // and define its properties
-                title:     'Play/Pause animation (spacebar)', // like its title
-                onClick: function(btn, map) {  // and its callback
+                stateName: 'pause',
+                icon:      'fa-pause-circle-o',
+                title:     t('gpxmotion', 'Play/Pause animation (spacebar)'),
+                onClick: function(btn, map) {
                     if (currentMarkerIndex === 0){
                         reset();
                         nextMarker();
@@ -910,7 +910,8 @@
         var totsec = Math.floor(totalTime/1000);
         var minutes = Math.floor(totsec/60);
         var remsec = totsec%60;
-        gpxMotionView.summaryText = 'Ready to play !!! ('+minutes+' min '+remsec+' sec ; '+
+        gpxMotionView.summaryText = t('gpxmotion', 'Ready to play') +
+                                    ' !!! ('+minutes+' min '+remsec+' sec ; '+
                                     formatDistance(allStepTotalDistance)+')'
         $('div#summary').text(gpxMotionView.summaryText);
         ready = true;

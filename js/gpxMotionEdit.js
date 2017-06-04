@@ -262,7 +262,7 @@
 
     function showSaveSuccessAnimation(path) {
         $('#saved').find('b#content').html(
-            t('gpxedit', 'File successfully saved as') + '<br/>' + path
+            t('gpxmotion', 'File successfully saved as') + '<br/>' + path
         );
         $('#saved').fadeIn();
         setTimeout(hideSaveSuccessAnimation, 4000);
@@ -292,7 +292,7 @@
         if (!endsWith(path, '.gpx') && !endsWith(path, '.GPX')) { 
             OC.dialogs.alert( 
                 t('gpxmotion', 'Impossible to load this file. ') + 
-                t('gpxmotion', 'Supported formats is gpx'), 
+                t('gpxmotion', 'Supported format : gpx'), 
                 t('gpxmotion', 'Load error') 
             ); 
             return; 
@@ -517,13 +517,13 @@
         divtxt = divtxt + '<textarea role="description" value="' + escapeHTML(values.description) + '"/>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Picture URL') + ' :</label>';
         divtxt = divtxt + '<input role="pictureUrl" type="text" value="' + escapeHTML(values.pictureUrl) + '"></input>';
-        divtxt = divtxt + '<label>' + t('gpxmotion', 'Begin title') + ' :</label>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Starting point title') + ' :</label>';
         divtxt = divtxt + '<input role="beginTitle" type="text" value="' + escapeHTML(values.beginTitle) + '"></input>';
-        divtxt = divtxt + '<label>' + t('gpxmotion', 'Begin description') + ' :</label>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Starting point description') + ' :</label>';
         divtxt = divtxt + '<input role="beginDescription" type="text" value="' + escapeHTML(values.beginDescription) + '"></input>';
-        divtxt = divtxt + '<label>' + t('gpxmotion', 'Begin picture URL') + ' :</label>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Starting point picture URL') + ' :</label>';
         divtxt = divtxt + '<input role="beginPictureUrl" type="text" value="' + escapeHTML(values.beginPictureUrl) + '"></input>';
-        divtxt = divtxt + '<label>' + t('gpxmotion', 'Begin detail URL') + ' :</label>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Starting point detail URL') + ' :</label>';
         divtxt = divtxt + '<input role="beginDetailUrl" type="text" value="' + escapeHTML(values.beginDetailUrl) + '"></input>';
         divtxt = divtxt + '</div>';
 
@@ -584,21 +584,21 @@
                 showSaveFailAnimation(
                     saveFilePath,
                     t('gpxmotion', 'Impossible to write file') + ' : ' +
-                    t('gpxmotion', 'write access denied')
+                    t('gpxmotion', 'Write access denied')
                 );
             }
             else if (response.status === 'fu') {
                 showSaveFailAnimation(
                     saveFilePath,
                     t('gpxmotion', 'Impossible to write file') + ' : ' +
-                    t('gpxmotion', 'folder does not exist')
+                    t('gpxmotion', 'Folder does not exist')
                 );
             }
             else if (response.status === 'fw') {
                 showSaveFailAnimation(
                     saveFilePath,
                     t('gpxmotion', 'Impossible to write file') + ' : ' +
-                    t('gpxmotion', 'folder write access denied')
+                    t('gpxmotion', 'Folder write access denied')
                 );
             }
             else if (response.status === 'bfn') {
