@@ -40,8 +40,8 @@
     </form>
     <div style="clear:both"></div>
     <hr/>
-    <button id="clearButton"><i class="fa fa-bomb"></i> <?php p($l->t('Clear animation steps'));?></button>
-    <button id="addStepButton"><i class="fa fa-plus-circle"></i> <?php p($l->t('Add animation step'));?></button>
+    <button id="clearButton"><i class="fa fa-bomb"></i> <?php p($l->t('Clear animation sections'));?></button>
+    <button id="addSectionButton"><i class="fa fa-plus-circle"></i> <?php p($l->t('Add animation section'));?></button>
     <div id="saved"><p>
         <i class="fa fa-save fa-spin fa-3x fa-fw"></i>
         <b id="content"></b></p>
@@ -91,8 +91,8 @@ echo '</ul>'."\n";
 <h1 class="sectiontitle"><?php p($l->t('Options')); ?></h1>
 <hr/>
 <div id="optiontop">
-    <label for="clearstepsbeforeload"><?php p($l->t('Clear steps before loading'));?></label>
-    <input type="checkbox" id="clearstepsbeforeload" checked></input>
+    <label for="clearsectionsbeforeload"><?php p($l->t('Clear sections before loading'));?></label>
+    <input type="checkbox" id="clearsectionsbeforeload" checked></input>
 </div>
 <hr/>
     <h3 class="sectiontitle"><?php p($l->t('Custom tile servers')); ?></h3>

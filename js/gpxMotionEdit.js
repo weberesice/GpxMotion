@@ -333,8 +333,8 @@
                 return xhr;
             }
         }).done(function(response) {
-            if ($('#clearstepsbeforeload').is(':checked')) {
-                clearSteps();
+            if ($('#clearsectionsbeforeload').is(':checked')) {
+                clearSections();
             }
             if (response.gpx === '') {
                 OC.dialogs.alert('The file does not exist or it is not supported',
@@ -365,21 +365,21 @@
         });
     }
 
-    function clearSteps() {
-        $('div.step').each(function() {
+    function clearSections() {
+        $('div.section').each(function() {
             $(this).fadeOut('slow', function() {
                 $(this).remove();
-                updateStepNumbers();
+                updateSectionNumbers();
             });
         });
     }
 
-    function insertStepBefore(elem) {
-        addStep(1, 'plane', 5000, '', '', '', '', '', '', '', '', false, elem);
+    function insertSectionBefore(elem) {
+        addSection(1, 'plane', 5000, '', '', '', '', '', '', '', '', false, elem);
     }
 
-    function insertStepAfter(elem) {
-        addStep(1, 'plane', 5000, '', '', '', '', '', '', '', '', true, elem);
+    function insertSectionAfter(elem) {
+        addSection(1, 'plane', 5000, '', '', '', '', '', '', '', '', true, elem);
     }
 
     function clearTrack() {
@@ -436,7 +436,7 @@
         if (json.plan) {
             for (i=0; i < json.plan.length; i++) {
                 p = json.plan[i];
-                addStep(p.nbElements,
+                addSection(p.nbElements,
                         p.vehicule,
                         p.time,
                         p.title,
@@ -448,13 +448,13 @@
                         p.beginPictureUrl,
                         p.beginDetailUrl,
                         false,
-                        $('#addStepButton')
+                        $('#addSectionButton')
                 );
             }
         }
     }
 
-    function addStep(nbElements=1,
+    function addSection(nbElements=1,
                      vehicule="plane",
                      time=5000,
                      title='',
@@ -470,7 +470,7 @@
     ){
         var insertNextTo = what;
         if (!what) {
-            insertNextTo = $('#addStepButton');
+            insertNextTo = $('#addSectionButton');
         }
         var sel, v;
         var values = {
@@ -491,8 +491,8 @@
                 values[v] = '';
             }
         }
-        var divtxt = '<div class="step">';
-        divtxt = divtxt + '<h3 step=""></h3>';
+        var divtxt = '<div class="section">';
+        divtxt = divtxt + '<h3 section=""></h3>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Number of tracks/routes') + ' :</label>';
         divtxt = divtxt + '<input role="nbelem" type="text" value="' + escapeHTML(values.nbElements) + '"></input>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Vehicule') + ' :</label>';
@@ -509,10 +509,10 @@
         divtxt = divtxt + '</select>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Duration') + ' :</label>';
         divtxt = divtxt + '<input role="time" type="text" value="' + escapeHTML(values.time) + '"></input>';
-        divtxt = divtxt + '<label>' + t('gpxmotion', 'Step title') + ' :</label>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Section title') + ' :</label>';
         divtxt = divtxt + '<input role="title" type="text" value="' + escapeHTML(values.title) + '"></input>';
         divtxt = divtxt + '<p class="morebutton"><i class="fa fa-angle-double-down"></i> <b>more</b></p>';
-        divtxt = divtxt + '<div class="stepmore">';
+        divtxt = divtxt + '<div class="sectionmore">';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Description') + ' :</label>';
         divtxt = divtxt + '<textarea role="description" value="' + escapeHTML(values.description) + '"/>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Picture URL') + ' :</label>';
@@ -527,10 +527,10 @@
         divtxt = divtxt + '<input role="beginDetailUrl" type="text" value="' + escapeHTML(values.beginDetailUrl) + '"></input>';
         divtxt = divtxt + '</div>';
 
-        divtxt = divtxt + '<button class="removeStep"><i class="fa fa-trash" aria-hidden="true"></i> Remove step</button>';
-        divtxt = divtxt + '<button class="zoom"><i class="fa fa-search" aria-hidden="true"></i> Zoom on step</button>';
-        divtxt = divtxt + '<button class="insertStepBefore"><i class="fa fa-arrow-up" aria-hidden="true"></i> Insert step before</button>';
-        divtxt = divtxt + '<button class="insertStepAfter"><i class="fa fa-arrow-down" aria-hidden="true"></i> Insert step after</button>';
+        divtxt = divtxt + '<button class="removeSection"><i class="fa fa-trash" aria-hidden="true"></i> Remove section</button>';
+        divtxt = divtxt + '<button class="zoom"><i class="fa fa-search" aria-hidden="true"></i> Zoom on section</button>';
+        divtxt = divtxt + '<button class="insertSectionBefore"><i class="fa fa-arrow-up" aria-hidden="true"></i> Insert section before</button>';
+        divtxt = divtxt + '<button class="insertSectionAfter"><i class="fa fa-arrow-down" aria-hidden="true"></i> Insert section after</button>';
         divtxt = divtxt + '</div>';
         if (after) {
             insertNextTo.after($(divtxt).fadeIn('slow').css('display', 'grid'));
@@ -538,13 +538,13 @@
         else {
             insertNextTo.before($(divtxt).fadeIn('slow').css('display', 'grid'));
         }
-        updateStepNumbers();
+        updateSectionNumbers();
     }
 
-    function updateStepNumbers() {
+    function updateSectionNumbers() {
         var i = 1;
-        $('div.step').each(function() {
-            $(this).find('h3').text('Step ' + i).attr('step', i);
+        $('div.section').each(function() {
+            $(this).find('h3').text('Section ' + i).attr('section', i);
             i++;
         });
     }
@@ -639,35 +639,35 @@
             beginDescription,
             beginPictureUrl,
             beginDetailUrl;
-        var steplist = [];
-        $('div.step').each(function() {
-            var step = {};
-            step.nbElements = parseInt($(this).find('input[role=nbelem]').val());
-            step.vehicule = $(this).find('select[role=vehicule]').val();
-            step.time = parseInt($(this).find('input[role=time]').val());
-            step.title = $(this).find('input[role=title]').val();
-            step.description = $(this).find('input[role=description]').val();
-            step.pictureUrl = $(this).find('input[role=pictureUrl]').val();
-            step.detailUrl = $(this).find('input[role=detailUrl]').val();
-            step.beginTitle = $(this).find('input[role=beginTitle]').val();
-            step.beginDescription = $(this).find('input[role=beginDescription]').val();
-            step.beginPictureUrl = $(this).find('input[role=beginPictureUrl]').val();
-            step.beginDetailUrl = $(this).find('input[role=beginDetailUrl]').val();
-            steplist.push(step);
+        var sectionlist = [];
+        $('div.section').each(function() {
+            var section = {};
+            section.nbElements = parseInt($(this).find('input[role=nbelem]').val());
+            section.vehicule = $(this).find('select[role=vehicule]').val();
+            section.time = parseInt($(this).find('input[role=time]').val());
+            section.title = $(this).find('input[role=title]').val();
+            section.description = $(this).find('input[role=description]').val();
+            section.pictureUrl = $(this).find('input[role=pictureUrl]').val();
+            section.detailUrl = $(this).find('input[role=detailUrl]').val();
+            section.beginTitle = $(this).find('input[role=beginTitle]').val();
+            section.beginDescription = $(this).find('input[role=beginDescription]').val();
+            section.beginPictureUrl = $(this).find('input[role=beginPictureUrl]').val();
+            section.beginDetailUrl = $(this).find('input[role=beginDetailUrl]').val();
+            sectionlist.push(section);
         });
         json.elementUnit = 'track';
-        json.plan = steplist;
+        json.plan = sectionlist;
         return JSON.stringify(json);
     }
 
-    function zoomOnStep(stepdiv) {
-        var stepnum = parseInt(stepdiv.find('h3').attr('step'));
-        var nbelems = parseInt(stepdiv.find('input[role=nbelem]').val());
+    function zoomOnSection(sectiondiv) {
+        var sectionnum = parseInt(sectiondiv.find('h3').attr('section'));
+        var nbelems = parseInt(sectiondiv.find('input[role=nbelem]').val());
         var featgr = new L.featureGroup();
         // get the first line we need
         var i = 0;
-        $('div.step').each(function() {
-            if (stepnum > parseInt($(this).find('h3').attr('step'))) {
+        $('div.section').each(function() {
+            if (sectionnum > parseInt($(this).find('h3').attr('section'))) {
                 i = i + parseInt($(this).find('input[role=nbelem]').val());
             }
         });
@@ -689,7 +689,7 @@
         });
         featgr.eachLayer(function(l) {
             l.setStyle(zoomStyle);
-            l.bindTooltip('Step '+stepnum, {permanent: true});
+            l.bindTooltip('Section '+sectionnum, {permanent: true});
         });
     }
 
@@ -726,24 +726,24 @@
             );
         });
 
-        $('#addStepButton').click(function(e) {
-            addStep();
+        $('#addSectionButton').click(function(e) {
+            addSection();
         });
 
         $('#clearButton').click(function(e) {
-            clearSteps();
+            clearSections();
         });
 
-        $('body').on('click', '.removeStep', function(e) {
+        $('body').on('click', '.removeSection', function(e) {
             var p = $(this).parent();
             p.fadeOut('slow', function() {
                 p.remove();
-                updateStepNumbers();
+                updateSectionNumbers();
             });
         });
 
         $('button#saveButton').click(function(e) {
-            if (gpxmotion.lineList.length === 0 || $('div.step').length === 0) {
+            if (gpxmotion.lineList.length === 0 || $('div.section').length === 0) {
                 showFailAnimation(t('gpxmotion', 'There is nothing to save'));
             }
             else{
@@ -759,16 +759,16 @@
             }
         });
 
-        $('body').on('click', '.insertStepBefore', function(e) {
-            insertStepBefore($(this).parent());
+        $('body').on('click', '.insertSectionBefore', function(e) {
+            insertSectionBefore($(this).parent());
         });
 
-        $('body').on('click', '.insertStepAfter', function(e) {
-            insertStepAfter($(this).parent());
+        $('body').on('click', '.insertSectionAfter', function(e) {
+            insertSectionAfter($(this).parent());
         });
 
         $('body').on('click', '.zoom', function(e) {
-            zoomOnStep($(this).parent());
+            zoomOnSection($(this).parent());
         });
 
         $('#viewButton').click(function() {
@@ -777,15 +777,15 @@
         });
 
         $('body').on('click', '.morebutton', function(e) {
-            var stepdiv = $(this).parent();
-            var stepmore = stepdiv.find('.stepmore');
-            if (stepmore.is(':visible')) {
-                stepmore.slideUp('slow').css('display', 'grid');
+            var sectiondiv = $(this).parent();
+            var sectionmore = sectiondiv.find('.sectionmore');
+            if (sectionmore.is(':visible')) {
+                sectionmore.slideUp('slow').css('display', 'grid');
                 $(this).find('i').removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
                 $(this).find('b').text('more');
             }
             else {
-                stepmore.slideDown('slow').css('display', 'grid');
+                sectionmore.slideDown('slow').css('display', 'grid');
                 $(this).find('i').removeClass('fa-angle-double-down').addClass('fa-angle-double-up');
                 $(this).find('b').text('less');
             }

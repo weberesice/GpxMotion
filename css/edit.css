@@ -875,17 +875,17 @@ div#ho button {
 #optiontop input[type=checkbox] {
     margin-right: auto;
 }
-#addStepButton {
+#addSectionButton {
     width: 100%;
 }
-#addStepButton i {
+#addSectionButton i {
     color: green;
 }
-div.step h3 {
+div.section h3 {
     grid-column: 1/3;
     text-align: center;
 }
-div.step label{
+div.section label{
     margin-top: auto;
     margin-bottom: auto;
     text-align: center;
@@ -899,31 +899,31 @@ div.step label{
     background-color: #F7F7F7;
     border: solid 1px lightgrey;
 }
-div.stepmore {
+div.sectionmore {
     grid-column: 1/3;
     display: grid;
     grid-template-columns: 1fr 1fr;
     display: none;
 }
-div.step {
+div.section {
     border: 2px solid grey;
     border-radius: 5px;
     padding: 0 4px 0 4px;
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
-div.step input, div.step textarea{
+div.section input, div.section textarea{
     width: 100%;
 }
-div.step .zoom i{
+div.section .zoom i{
     color: blue;
 }
-div.step .removeStep i{
+div.section .removeSection i{
     color: red;
 }
-div.step .insertStepAfter i, div.step .insertStepBefore i{
+div.section .insertSectionAfter i, div.section .insertSectionBefore i{
     color: green;
 }
-/*div.step .removeStep{
+/*div.section .removeSection{
     grid-column: 1/3;
 }*/

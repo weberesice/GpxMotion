@@ -10,7 +10,7 @@
     }
 
     var border = true;
-    var allStepTotalDistance = 0;
+    var allSectionTotalDistance = 0;
     var currentTimer = null;
     var params;
     var plan;
@@ -18,7 +18,7 @@
     var markers = [];
     var polylines = [];
     var drawPolylines = [];
-    // used to add permanent steps markers
+    // used to add permanent sections markers
     var beginMarkers = [];
     var globalBounds;
     var ready = false;
@@ -98,7 +98,7 @@
             if (currentMarkerIndex > 0){
                 markers[currentMarkerIndex-1].stop();
                 gpxMotionView.map.removeLayer(markers[currentMarkerIndex-1]);
-                // add the line for the previous step
+                // add the line for the previous Section
                 gpxMotionView.map.addLayer(polylines[currentMarkerIndex-1]);
                 // remove the partial drawing
                 gpxMotionView.map.removeLayer(drawPolylines[currentMarkerIndex-1]);
@@ -111,7 +111,7 @@
             // update current title
             $('div#summary').text(plan[currentMarkerIndex]['title']+
                 ' (~'+formatDistance(plan[currentMarkerIndex]['totalDistance'])+
-                    ' ; step '+(currentMarkerIndex+1)+'/'+markers.length+')');
+                    ' ; section '+(currentMarkerIndex+1)+'/'+markers.length+')');
 
             // add next marker pin at start point and get its time
             var timeout = plan[currentMarkerIndex]['time'];
@@ -150,7 +150,7 @@
             // we remove the last marker
             markers[currentMarkerIndex-1].stop();
             gpxMotionView.map.removeLayer(markers[currentMarkerIndex-1]);
-            // add the line for the last step
+            // add the line for the last Section
             gpxMotionView.map.addLayer(polylines[currentMarkerIndex-1]);
             // remove the partial drawing
             gpxMotionView.map.removeLayer(drawPolylines[currentMarkerIndex-1]);
@@ -231,7 +231,7 @@
         gpxMotionView.map.flyToBounds(globalBounds, {animate:true, padding: [100,100]});
     }
 
-    function nextStep(){
+    function nextSection(){
         if (currentMarkerIndex === 0){
             return;
         }
@@ -242,7 +242,7 @@
         nextMarker();
     }
 
-    function prevStep(){
+    function prevSection(){
         if (currentMarkerIndex === 0){
             return;
         }
@@ -255,14 +255,14 @@
         if (currentMarkerIndex > 0){
             markers[currentMarkerIndex-1].stop();
             gpxMotionView.map.removeLayer(markers[currentMarkerIndex-1]);
-            // in case it was added by nextStep
+            // in case it was added by nextSection
             gpxMotionView.map.removeLayer(polylines[currentMarkerIndex-1]);
             gpxMotionView.map.removeLayer(drawPolylines[currentMarkerIndex-1]);
             drawPolylines[currentMarkerIndex-1].eachLayer( function (l) {
                 l.setLatLngs([]);
             });
             gpxMotionView.map.removeLayer(beginMarkers[currentMarkerIndex-1]);
-            // remove the previous step
+            // remove the previous Section
             if (currentMarkerIndex > 1){
                 gpxMotionView.map.removeLayer(polylines[currentMarkerIndex-2]);
                 gpxMotionView.map.removeLayer(drawPolylines[currentMarkerIndex-2]);
@@ -356,11 +356,11 @@
             '<div class="dialogicon" icon="bus">  </div>  <b style="color:cyan;">' + t('gpxmotion', 'bus') + '</b>' +
             '<div class="dialogicon" icon="train"></div>  <b style="color:red;">   ' + t('gpxmotion', 'train') + '</b>' +
             '</div>' +
-            '<h3>Pins</h3>' +
+            '<h3>' + t('gpxmotion', 'Pins') + '</h3>' +
             '<div class="legendPins">' +
-            '<div icon="pin"></div><b>' + t('gpxmotion', 'start') + '</b>' +
-            '<div icon="pinblue"></div><b>' + t('gpxmotion', 'intermediate') + '</b>' +
-            '<div icon="pinred"></div><b>' + t('gpxmotion', 'end') + '</b>' +
+            '<div icon="pin"></div><p>' + t('gpxmotion', 'start') + '</p>' +
+            '<div icon="pinblue"></div><p>' + t('gpxmotion', 'step') + '</p>' +
+            '<div icon="pinred"></div><p>' + t('gpxmotion', 'end') + '</p>' +
             '</div>';
         gpxMotionView.dialog = L.control.dialog({
             anchor: [110, 0],
@@ -557,9 +557,9 @@
             states: [{
                 stateName: 'next',
                 icon:      'fa-fast-forward',
-                title:     t('gpxmotion', 'Next step (n)'),
+                title:     t('gpxmotion', 'Next section (n)'),
                 onClick: function(btn, map) {
-                    nextStep();
+                    nextSection();
                 }
             }]
         });
@@ -570,9 +570,9 @@
             states: [{
                 stateName: 'prev',
                 icon:      'fa-fast-backward',
-                title:     t('gpxmotion', 'Previous step (p)'),
+                title:     t('gpxmotion', 'Previous section (p)'),
                 onClick: function(btn, map) {
-                    prevStep();
+                    prevSection();
                 }
             }]
         });
@@ -675,11 +675,11 @@
         var totalTime = 0;
 
         // used in feature unit only
-        // we get the number of features we want for each plan step
-        var featureNumberPerStep = [];
+        // we get the number of features we want for each plan Section
+        var featureNumberPerSection = [];
         if (params.elementUnit === 'track'){
             for (var i=0; i<plan.length; i++){
-                featureNumberPerStep.push(plan[i]['nbElements']);
+                featureNumberPerSection.push(plan[i]['nbElements']);
                 plan[i]['nbElements'] = 0;
                 planNamesFromGpxTrk.push('');
             }
@@ -705,8 +705,8 @@
                 if (params.elementUnit === 'track' && iplancoord < plan.length){
                     plan[iplancoord]['nbElements'] += featureLength;
                     planNamesFromGpxTrk[iplancoord] += geogpx.features[i].properties.name + '; ';
-                    featureNumberPerStep[iplancoord]--;
-                    if (featureNumberPerStep[iplancoord] === 0){
+                    featureNumberPerSection[iplancoord]--;
+                    if (featureNumberPerSection[iplancoord] === 0){
                         planNamesFromGpxTrk[iplancoord] = planNamesFromGpxTrk[iplancoord].replace(/;\s$/g, '');
                         iplancoord++;
                     }
@@ -740,7 +740,7 @@
             for (var ii = 0; ii < table.length - 1; ii++){
                 planSection['totalDistance'] += gpxMotionView.map.distance(table[ii], table[ii+1]);
             }
-            allStepTotalDistance += planSection['totalDistance'];
+            allSectionTotalDistance += planSection['totalDistance'];
 
             mypoly = L.polyline(table, {color:thecolor, weight:5});
             if (border){
@@ -786,7 +786,7 @@
                         title += ' '+planNamesFromGpxTrk[iplan];
                     }
                 }
-                linePopupString = '<h2 class="popupTitle">Step '+(iplan+1)+' : '+title+'</h2>';
+                linePopupString = '<h2 class="popupTitle">Section '+(iplan+1)+' : '+title+'</h2>';
                 if (text){
                     linePopupString = linePopupString + '<p>'+text+'</p>';
                 }
@@ -805,7 +805,7 @@
                 }
 
                 featGroup.bindPopup(linePopupString);
-                featGroup.bindTooltip('Step '+(iplan+1)+' : '+title+'<br/>Click for details', {sticky: true});
+                featGroup.bindTooltip('Section '+(iplan+1)+' : '+title+'<br/>Click for details', {sticky: true});
                 lineSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+' : '+title+'</td></tr>';
             }
             else{
@@ -823,7 +823,7 @@
                         beginTitle += ' '+planNamesFromGpxTrk[iplan];
                     }
                 }
-                popupString = '<h2 class="popupTitle">Step '+(iplan+1)+' : '+beginTitle+'</h2>';
+                popupString = '<h2 class="popupTitle">Section '+(iplan+1)+' : '+beginTitle+'</h2>';
                 if (text){
                     popupString = popupString + '<p>'+text+'</p>';
                 }
@@ -841,7 +841,7 @@
                     popupString = popupString+ '<a href="' + linkDest + '" target="_blank">More about "'+beginTitle+'"</a>';
                 }
                 beginMarker.bindPopup(popupString);
-                beginMarker.bindTooltip('Step '+(iplan+1)+' : '+beginTitle+'<br/>Click for details');
+                beginMarker.bindTooltip('Section '+(iplan+1)+' : '+beginTitle+'<br/>Click for details');
                 pinSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+' : '+beginTitle+'</td></tr>';
             }
             else{
@@ -864,10 +864,10 @@
 
         // add last pin marker and tooltip
         var lastMarker = L.marker(table[table.length-1], {icon: gpxMotionView.endPinIcon});
-        var lastTooltip = 'Step '+(iplan+1)+' (final)';
+        var lastTooltip = 'Section '+(iplan+1)+' (final)';
         var lastPopup = lastTooltip;
         if (iplan < plan.length && plan[iplan].hasOwnProperty('beginTitle')){
-            lastTooltip = 'Step '+(iplan+1)+' (final) : '+plan[iplan]['beginTitle']+'<br/>Click for details';
+            lastTooltip = 'Section '+(iplan+1)+' (final) : '+plan[iplan]['beginTitle']+'<br/>Click for details';
 
             linkDest = plan[iplan]['beginDetailUrl'];
             beginTitle = plan[iplan]['beginTitle'];
@@ -879,7 +879,7 @@
                     beginTitle += ' '+planNamesFromGpxTrk[iplan];
                 }
             }
-            lastPopup = '<h2 class="popupTitle">Step '+(iplan+1)+' (final) : '+beginTitle+'</h2>';
+            lastPopup = '<h2 class="popupTitle">Section '+(iplan+1)+' (final) : '+beginTitle+'</h2>';
             if (text){
                 lastPopup = lastPopup + '<p>'+text+'</p>';
             }
@@ -912,7 +912,7 @@
         var remsec = totsec%60;
         gpxMotionView.summaryText = t('gpxmotion', 'Ready to play') +
                                     ' !!! ('+minutes+' min '+remsec+' sec ; '+
-                                    formatDistance(allStepTotalDistance)+')'
+                                    formatDistance(allSectionTotalDistance)+')'
         $('div#summary').text(gpxMotionView.summaryText);
         ready = true;
     }
@@ -974,7 +974,7 @@
 
     function clearAll() {
         clearMap(gpxMotionView.map);
-        allStepTotalDistance = 0;
+        allSectionTotalDistance = 0;
         currentTimer = null;
         params;
         plan;
@@ -1115,11 +1115,11 @@
             }
             if (kc === 78){
                 e.preventDefault();
-                nextStep();
+                nextSection();
             }
             if (kc === 80){
                 e.preventDefault();
-                prevStep();
+                prevSection();
             }
             if (kc === 73){
                 e.preventDefault();

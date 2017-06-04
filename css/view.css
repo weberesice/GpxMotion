@@ -18,6 +18,9 @@ body { margin: 0; }
 .easy-button-button{
     background-color: lightcoral !important;
 }
+.legendPins p{
+    font-size: 12px;
+}
 .legendPins div{
     width: 20px;
     height: 28px;
@@ -90,12 +93,12 @@ body { margin: 0; }
 .legendVehicules{
     font-size: 16px;
     display: grid;
-    grid-template: 1fr 1fr 1fr 1fr 1fr 1fr / 50% 50%;
+    grid-template-columns: 30% 70%;
 }
 .legendPins{
     font-size: 16px;
     display: grid;
-    grid-template: 1fr 1fr 1fr / 50% 50%;
+    grid-template-columns: 30% 70%;
 }
 .marker-icon-plane, .marker-icon-bike, .marker-icon-hike, .marker-icon-car, .marker-icon-bus, .marker-icon-train {
     background-size: 40px 52px !important;
