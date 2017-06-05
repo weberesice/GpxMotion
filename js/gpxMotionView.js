@@ -645,16 +645,29 @@
         $('span.fa-play-circle-o').parent().parent().prop('disabled', true);
     }
 
+    function showEmptyMessage() {
+        OC.dialogs.alert(t('gpxmotion', 'No animation data found in the GPX file'),
+                         t('gpxmotion', 'Load error'));
+    }
+
     function processXml(xml) {
         if (xml.gpx === '') {
-            // TODO inform
+            showEmptyMessage();
             return;
         }
         var gpxml = $.parseXML(xml.gpx);
         var desc = $(gpxml).find('gpx>metadata>desc').text();
         var jsondesc = $.parseJSON(desc);
         params = jsondesc;
+        if (!params) {
+            showEmptyMessage();
+            return;
+        }
         plan = params.plan;
+        if (!plan || plan.length === 0) {
+            showEmptyMessage();
+            return;
+        }
 
         var table;
         var ll,mypoly, borderLine, featGroup;

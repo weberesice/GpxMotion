@@ -2,6 +2,7 @@ OC.L10N.register(
     "gpxmotion",
     {
     "Load error" : "Erreur de chargement",
+    "No animation data found in the GPX file" : "Pas de données d'animation dans le fichier GPX",
     "Bad file name, must end with \".gpx\"" : "Nom mal formé, doit finir par \".gpx\"",
     "Vehicule" : "Vehicule",
     "Public link to" : "Lien public vers",
