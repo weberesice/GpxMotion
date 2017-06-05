@@ -648,6 +648,8 @@
     function showEmptyMessage() {
         OC.dialogs.alert(t('gpxmotion', 'No animation data found in the GPX file'),
                          t('gpxmotion', 'Load error'));
+        $('span.fa-spinner').removeClass('fa-spinner fa-pulse').addClass('fa-play-circle-o');
+        $('div#summary').text(t('gpxmotion', 'Load error'));
     }
 
     function processXml(xml) {
