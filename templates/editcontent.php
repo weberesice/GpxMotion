@@ -21,7 +21,7 @@
             </div>
         </div>
         <button id="viewButton"><i class="fa fa-eye"></i> <?php p($l->t('Go to view page'));?></button>
-        <button id="loadButton"><i class="fa fa-file-o"></i> <?php p($l->t('Load file'));?></button>
+        <button id="loadButton"><i class="fa fa-folder-open-o"></i> <?php p($l->t('Load file'));?></button>
     </div>
     <div style="clear:both"></div>
     <hr/>

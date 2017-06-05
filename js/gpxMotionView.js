@@ -531,7 +531,7 @@
                 position: 'bottomright',
                 states: [{
                     stateName: 'prev',
-                    icon:      'fa-file-o',
+                    icon:      'fa-folder-open-o',
                     title:     t('gpxmotion', 'Load file'),
                     onClick: function(btn, map) {
                         if (gpxMotionView.currentAjax !== null) {
@@ -1027,7 +1027,10 @@
                         path: pathGet
                     }
                 }
+                // this is not a public link, not a preview and there is no file to load
+                // probably just the view page displayed
                 else {
+                    $('div#summary').text(t('gpxmotion', 'Load a file to display an animation'));
                     return;
                 }
             }
