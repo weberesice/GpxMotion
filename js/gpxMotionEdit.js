@@ -693,7 +693,22 @@
         });
     }
 
+    /*
+     * get key events
+     */
+    function checkKey(e) {
+        e = e || window.event;
+        var kc = e.keyCode;
+        //console.log(kc);
+
+        if (kc === 60 || kc === 220) {
+            e.preventDefault();
+            $('#sidebar').toggleClass('collapsed');
+        }
+    }
+
     $(document).ready(function() {
+        document.onkeydown = checkKey;
         load_map();
 
         // Custom tile server management
