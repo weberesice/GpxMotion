@@ -811,5 +811,11 @@
             $('#previewform input[name=gpxContent]').val(generateGpx());
             $('#previewform').submit();
         });
+
+        // load a file if 'file' GET url parameter was given
+        var fileparam = getUrlParameter('path');
+        if (fileparam && fileparam !== undefined) {
+            loadAction(fileparam);
+        }
     });
 }(jQuery, OC));

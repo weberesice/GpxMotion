@@ -1,11 +1,19 @@
 $(document).ready(function() {
 
-    if (OCA.Files && OCA.Files.fileActions && !$('#sharingToken').val()) {
+    if (OCA.Files && OCA.Files.fileActions) {
 
-		var token = $('#sharingToken').val();
+        var token = $('#sharingToken').val();
 
-        function openFile(file, data){
-            var url = OC.generateUrl('apps/gpxmotion/view?path={filepath}',{'filepath': data.dir+'/'+file});
+        function openViewFile(file, data){
+            // if we are logged
+            if (!token){
+				var url = OC.generateUrl('apps/gpxmotion/view?path={filepath}',{'filepath': data.dir+'/'+file});
+            }
+            // if we are in share browsing
+            else{
+                var url = OC.generateUrl('apps/gpxmotion/publicview?token={token}&path={path}&filename={filename}',
+                        {'token': token, 'path': data.dir, 'filename': file});
+            }
             window.open(url, '_blank');
         }
 
@@ -15,8 +23,24 @@ $(document).ready(function() {
             mime: 'application/gpx+xml',
             permissions: OC.PERMISSION_READ,
             icon: function () {return OC.imagePath('gpxmotion', 'app_black');},
-            actionHandler: openFile
+            actionHandler: openViewFile
         });
+
+        if (!token) {
+            function openEditFile(file, data){
+                var url = OC.generateUrl('apps/gpxmotion/?path={filepath}',{'filepath': data.dir+'/'+file});
+                window.open(url, '_blank');
+            }
+
+            OCA.Files.fileActions.registerAction({
+                name: 'editFileGpxMotion',
+                displayName: t('gpxmotion', 'Edit with GpxMotion'),
+                mime: 'application/gpx+xml',
+                permissions: OC.PERMISSION_READ,
+                icon: function () {return OC.imagePath('gpxmotion', 'app_black');},
+                actionHandler: openEditFile
+            });
+        }
     }
 
 });
