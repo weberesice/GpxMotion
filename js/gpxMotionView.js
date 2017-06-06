@@ -981,7 +981,7 @@
                     m.removeLayer(m._layers[i]);
                 }
                 catch(e) {
-                    console.log("problem with " + e + m._layers[i]);
+                    console.log('problem with ' + e + m._layers[i]);
                 }
             }
         }
@@ -1038,7 +1038,7 @@
                 req = {
                     path: path
                 }
-                document.title = 'GpxMotion - ' + basename(path);
+                document.title = 'GpxMotion - view - ' + basename(path);
                 window.history.pushState({'html': '', 'pageTitle': ''},'', 'view?path='+encodeURIComponent(path));
             }
             gpxMotionView.currentFilePath = req.path;

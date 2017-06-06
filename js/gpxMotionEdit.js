@@ -23,6 +23,14 @@
         color: 'red'
     };
 
+    function basename(str) {
+        var base = new String(str).substring(str.lastIndexOf('/') + 1);
+        if (base.lastIndexOf(".") !== -1) {
+            base = base.substring(0, base.lastIndexOf("."));
+        }
+        return base;
+    }
+
     function endsWith(str, suffix) {
         return str.indexOf(suffix, str.length - suffix.length) !== -1;
     }
@@ -356,6 +364,8 @@
                 catch (err) {
                     console.log('Impossible to fit to bounds \n'+err);
                 }
+                document.title = 'GpxMotion - edit - ' + basename(file);
+                window.history.pushState({'html': '', 'pageTitle': ''},'', '?path='+encodeURIComponent(file));
             }
         }).fail(function() {
             OC.dialogs.alert('Failed to communicate with the server',
