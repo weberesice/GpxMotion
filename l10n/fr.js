@@ -55,6 +55,7 @@ OC.L10N.register(
     "Draw complete trip (g)" : "Affiche le parcours complet (g)",
     "Reset (i)" : "RAZ (i)",
     "Edit with GpxMotion" : "Éditer avec GpxMotion",
+    "Load and view animation file (gpx)" : "Charger et voir un fichier d'animation (gpx)",
     "View in GpxMotion" : "Voir dans GpxMotion"
     },
 "nplurals=2; plural=(n > 1);");
