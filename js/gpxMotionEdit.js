@@ -23,6 +23,18 @@
         color: 'red'
     };
 
+    function isInt(value) {
+        return !isNaN(value) && 
+            parseInt(Number(value)) == value && 
+            !isNaN(parseInt(value, 10));
+    }
+
+    function isFloat(value){
+        return !isNaN(value) && 
+            parseFloat(Number(value)) == value && 
+            !isNaN(parseFloat(value, 10));
+    }
+
     function basename(str) {
         var base = new String(str).substring(str.lastIndexOf('/') + 1);
         if (base.lastIndexOf(".") !== -1) {
@@ -722,6 +734,24 @@
         window.location.href = url;
     }
 
+    function checkSections() {
+        var errors = '';
+
+        $('div.section').each(function() {
+            var sn = parseInt($(this).find('h3').attr('section'));
+            var nbelem = $(this).find('input[role=nbelem]').val();
+            if (nbelem === '' || !isInt(nbelem)) {
+                errors = errors + '\nIn section ' + sn + ', number of tracks should be an integer';
+            }
+            var time = $(this).find('input[role=time]').val();
+            if (time === '' || (!isInt(time) && !isFloat(time))) {
+                errors = errors + '\nIn section ' + sn + ', time should be a float';
+            }
+        });
+
+        return errors;
+    }
+
     $(document).ready(function() {
         document.onkeydown = checkKey;
         load_map();
@@ -777,15 +807,21 @@
                 showFailAnimation(t('gpxmotion', 'There is nothing to save'));
             }
             else{
-                var filename = $('#saveName').val();
-                OC.dialogs.filepicker(
-                    t('gpxmotion', 'Where to save') +
-                    ' <b>' + filename + '</b>',
-                    function(targetPath) {
-                        saveAction(targetPath);
-                    },
-                    false, "httpd/unix-directory", true
-                );
+                var errors = checkSections();
+                if (errors === '') {
+                    var filename = $('#saveName').val();
+                    OC.dialogs.filepicker(
+                        t('gpxmotion', 'Where to save') +
+                        ' <b>' + filename + '</b>',
+                        function(targetPath) {
+                            saveAction(targetPath);
+                        },
+                        false, "httpd/unix-directory", true
+                    );
+                }
+                else {
+                    alert('Errors in section definition :\n' + errors);
+                }
             }
         });
 
@@ -829,9 +865,16 @@
         })
 
         $('#previewform').attr('action', OC.generateUrl('/apps/gpxmotion/preview'));
-        $('#previewButton').click(function() {
-            $('#previewform input[name=gpxContent]').val(generateGpx());
-            $('#previewform').submit();
+        $('#previewButton').click(function(e) {
+            var errors = checkSections();
+            if (errors === '') {
+                $('#previewform input[name=gpxContent]').val(generateGpx());
+                $('#previewform').submit();
+            }
+            else {
+                e.preventDefault();
+                alert('Errors in section definition :\n' + errors);
+            }
         });
 
         // load a file if 'file' GET url parameter was given
