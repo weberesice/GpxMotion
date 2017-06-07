@@ -456,7 +456,7 @@
         var json = $.parseJSON(desc);
         var i, p;
         if (json.plan) {
-            for (i=0; i < json.plan.length; i++) {
+            for (i = 0; i < json.plan.length; i++) {
                 p = json.plan[i];
                 addSection(p.nbElements,
                         p.vehicule,
@@ -495,10 +495,14 @@
             insertNextTo = $('#addSectionButton');
         }
         var sel, v;
+        var ftime = time;
+        if (isFloat(time)) {
+            ftime = parseFloat(time) / 1000;
+        }
         var values = {
             nbElements: nbElements,
             vehicule: vehicule,
-            time: time,
+            time: ftime,
             title: title,
             description: description,
             pictureUrl: pictureUrl,
@@ -529,7 +533,7 @@
             divtxt = divtxt +'<option value="' + escapeHTML(v) + '"' + sel + '>' + v + '</option>';
         }
         divtxt = divtxt + '</select>';
-        divtxt = divtxt + '<label>' + t('gpxmotion', 'Duration') + ' :</label>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Duration (sec)') + ' :</label>';
         divtxt = divtxt + '<input role="time" type="text" value="' + escapeHTML(values.time) + '"></input>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Section title') + ' :</label>';
         divtxt = divtxt + '<input role="title" type="text" value="' + escapeHTML(values.title) + '"></input>';
@@ -666,7 +670,7 @@
             var section = {};
             section.nbElements = parseInt($(this).find('input[role=nbelem]').val());
             section.vehicule = $(this).find('select[role=vehicule]').val();
-            section.time = parseInt($(this).find('input[role=time]').val());
+            section.time = parseInt($(this).find('input[role=time]').val()) * 1000;
             section.title = $(this).find('input[role=title]').val();
             section.description = $(this).find('input[role=description]').val();
             section.pictureUrl = $(this).find('input[role=pictureUrl]').val();

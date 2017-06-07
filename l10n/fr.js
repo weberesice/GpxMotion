@@ -37,7 +37,7 @@ OC.L10N.register(
     "Picture URL" : "URL de l'image",
     "There is nothing to save" : "Il n'y a rien à sauver",
     "Where to save" : "Où enregistrer",
-    "Duration" : "Durée",
+    "Duration (sec)" : "Durée (sec)",
     "Number of tracks/routes" : "Nombre de traces/routes",
     "Write access denied" : "Droit d'accès d'écriture refusé",
     "Tile server \"{ts}\" has been added" : "Le serveur de tuiles \"{ts}\" a été ajouté",
