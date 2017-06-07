@@ -461,6 +461,20 @@
         }
 
         if (!isPublicPage()) {
+            gpxMotionView.editButton = L.easyButton({
+                position: 'topright',
+                states: [{
+                    stateName: 'prev',
+                    icon:      'fa-pencil',
+                    title:     'Edit current file',
+                    onClick: function(btn, map) {
+                        var url = OC.generateUrl('apps/gpxmotion/?path={filepath}',{'filepath': gpxMotionView.currentFilePath});
+                        window.location.href = url;
+                    }
+                }]
+            });
+            gpxMotionView.editButton.addTo(gpxMotionView.map);
+
             gpxMotionView.shareButton = L.easyButton({
                 position: 'bottomright',
                 states: [{

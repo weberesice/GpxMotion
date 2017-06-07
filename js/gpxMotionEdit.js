@@ -717,6 +717,11 @@
         }
     }
 
+    function openViewPageOn(targetPath) {
+        var url = OC.generateUrl('apps/gpxmotion/view?path={filepath}',{'filepath': targetPath});
+        window.location.href = url;
+    }
+
     $(document).ready(function() {
         document.onkeydown = checkKey;
         load_map();
@@ -800,16 +805,7 @@
             OC.dialogs.filepicker(
                 t('gpxmotion', 'Load and view animation file (gpx)'),
                 function(targetPath) {
-                    var url = OC.generateUrl('apps/gpxmotion/view?path={filepath}',{'filepath': targetPath});
-                    var win = window.open(url, '_blank');
-                    if (win) {
-                        win.focus();
-                    }
-                    else {
-                        OC.dialogs.alert('Allow popups for this page in order'+
-                                         ' to open comparison tab/window.',
-                                         'Failed to open popup');
-                    }
+                    openViewPageOn(targetPath);
                 },
                 false,
                 null,
