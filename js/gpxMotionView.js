@@ -975,6 +975,7 @@
     }
 
     function clearMap(m) {
+        var i, e;
         for(i in m._layers) {
             if (m._layers[i] instanceof L.Marker || m._layers[i] instanceof L.Polyline) {
                 try {
