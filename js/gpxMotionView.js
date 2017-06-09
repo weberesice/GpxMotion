@@ -835,6 +835,8 @@
 
                 featGroup.bindPopup(linePopupString);
                 featGroup.bindTooltip('Section '+(iplan+1)+' : '+title+'<br/>Click for details', {sticky: true});
+                drawFeatGroup.bindPopup(linePopupString);
+                drawFeatGroup.bindTooltip('Section '+(iplan+1)+' : '+title+'<br/>Click for details', {sticky: true});
                 lineSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+' : '+title+'</td></tr>';
             }
             else{
