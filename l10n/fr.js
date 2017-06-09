@@ -57,6 +57,10 @@ OC.L10N.register(
     "Reset (i)" : "RAZ (i)",
     "Edit with GpxMotion" : "Éditer avec GpxMotion",
     "Load and view animation file (gpx)" : "Charger et voir un fichier d'animation (gpx)",
+    "Insert section before" : "Insérer une section avant",
+    "Insert section after" : "Insérer une section après",
+    "Remove section" : "Supprimer la section",
+    "Zoom on section" : "Zoomer sur la section",
     "View in GpxMotion" : "Voir dans GpxMotion"
     },
 "nplurals=2; plural=(n > 1);");

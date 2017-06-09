@@ -540,7 +540,7 @@
         divtxt = divtxt + '<p class="morebutton"><i class="fa fa-angle-double-down"></i> <b>more</b></p>';
         divtxt = divtxt + '<div class="sectionmore">';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Description') + ' :</label>';
-        divtxt = divtxt + '<textarea role="description" value="' + escapeHTML(values.description) + '"/>';
+        divtxt = divtxt + '<textarea role="description">' + escapeHTML(values.description) + '</textarea>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Picture URL') + ' :</label>';
         divtxt = divtxt + '<input role="pictureUrl" type="text" value="' + escapeHTML(values.pictureUrl) + '"></input>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Detail URL') + ' :</label>';
@@ -555,10 +555,14 @@
         divtxt = divtxt + '<input role="beginDetailUrl" type="text" value="' + escapeHTML(values.beginDetailUrl) + '"></input>';
         divtxt = divtxt + '</div>';
 
-        divtxt = divtxt + '<button class="removeSection"><i class="fa fa-trash" aria-hidden="true"></i> Remove section</button>';
-        divtxt = divtxt + '<button class="zoom"><i class="fa fa-search" aria-hidden="true"></i> Zoom on section</button>';
-        divtxt = divtxt + '<button class="insertSectionBefore"><i class="fa fa-arrow-up" aria-hidden="true"></i> Insert section before</button>';
-        divtxt = divtxt + '<button class="insertSectionAfter"><i class="fa fa-arrow-down" aria-hidden="true"></i> Insert section after</button>';
+        divtxt = divtxt + '<button class="removeSection"><i class="fa fa-trash" aria-hidden="true"></i> ' +
+            t('gpxmotion', 'Remove section') + '</button>';
+        divtxt = divtxt + '<button class="zoom"><i class="fa fa-search" aria-hidden="true"></i> ' +
+            t('gpxmotion', 'Zoom on section') + '</button>';
+        divtxt = divtxt + '<button class="insertSectionBefore"><i class="fa fa-arrow-up" aria-hidden="true"></i> ' +
+            t('gpxmotion', 'Insert section before') + '</button>';
+        divtxt = divtxt + '<button class="insertSectionAfter"><i class="fa fa-arrow-down" aria-hidden="true"></i> ' +
+            t('gpxmotion', 'Insert section after') + '</button>';
         divtxt = divtxt + '</div>';
         if (after) {
             insertNextTo.after($(divtxt).fadeIn('slow').css('display', 'grid'));
@@ -674,7 +678,7 @@
             section.vehicule = $(this).find('select[role=vehicule]').val();
             section.time = parseInt($(this).find('input[role=time]').val()) * 1000;
             section.title = $(this).find('input[role=title]').val();
-            section.description = $(this).find('input[role=description]').val();
+            section.description = $(this).find('textarea[role=description]').val();
             section.pictureUrl = $(this).find('input[role=pictureUrl]').val();
             section.detailUrl = $(this).find('input[role=detailUrl]').val();
             section.beginTitle = $(this).find('input[role=beginTitle]').val();
