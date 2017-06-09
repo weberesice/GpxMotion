@@ -109,9 +109,10 @@
             }
 
             // update current title
-            $('div#summary').text(plan[currentMarkerIndex]['title']+
-                ' (~'+formatDistance(plan[currentMarkerIndex]['totalDistance'])+
-                    ' ; section '+(currentMarkerIndex+1)+'/'+markers.length+')');
+            $('div#summary').text(plan[currentMarkerIndex]['title'] +
+                ' (~'+formatDistance(plan[currentMarkerIndex]['totalDistance']) +
+                    ' ; ' + t('gpxmotion', 'Section') +
+                    ' ' + (currentMarkerIndex+1) + '/' + markers.length + ')');
 
             // add next marker pin at start point and get its time
             var timeout = plan[currentMarkerIndex]['time'];
@@ -815,7 +816,7 @@
                         title += ' ' + planNamesFromGpxTrk[iplan];
                     }
                 }
-                linePopupString = '<h2 class="popupTitle">Section ' + (iplan+1) + ' : ' + title + '</h2>';
+                linePopupString = '<h2 class="popupTitle">' + t('gpxmotion', 'Section') + ' ' + (iplan+1) + ' : ' + title + '</h2>';
                 if (text) {
                     linePopupString = linePopupString + '<p>' + text + '</p>';
                 }
@@ -835,14 +836,17 @@
                 }
 
                 featGroup.bindPopup(linePopupString);
-                featGroup.bindTooltip('Section ' + (iplan+1) + ' : ' + title + '<br/>' + t('gpxmotion', 'Click for more details'),
+                featGroup.bindTooltip(t('gpxmotion', 'Section') + ' ' + (iplan+1) + ' : ' +
+                                      title + '<br/>' + t('gpxmotion', 'Click for more details'),
                                       {sticky: true});
                 drawFeatGroup.bindPopup(linePopupString);
-                drawFeatGroup.bindTooltip('Section ' + (iplan+1) + ' : ' + title + '<br/>' + t('gpxmotion', 'Click for more details'),
+                drawFeatGroup.bindTooltip(t('gpxmotion', 'Section') + ' ' + (iplan+1) + ' : ' +
+                                          title + '<br/>' + t('gpxmotion', 'Click for more details'),
                                           {sticky: true});
                 marker.bindPopup(linePopupString);
-                marker.bindTooltip('Section ' + (iplan+1) + ' : ' + title + '<br/>' + t('gpxmotion', 'Click for more details'),
-                    {sticky: true});
+                marker.bindTooltip(t('gpxmotion', 'Section') + ' ' + (iplan+1) + ' : ' +
+                                   title + '<br/>' + t('gpxmotion', 'Click for more details'),
+                                   {sticky: true});
                 lineSummaryContent += '<tr><td id="' + iplan + '">' + (iplan+1) + ' : ' + title + '</td></tr>';
             }
             else {
@@ -860,9 +864,9 @@
                         beginTitle += ' '+planNamesFromGpxTrk[iplan];
                     }
                 }
-                popupString = '<h2 class="popupTitle">Section '+(iplan+1)+' : '+beginTitle+'</h2>';
+                popupString = '<h2 class="popupTitle">' + t('gpxmotion', 'Step') + ' '+ iplan + ' : ' + beginTitle + '</h2>';
                 if (text) {
-                    popupString = popupString + '<p>'+text+'</p>';
+                    popupString = popupString + '<p>' + text + '</p>';
                 }
                 if (photoUrl) {
                     if (linkDest) {
@@ -905,10 +909,11 @@
 
         // add last pin marker and tooltip
         var lastMarker = L.marker(table[table.length-1], {icon: gpxMotionView.endPinIcon});
-        var lastTooltip = 'Section '+(iplan+1)+' (final)';
+        var lastTooltip = t('gpxmotion', 'Step') + ' '+ iplan + ' (final)';
         var lastPopup = lastTooltip;
         if (iplan < plan.length && plan[iplan].hasOwnProperty('beginTitle')) {
-            lastTooltip = 'Section '+(iplan+1)+' (final) : '+plan[iplan]['beginTitle']+'<br/>Click for details';
+            lastTooltip = t('gpxmotion', 'Step') + ' ' + iplan + ' (final) : ' +
+                          plan[iplan]['beginTitle'] + '<br/>' + t('gpxmotion', 'Click for more details');
 
             linkDest = plan[iplan]['beginDetailUrl'];
             beginTitle = plan[iplan]['beginTitle'];
@@ -917,25 +922,28 @@
             if (!beginTitle) {
                 beginTitle = '';
                 if (params.elementUnit === 'track') {
-                    beginTitle += ' '+planNamesFromGpxTrk[iplan];
+                    beginTitle += ' ' + planNamesFromGpxTrk[iplan];
                 }
             }
-            lastPopup = '<h2 class="popupTitle">Section '+(iplan+1)+' (final) : '+beginTitle+'</h2>';
+            lastPopup = '<h2 class="popupTitle">' + t('gpxmotion', 'Step') + ' ' +
+                        iplan + ' (' + t('gpxmotion', 'final') +
+                        ') : ' + beginTitle + '</h2>';
             if (text) {
-                lastPopup = lastPopup + '<p>'+text+'</p>';
+                lastPopup = lastPopup + '<p>' + text + '</p>';
             }
             if (photoUrl) {
                 if (linkDest) {
                     lastPopup = lastPopup + '<a href="' + linkDest +
-                        '" target="_blank" title="Click to know more about \''+
-                        beginTitle+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
+                        '" target="_blank" title="' + t('gpxmotion', 'More about') + ' \'' +
+                        beginTitle + '\'"><img class="popupPhoto" src="' + photoUrl + '"/></a>';
                 }
                 else {
                     lastPopup = lastPopup + '<img class="popupPhoto" src="'+photoUrl+'"/>';
                 }
             }
             if (linkDest) {
-                lastPopup = lastPopup+ '<a href="' + linkDest + '" target="_blank">More about "'+beginTitle+'"</a>';
+                lastPopup = lastPopup + '<a href="' + linkDest + '" target="_blank">' +
+                            t('gpxmotion', 'More about') + ' "' + beginTitle + '"</a>';
             }
             lastMarker.bindPopup(lastPopup);
         }

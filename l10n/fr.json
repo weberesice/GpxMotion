@@ -26,7 +26,6 @@
     "Server name (for example 'my custom server')" : "Nom du serveur ('mon super serveur' par exemple)",
     "Documentation" : "Documentation",
     "File name" : "Nom de fichier",
-    "toggle minimap" : "montrer/cacher la mini carte",
 	"loading file" : "chargement du fichier",
     "toggle sidebar" : "montrer/cacher la barre latérale",
     "GpxMotion" : "GpxMotion"

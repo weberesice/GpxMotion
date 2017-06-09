@@ -65,6 +65,7 @@ OC.L10N.register(
     "Step" : "Étape",
     "Section" : "Section",
     "More about" : "Plus d'infos sur",
+    "final" : "dernier",
     "View in GpxMotion" : "Voir dans GpxMotion"
     },
 "nplurals=2; plural=(n > 1);");
