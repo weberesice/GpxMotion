@@ -71,11 +71,11 @@
     function long2tile(lon,zoom) { return (Math.floor((lon+180)/360*Math.pow(2,zoom))); }
     function lat2tile(lat,zoom)  { return (Math.floor((1-Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2 *Math.pow(2,zoom))); }
 
-    function formatDistance(d){
-        if (d > 1000){
+    function formatDistance(d) {
+        if (d > 1000) {
             return ((d/1000).toFixed(2)+'km');
         }
-        else{
+        else {
             return (parseInt(d)+'m');
         }
     }
@@ -90,12 +90,12 @@
         }
     }
 
-    function nextMarker(){
-        if (currentMarkerIndex < markers.length){
+    function nextMarker() {
+        if (currentMarkerIndex < markers.length) {
             gpxMotionView.playButton.state('pause');
 
             // remove marker when it ends
-            if (currentMarkerIndex > 0){
+            if (currentMarkerIndex > 0) {
                 markers[currentMarkerIndex-1].stop();
                 gpxMotionView.map.removeLayer(markers[currentMarkerIndex-1]);
                 // add the line for the previous Section
@@ -130,7 +130,7 @@
             });
 
             // preload tiles needed for next marker
-            if (currentMarkerIndex+1 < markers.length){
+            if (currentMarkerIndex+1 < markers.length) {
                 preloadTiles(polylines[currentMarkerIndex+1]);
             }
 
@@ -145,7 +145,7 @@
                 nextMarker();
             }, timeout);
         }
-        else{
+        else {
             // this is the end of the animation
             // we remove the last marker
             markers[currentMarkerIndex-1].stop();
@@ -167,25 +167,25 @@
         }
     }
 
-    function playPause(){
-        if (markers[currentMarkerIndex-1].isPaused()){
+    function playPause() {
+        if (markers[currentMarkerIndex-1].isPaused()) {
             currentTimer.resume();
             markers[currentMarkerIndex-1].resume();
             gpxMotionView.playButton.state('pause');
         }
-        else{
+        else {
             currentTimer.pause();
             markers[currentMarkerIndex-1].pause();
             gpxMotionView.playButton.state('play');
         }
     }
 
-    function reset(){
+    function reset() {
         // empty title
         $('div#summary').text('');
 
         // stop scheduler
-        if (currentTimer !== null){
+        if (currentTimer !== null) {
             currentTimer.pause();
             currentTimer = null;
         }
@@ -194,16 +194,16 @@
         currentMarkerIndex = 0;
         var i;
         // remove begin markers
-        for (i=0; i < beginMarkers.length; i++){
+        for (i=0; i < beginMarkers.length; i++) {
             gpxMotionView.map.removeLayer(beginMarkers[i]);
         }
 
         // remove polylines
-        for (i = 0; i < polylines.length; i++){
+        for (i = 0; i < polylines.length; i++) {
             gpxMotionView.map.removeLayer(polylines[i]);
         }
         // remove draw polylines
-        for (i=0; i < drawPolylines.length; i++){
+        for (i=0; i < drawPolylines.length; i++) {
             gpxMotionView.map.removeLayer(drawPolylines[i]);
             drawPolylines[i].eachLayer( function (l) {
                 l.setLatLngs([]);
@@ -211,19 +211,19 @@
         }
 
         // remove moving markers
-        for (i = 0; i < markers.length; i++){
+        for (i = 0; i < markers.length; i++) {
             markers[i].stop();
             gpxMotionView.map.removeLayer(markers[i]);
         }
         gpxMotionView.playButton.state('play');
     }
 
-    function displayCompleteTravel(){
+    function displayCompleteTravel() {
         $('div#summary').text(gpxMotionView.summaryText);
-        for (var i=0; i<beginMarkers.length; i++){
+        for (var i=0; i<beginMarkers.length; i++) {
             beginMarkers[i].addTo(gpxMotionView.map);
         }
-        for (var i = 0; i < polylines.length; i++){
+        for (var i = 0; i < polylines.length; i++) {
             polylines[i].addTo(gpxMotionView.map);
         }
         // zoom on whole travel
@@ -231,8 +231,8 @@
         gpxMotionView.map.flyToBounds(globalBounds, {animate:true, padding: [100,100]});
     }
 
-    function nextSection(){
-        if (currentMarkerIndex === 0){
+    function nextSection() {
+        if (currentMarkerIndex === 0) {
             return;
         }
 
@@ -242,8 +242,8 @@
         nextMarker();
     }
 
-    function prevSection(){
-        if (currentMarkerIndex === 0){
+    function prevSection() {
+        if (currentMarkerIndex === 0) {
             return;
         }
 
@@ -252,7 +252,7 @@
         currentTimer = null;
 
         // remove current marker and polyline and begin marker
-        if (currentMarkerIndex > 0){
+        if (currentMarkerIndex > 0) {
             markers[currentMarkerIndex-1].stop();
             gpxMotionView.map.removeLayer(markers[currentMarkerIndex-1]);
             // in case it was added by nextSection
@@ -263,7 +263,7 @@
             });
             gpxMotionView.map.removeLayer(beginMarkers[currentMarkerIndex-1]);
             // remove the previous Section
-            if (currentMarkerIndex > 1){
+            if (currentMarkerIndex > 1) {
                 gpxMotionView.map.removeLayer(polylines[currentMarkerIndex-2]);
                 gpxMotionView.map.removeLayer(drawPolylines[currentMarkerIndex-2]);
                 drawPolylines[currentMarkerIndex-2].eachLayer( function (l) {
@@ -273,10 +273,10 @@
         }
 
         // rewind
-        if (currentMarkerIndex <= 1){
+        if (currentMarkerIndex <= 1) {
             currentMarkerIndex = 0;
         }
-        else{
+        else {
             currentMarkerIndex -= 2;
         }
 
@@ -706,8 +706,8 @@
         // used in feature unit only
         // we get the number of features we want for each plan Section
         var featureNumberPerSection = [];
-        if (params.elementUnit === 'track'){
-            for (var i=0; i<plan.length; i++){
+        if (params.elementUnit === 'track') {
+            for (var i=0; i<plan.length; i++) {
                 featureNumberPerSection.push(plan[i]['nbElements']);
                 plan[i]['nbElements'] = 0;
                 planNamesFromGpxTrk.push('');
@@ -716,37 +716,37 @@
         var iplancoord = 0;
         // concatenate all tracks/routes coordinates in one array
         // avoid waypoints
-        for (var i=0; i<geogpx.features.length; i++){
+        for (var i=0; i<geogpx.features.length; i++) {
             if (geogpx.features[i].geometry.type !== 'Point'){
                 //alert(geogpx.features[i].geometry.type);
                 var featureLength = 0;
-                if (geogpx.features[i].geometry.type === 'MultiLineString'){
-                    for(var j=0; j<geogpx.features[i].geometry.coordinates.length; j++){
+                if (geogpx.features[i].geometry.type === 'MultiLineString') {
+                    for(var j=0; j<geogpx.features[i].geometry.coordinates.length; j++) {
                         coords = coords.concat(geogpx.features[i].geometry.coordinates[j]);
                         featureLength += geogpx.features[i].geometry.coordinates[j].length;
                     }
                 }
-                else{
+                else {
                     coords = coords.concat(geogpx.features[i].geometry.coordinates);
                     featureLength = geogpx.features[i].geometry.coordinates.length;
                 }
                 // if we count the features, get the correct number of segments
-                if (params.elementUnit === 'track' && iplancoord < plan.length){
+                if (params.elementUnit === 'track' && iplancoord < plan.length) {
                     plan[iplancoord]['nbElements'] += featureLength;
                     planNamesFromGpxTrk[iplancoord] += geogpx.features[i].properties.name + '; ';
                     featureNumberPerSection[iplancoord]--;
-                    if (featureNumberPerSection[iplancoord] === 0){
+                    if (featureNumberPerSection[iplancoord] === 0) {
                         planNamesFromGpxTrk[iplancoord] = planNamesFromGpxTrk[iplancoord].replace(/;\s$/g, '');
                         iplancoord++;
                     }
                 }
             }
         }
-        while (iplan < plan.length && iline < coords.length){
+        while (iplan < plan.length && iline < coords.length) {
             planSection = plan[iplan];
             nblinesInserted = 0;
             table = [];
-            while (nblinesInserted < planSection['nbElements']+1 && iline < coords.length){
+            while (nblinesInserted < planSection['nbElements']+1 && iline < coords.length) {
                 thecoord = coords[iline];
                 ll = L.latLng(thecoord[1], thecoord[0]);
                 //console.log('section '+iplan+' : '+thecoord[1]+' ; '+ thecoord[0]);
@@ -756,7 +756,7 @@
             }
             // if this is the last coord, there is nothing to link with after
             // else : we artificialy put the last point we took as the start of next section
-            if (iline !== coords.length){
+            if (iline !== coords.length) {
                 iline--;
             }
 
@@ -766,18 +766,18 @@
 
             // calculate approximate plan section total distance
             planSection['totalDistance'] = 0;
-            for (var ii = 0; ii < table.length - 1; ii++){
+            for (var ii = 0; ii < table.length - 1; ii++) {
                 planSection['totalDistance'] += gpxMotionView.map.distance(table[ii], table[ii+1]);
             }
             allSectionTotalDistance += planSection['totalDistance'];
 
             mypoly = L.polyline(table, {color:thecolor, weight:5});
-            if (border){
+            if (border) {
                 borderLine = L.polyline(table,
                     {opacity:1, weight: parseInt(5*1.6), color:'black'});
                 featGroup = L.featureGroup([borderLine, mypoly]);
             }
-            else{
+            else {
                 featGroup = L.featureGroup([mypoly]);
             }
             polylines.push(featGroup);
@@ -796,7 +796,7 @@
             });
             marker.on('move', updateSnakeLine);
             var pinIcon = gpxMotionView.normalPinIcon;
-            if (iplan === 0){
+            if (iplan === 0) {
                 pinIcon = gpxMotionView.beginPinIcon;
             }
             var beginMarker = L.marker(table[0], {icon: pinIcon});
@@ -804,82 +804,90 @@
             popupString = '';
 
             // popup for line
-            if (planSection.hasOwnProperty('title')){
+            if (planSection.hasOwnProperty('title')) {
                 linkDest = planSection['detailUrl'];
                 title = planSection['title'];
                 text = planSection['description'];
                 photoUrl = planSection['pictureUrl'];
-                if (!title){
+                if (!title) {
                     title = '';
-                    if (params.elementUnit === 'track'){
-                        title += ' '+planNamesFromGpxTrk[iplan];
+                    if (params.elementUnit === 'track') {
+                        title += ' ' + planNamesFromGpxTrk[iplan];
                     }
                 }
-                linePopupString = '<h2 class="popupTitle">Section '+(iplan+1)+' : '+title+'</h2>';
-                if (text){
-                    linePopupString = linePopupString + '<p>'+text+'</p>';
+                linePopupString = '<h2 class="popupTitle">Section ' + (iplan+1) + ' : ' + title + '</h2>';
+                if (text) {
+                    linePopupString = linePopupString + '<p>' + text + '</p>';
                 }
-                if (photoUrl){
-                    if (linkDest){
+                if (photoUrl) {
+                    if (linkDest) {
                         linePopupString = linePopupString + '<a href="' + linkDest +
-                            '" target="_blank" title="Click to know more about \''+
-                            beginTitle+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
+                            '" target="_blank" title="' + t('gpxmotion', 'More about') + ' \'' +
+                            title +'\'"><img class="popupPhoto" src="' + photoUrl + '"/></a>';
                     }
-                    else{
-                        linePopupString = linePopupString + '<img class="popupPhoto" src="'+photoUrl+'"/>';
+                    else {
+                        linePopupString = linePopupString + '<img class="popupPhoto" src="' + photoUrl + '"/>';
                     }
                 }
-                if (linkDest){
-                    linePopupString = linePopupString+ '<a href="' + linkDest + '" target="_blank">More about "'+title+'"</a>';
+                if (linkDest) {
+                    linePopupString = linePopupString+ '<a href="' + linkDest + '" target="_blank">' +
+                                      t('gpxmotion', 'More about') + ' "' + title + '"</a>';
                 }
 
                 featGroup.bindPopup(linePopupString);
-                featGroup.bindTooltip('Section '+(iplan+1)+' : '+title+'<br/>Click for details', {sticky: true});
+                featGroup.bindTooltip('Section ' + (iplan+1) + ' : ' + title + '<br/>' + t('gpxmotion', 'Click for more details'),
+                                      {sticky: true});
                 drawFeatGroup.bindPopup(linePopupString);
-                drawFeatGroup.bindTooltip('Section '+(iplan+1)+' : '+title+'<br/>Click for details', {sticky: true});
+                drawFeatGroup.bindTooltip('Section ' + (iplan+1) + ' : ' + title + '<br/>' + t('gpxmotion', 'Click for more details'),
+                                          {sticky: true});
                 marker.bindPopup(linePopupString);
-                marker.bindTooltip('Section '+(iplan+1)+' : '+title+'<br/>Click for details', {sticky: true});
-                lineSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+' : '+title+'</td></tr>';
+                marker.bindTooltip('Section ' + (iplan+1) + ' : ' + title + '<br/>' + t('gpxmotion', 'Click for more details'),
+                    {sticky: true});
+                lineSummaryContent += '<tr><td id="' + iplan + '">' + (iplan+1) + ' : ' + title + '</td></tr>';
             }
-            else{
-                lineSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+'</td></tr>';
+            else {
+                lineSummaryContent += '<tr><td id="' + iplan + '">' + (iplan+1) + '</td></tr>';
             }
             // popup for begin pin
-            if (planSection.hasOwnProperty('beginTitle')){
+            if (planSection.hasOwnProperty('beginTitle')) {
                 linkDest = planSection['beginDetailUrl'];
                 beginTitle = planSection['beginTitle'];
                 text = planSection['beginDescription'];
                 photoUrl = planSection['beginPictureUrl'];
-                if (!beginTitle){
+                if (!beginTitle) {
                     beginTitle = '';
                     if (params.elementUnit === 'track'){
                         beginTitle += ' '+planNamesFromGpxTrk[iplan];
                     }
                 }
                 popupString = '<h2 class="popupTitle">Section '+(iplan+1)+' : '+beginTitle+'</h2>';
-                if (text){
+                if (text) {
                     popupString = popupString + '<p>'+text+'</p>';
                 }
-                if (photoUrl){
-                    if (linkDest){
+                if (photoUrl) {
+                    if (linkDest) {
                         popupString = popupString + '<a href="' + linkDest +
-                            '" target="_blank" title="Click to know more about \''+
-                            beginTitle+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
+                            '" target="_blank" title="' + t('gpxmotion', 'More about') + ' \''+
+                            beginTitle + '\'"><img class="popupPhoto" src="' + photoUrl + '"/></a>';
                     }
-                    else{
+                    else {
                         popupString = popupString + '<img class="popupPhoto" src="'+photoUrl+'"/>';
                     }
                 }
-                if (linkDest){
-                    popupString = popupString+ '<a href="' + linkDest + '" target="_blank">More about "'+beginTitle+'"</a>';
+                if (linkDest) {
+                    popupString = popupString+ '<a href="' + linkDest + '" target="_blank">' +
+                                  t('gpxmotion', 'More about') + ' "'+beginTitle+'"</a>';
                 }
                 beginMarker.bindPopup(popupString);
-                beginMarker.bindTooltip('Section '+(iplan+1)+' : '+beginTitle+'<br/>Click for details');
-                pinSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+' : '+beginTitle+'</td></tr>';
+                beginMarker.bindTooltip(t('gpxmotion', 'Step') + ' ' + iplan +
+                                        ' : '+beginTitle+'<br/>' +
+                                        t('gpxmotion', 'Click for more details'));
+                pinSummaryContent += '<tr><td id="' + iplan + '">' +
+                                     iplan + ' : ' + beginTitle + '</td></tr>';
             }
-            else{
+            else {
                 beginMarkers.bindPopup(linePopupString);
-                pinSummaryContent += '<tr><td id="'+iplan+'">'+(iplan+1)+'</td></tr>';
+                pinSummaryContent += '<tr><td id="'+iplan+'">' + iplan + '</td></tr>';
             }
 
             beginMarkers.push(beginMarker);
@@ -891,7 +899,7 @@
 
         // get the global bounds to zoom on the whole trip
         globalBounds = L.latLngBounds(polylines[0].getBounds().getSouthWest(), polylines[0].getBounds().getNorthEast());
-        for (var i=0; i<polylines.length; i++){
+        for (var i=0; i<polylines.length; i++) {
             globalBounds.extend(polylines[i].getBounds());
         }
 
@@ -899,34 +907,34 @@
         var lastMarker = L.marker(table[table.length-1], {icon: gpxMotionView.endPinIcon});
         var lastTooltip = 'Section '+(iplan+1)+' (final)';
         var lastPopup = lastTooltip;
-        if (iplan < plan.length && plan[iplan].hasOwnProperty('beginTitle')){
+        if (iplan < plan.length && plan[iplan].hasOwnProperty('beginTitle')) {
             lastTooltip = 'Section '+(iplan+1)+' (final) : '+plan[iplan]['beginTitle']+'<br/>Click for details';
 
             linkDest = plan[iplan]['beginDetailUrl'];
             beginTitle = plan[iplan]['beginTitle'];
             text = plan[iplan]['beginDescription'];
             photoUrl = plan[iplan]['beginPictureUrl'];
-            if (!beginTitle){
+            if (!beginTitle) {
                 beginTitle = '';
-                if (params.elementUnit === 'track'){
+                if (params.elementUnit === 'track') {
                     beginTitle += ' '+planNamesFromGpxTrk[iplan];
                 }
             }
             lastPopup = '<h2 class="popupTitle">Section '+(iplan+1)+' (final) : '+beginTitle+'</h2>';
-            if (text){
+            if (text) {
                 lastPopup = lastPopup + '<p>'+text+'</p>';
             }
-            if (photoUrl){
-                if (linkDest){
+            if (photoUrl) {
+                if (linkDest) {
                     lastPopup = lastPopup + '<a href="' + linkDest +
                         '" target="_blank" title="Click to know more about \''+
                         beginTitle+'\'"><img class="popupPhoto" src="'+photoUrl+'"/></a>';
                 }
-                else{
+                else {
                     lastPopup = lastPopup + '<img class="popupPhoto" src="'+photoUrl+'"/>';
                 }
             }
-            if (linkDest){
+            if (linkDest) {
                 lastPopup = lastPopup+ '<a href="' + linkDest + '" target="_blank">More about "'+beginTitle+'"</a>';
             }
             lastMarker.bindPopup(lastPopup);
@@ -950,13 +958,13 @@
         ready = true;
     }
 
-    function drawslider(ossz, meik){
+    function drawslider(ossz, meik) {
         var slidertext=Math.round((meik*100)/ossz);
         document.getElementById("sliderbar").style.width=slidertext+'%';
         document.getElementById("slidertext").innerHTML='Loading '+slidertext+'%';
     }
 
-    function updateDisplaySizes(){
+    function updateDisplaySizes() {
         gpxMotionView.summaryDialog.setLocation([0, parseInt(gpxMotionView.map.getSize().x * 0.2)]);
         gpxMotionView.summaryDialog.setSize([parseInt(gpxMotionView.map.getSize().x * 0.6), 20]);
 
@@ -964,7 +972,7 @@
     }
 
     // preload tiles needed when a polyline is displayed
-    function preloadTiles(poly){
+    function preloadTiles(poly) {
         var url, img, x, y;
         var currentTileUrl = gpxMotionView.activeLayers.getActiveBaseLayer().layer._url.replace('{s}', 'a');
         var bounds = poly.getBounds().pad(0.2);
@@ -979,7 +987,7 @@
         var dataNorth = lat2tile(north, zoom);
         var dataSouth = lat2tile(south, zoom);
 
-        try{
+        try {
             for(y = dataNorth; y < dataSouth + 1; y++) {
                 for(x = dataWest; x < dataEast + 1; x++) {
                     url = currentTileUrl.replace('{z}', zoom).replace('{x}', x).replace('{y}', y);
@@ -1023,7 +1031,7 @@
     }
 
     // load gpx file with plan and build our markers, pins...
-    function main(path=''){
+    function main(path='') {
         clearAll();
         var req;
         // public file or preview
@@ -1078,7 +1086,7 @@
                 async: true,
                 url: url,
                 data: req,
-                xhr: function(){
+                xhr: function() {
                     var xhr = new window.XMLHttpRequest();
                     xhr.addEventListener("progress", function(evt) {
                         if (evt.lengthComputable) {
@@ -1096,11 +1104,9 @@
     function getUrlParameter(sParam) {
         var sPageURL = window.location.search.substring(1);
         var sURLVariables = sPageURL.split('&');
-        for (var i = 0; i < sURLVariables.length; i++)
-        {
+        for (var i = 0; i < sURLVariables.length; i++) {
             var sParameterName = sURLVariables[i].split('=');
-            if (sParameterName[0] === sParam)
-            {
+            if (sParameterName[0] === sParam) {
                 return decodeURIComponent(sParameterName[1]);
             }
         }
@@ -1133,41 +1139,41 @@
             }
         });
 
-        function checkKey(e){
+        function checkKey(e) {
             e = e || window.event;
             var kc = e.keyCode;
             //console.log(kc);
 
-            if (kc === 32){
+            if (kc === 32) {
                 e.preventDefault();
-                if (ready){
+                if (ready) {
                     if (currentMarkerIndex === 0){
                         reset();
                         nextMarker();
                     }
-                    else{
+                    else {
                         playPause();
                     }
                 }
             }
-            if (kc === 78){
+            if (kc === 78) {
                 e.preventDefault();
                 nextSection();
             }
-            if (kc === 80){
+            if (kc === 80) {
                 e.preventDefault();
                 prevSection();
             }
-            if (kc === 73){
+            if (kc === 73) {
                 e.preventDefault();
-                if (ready){
+                if (ready) {
                     reset();
                     $('div#summary').text(gpxMotionView.summaryText);
                 }
             }
-            if (kc === 71){
+            if (kc === 71) {
                 e.preventDefault();
-                if (ready){
+                if (ready) {
                     reset();
                     displayCompleteTravel();
                 }

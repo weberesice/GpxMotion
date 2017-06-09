@@ -61,6 +61,10 @@ OC.L10N.register(
     "Insert section after" : "Insérer une section après",
     "Remove section" : "Supprimer la section",
     "Zoom on section" : "Zoomer sur la section",
+    "Click for more details" : "Cliquez pour plus de détails",
+    "Step" : "Étape",
+    "Section" : "Section",
+    "More about" : "Plus d'infos sur",
     "View in GpxMotion" : "Voir dans GpxMotion"
     },
 "nplurals=2; plural=(n > 1);");
