@@ -35,6 +35,7 @@ OC.L10N.register(
     "bike" : "vélo",
     "train" : "train",
     "Picture URL" : "URL de l'image",
+    "Detail URL" : "URL du détail",
     "There is nothing to save" : "Il n'y a rien à sauver",
     "Where to save" : "Où enregistrer",
     "Duration (sec)" : "Durée (sec)",

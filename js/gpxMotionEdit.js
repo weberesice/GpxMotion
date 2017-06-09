@@ -543,6 +543,8 @@
         divtxt = divtxt + '<textarea role="description" value="' + escapeHTML(values.description) + '"/>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Picture URL') + ' :</label>';
         divtxt = divtxt + '<input role="pictureUrl" type="text" value="' + escapeHTML(values.pictureUrl) + '"></input>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Detail URL') + ' :</label>';
+        divtxt = divtxt + '<input role="detailUrl" type="text" value="' + escapeHTML(values.detailUrl) + '"></input>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Starting point title') + ' :</label>';
         divtxt = divtxt + '<input role="beginTitle" type="text" value="' + escapeHTML(values.beginTitle) + '"></input>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Starting point description') + ' :</label>';

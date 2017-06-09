@@ -164,7 +164,6 @@ if (count($_['overlayservers']) > 0){
     <h3 class="sectiontitle"><?php p($l->t('Shortcuts')); ?> :</h3>
     <ul class="disclist">
         <li><b>&lt;</b> : <?php p($l->t('toggle sidebar')); ?></li>
-        <li><b>!</b> : <?php p($l->t('toggle minimap')); ?></li>
     </ul>
     <br/><hr/><br/>
     <h3 class="sectiontitle"><?php p($l->t('Documentation')); ?></h3>
