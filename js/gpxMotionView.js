@@ -467,7 +467,7 @@
                 states: [{
                     stateName: 'prev',
                     icon:      'fa-pencil',
-                    title:     'Edit current file',
+                    title:     t('gpxmotion', 'Edit current file'),
                     onClick: function(btn, map) {
                         var url = OC.generateUrl('apps/gpxmotion/?path={filepath}',{'filepath': gpxMotionView.currentFilePath});
                         window.location.href = url;

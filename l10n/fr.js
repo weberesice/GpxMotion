@@ -66,6 +66,7 @@ OC.L10N.register(
     "Section" : "Section",
     "More about" : "Plus d'infos sur",
     "final" : "dernier",
+    "Edit current file" : "Éditer le fichier courant",
     "View in GpxMotion" : "Voir dans GpxMotion"
     },
 "nplurals=2; plural=(n > 1);");
