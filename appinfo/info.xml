@@ -66,5 +66,4 @@ If you look for alternatives, take a look at :
         <owncloud min-version="9.0" max-version="10.9" />
         <nextcloud min-version="9.0" max-version="12.9"/>
     </dependencies>
-    <ocsid></ocsid>
 </info>
