@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## 0.0.1 – 2017-06-09
+## 0.0.1 – 2017-06-10
 ### Added
 - animation sections editor
 - line snake animation

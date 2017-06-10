@@ -2,9 +2,9 @@
 
 GpxMotion is an ownCloud/Nextcloud application to create and display path animations on an interactive map.
 
-To produce an animation, go to GpxMotion main page and load a GPX file with ordered tracks/routes.
+To produce an animation, go to GpxMotion main page and load a GPX file already containing ordered tracks/routes.
 Then define the animation steps. Then check you are satisfied with the animation preview. Then
-save the result to a GPX file.
+save the result to a GPX file (the animation data is saved as JSON in the GPX description field).
 
 To watch an animation, go to the "View" page of GpxMotion and load a GPX file. In the "view" page, if the file is
 publicly shared without password in "Files" app, you can produce a GpxMotion public link to
