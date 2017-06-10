@@ -58,7 +58,9 @@ If you look for alternatives, take a look at :
     <category>multimedia</category>
     <website>https://gitlab.com/eneiluj/gpxmotion-oc</website>
     <bugs>https://gitlab.com/eneiluj/gpxmotion-oc/issues</bugs>
-    <screenshot></screenshot>
+    <screenshot>https://gitlab.com/eneiluj/gpxmotion-oc/uploads/768a206b9eeac7bb774f9b6801690eae/mo2.png</screenshot>
+    <screenshot>https://gitlab.com/eneiluj/gpxmotion-oc/uploads/ab5e22993433a3ebaebc0612cbd8ddc5/mo3.png</screenshot>
+    <screenshot>https://gitlab.com/eneiluj/gpxmotion-oc/uploads/08d961fdbb010c5d852cf8d6a1c824a6/mo1.png</screenshot>
     <dependencies>
         <php min-version="5.6"/>
         <owncloud min-version="9.0" max-version="10.9" />
