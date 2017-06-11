@@ -160,3 +160,11 @@ body { margin: 0; }
     /*opacity: 0%;*/
     background-color: black;
 }
+#optiondiv {
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+#optiondiv label{
+    margin-top: auto;
+    margin-bottom: auto;
+}

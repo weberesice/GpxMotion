@@ -36,6 +36,7 @@ OC.L10N.register(
     "foot" : "marche",
     "bike" : "vélo",
     "train" : "train",
+    "loop" : "boucler",
     "Picture URL" : "URL de l'image",
     "Detail URL" : "URL du détail",
     "There is nothing to save" : "Il n'y a rien à sauver",

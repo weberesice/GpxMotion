@@ -165,6 +165,11 @@
             currentTimer = null;
 
             gpxMotionView.playButton.state('play');
+
+            if ($('#loopcheck').is(':checked')) {
+                reset();
+                nextMarker();
+            }
         }
     }
 
@@ -356,6 +361,11 @@
         L.control.mousePosition().addTo(gpxMotionView.map);
         L.control.scale({metric: true, imperial: true, position:'topleft'}).addTo(gpxMotionView.map);
         var legendText =
+            '<h3>' + t('gpxmotion', 'Options') + '</h3>' +
+            '<div id="optiondiv">' +
+            '<label for="loopcheck">' + t('gpxmotion', 'loop') + '</label>' +
+            '<input type="checkbox" id="loopcheck"/>' +
+            '</div>' +
             '<h3>' + t('gpxmotion', 'Legend') + '</h3><div class="legendVehicules">' +
             '<div class="dialogicon" icon="plane">  </div><b style="color:purple;">  ' + t('gpxmotion', 'plane') + '</b>' +
             '<div class="dialogicon" icon="bike"> </div>  <b style="color:green;"> ' + t('gpxmotion', 'bike') + '</b>' +
