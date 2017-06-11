@@ -13,7 +13,10 @@ To produce an animation, go to GpxMotion main page and load a GPX file already c
 Then define the animation steps. Then check you are satisfied with the animation preview. Then
 save the result to a GPX file (the animation data is saved as JSON in the GPX description field).
 
-To watch an animation, go to the "View" page of GpxMotion and load a GPX file. In the "view" page, if the file is
+To watch an animation, go to the "view" page of GpxMotion and load a GPX file.
+If no animation information was set, a default one (all tracks/routes in 10 seconds) is shown.
+
+In the "view" page, if the file is
 publicly shared without password in "Files" app, you can produce a GpxMotion public link to
 the current animation with the "Share" button.
 
