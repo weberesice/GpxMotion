@@ -137,7 +137,9 @@
 
             // zoom on current section with 20% padding
             var b = polylines[currentMarkerIndex].getBounds().pad(0.2);
-            gpxMotionView.map.fitBounds(b, {animate:true});
+            if ($('#zoomcheck').is(':checked')) {
+                gpxMotionView.map.fitBounds(b, {animate:true});
+            }
 
             currentMarkerIndex++;
 
@@ -365,6 +367,8 @@
             '<div id="optiondiv">' +
             '<label for="loopcheck">' + t('gpxmotion', 'loop') + '</label>' +
             '<input type="checkbox" id="loopcheck"/>' +
+            '<label for="zoomcheck">' + t('gpxmotion', 'autozoom') + '</label>' +
+            '<input type="checkbox" id="zoomcheck" checked/>' +
             '</div>' +
             '<h3>' + t('gpxmotion', 'Legend') + '</h3><div class="legendVehicules">' +
             '<div class="dialogicon" icon="plane">  </div><b style="color:purple;">  ' + t('gpxmotion', 'plane') + '</b>' +
