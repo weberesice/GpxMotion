@@ -4,7 +4,15 @@
     var gpxmotion = {
         map: null,
         vehicule: null,
-        vehicules: {'plane': '', 'car': '', 'hike': '', 'bike': '', 'train': '', 'bus': ''},
+        vehicules: {
+            'no vehicle': t('gpxmotion', 'no vehicle'),
+            'plane': t('gpxmotion', 'plane'),
+            'car': t('gpxmotion', 'car'),
+            'hike': t('gpxmotion', 'foot'),
+            'bike': t('gpxmotion', 'bike'),
+            'train': t('gpxmotion', 'train'),
+            'bus': t('gpxmotion', 'bus')
+        },
         currentAjax: null,
         featureGroup: new L.featureGroup(),
         lineList: [],
@@ -397,11 +405,11 @@
     }
 
     function insertSectionBefore(elem) {
-        addSection(1, 'plane', 5000, '', '', '', '', '', '', '', '', false, elem);
+        addSection(1, 'no vehicle', 5000, '', '', '', '', '', '', '', '', false, elem);
     }
 
     function insertSectionAfter(elem) {
-        addSection(1, 'plane', 5000, '', '', '', '', '', '', '', '', true, elem);
+        addSection(1, 'no vehicle', 5000, '', '', '', '', '', '', '', '', true, elem);
     }
 
     function clearTrack() {
@@ -477,7 +485,7 @@
     }
 
     function addSection(nbElements=1,
-                     vehicule="plane",
+                     vehicule="no vehicle",
                      time=5000,
                      title='',
                      description='',
@@ -521,7 +529,7 @@
         divtxt = divtxt + '<h3 section=""></h3>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Number of tracks/routes') + ' :</label>';
         divtxt = divtxt + '<input role="nbelem" type="text" value="' + escapeHTML(values.nbElements) + '"></input>';
-        divtxt = divtxt + '<label>' + t('gpxmotion', 'Vehicule') + ' :</label>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Vehicle') + ' :</label>';
         divtxt = divtxt + '<select role="vehicule">';
         for (v in gpxmotion.vehicules) {
             if (v === vehicule) {
@@ -530,7 +538,7 @@
             else {
                 sel = '';
             }
-            divtxt = divtxt +'<option value="' + escapeHTML(v) + '"' + sel + '>' + v + '</option>';
+            divtxt = divtxt +'<option value="' + escapeHTML(v) + '"' + sel + '>' + gpxmotion.vehicules[v] + '</option>';
         }
         divtxt = divtxt + '</select>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Duration (sec)') + ' :</label>';

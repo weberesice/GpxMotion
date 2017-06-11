@@ -156,3 +156,7 @@ body { margin: 0; }
 #linkinput {
     width: 98%;
 }
+.invisible-icon {
+    /*opacity: 0%;*/
+    background-color: black;
+}

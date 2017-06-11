@@ -109,7 +109,7 @@
             }
 
             // update current title
-            $('div#summary').text(plan[currentMarkerIndex]['title'] +
+            $('div#summary').text((plan[currentMarkerIndex]['title'] || t('gpxmotion', 'no title'))+
                 ' (~'+formatDistance(plan[currentMarkerIndex]['totalDistance']) +
                     ' ; ' + t('gpxmotion', 'Section') +
                     ' ' + (currentMarkerIndex+1) + '/' + markers.length + ')');
@@ -286,6 +286,13 @@
     
     function load_map() {
         gpxMotionView.vehicule = {
+            'no vehicle' : {
+                icon: L.divIcon({
+                    iconSize: [4, 4],
+                    className: 'invisible-icon'
+                }),
+                color : 'orange'
+            },
             plane : {
                 icon: L.divIcon({
                     className: 'marker-icon-plane',
@@ -668,23 +675,42 @@
     }
 
     function processXml(xml) {
+        var jsondesc, params;
+        var defaultDesc = '{"elementUnit": "track",' +
+            '"plan": [' +
+            '     {' +
+            '          "nbElements": 1000,' +
+            '          "vehicule": "no vehicle",' +
+            '          "time": 10000,' +
+            '          "title": null,' +
+            '          "description": null,' +
+            '          "pictureUrl": null,' +
+            '          "detailUrl": null,' +
+            '          "beginTitle": null,' +
+            '          "beginDescription": null,' +
+            '          "beginPictureUrl": null,' +
+            '          "beginDetailUrl": null' +
+            '          }]}';
         if (xml.gpx === '') {
             showEmptyMessage();
             return;
         }
         var gpxml = $.parseXML(xml.gpx);
         var desc = $(gpxml).find('gpx>metadata>desc').text();
-        var jsondesc = $.parseJSON(desc);
-        params = jsondesc;
-        if (!params) {
-            showEmptyMessage();
-            return;
+        // if there is no desc at all, we take the default one
+        if (desc === '') {
+            jsondesc = $.parseJSON(defaultDesc);
         }
-        plan = params.plan;
+        else {
+            jsondesc = $.parseJSON(desc);
+        }
+        plan = jsondesc.plan;
+        // if the plan is empty, we take the default one
         if (!plan || plan.length === 0) {
-            showEmptyMessage();
-            return;
+            jsondesc = $.parseJSON(defaultDesc);
+            plan = jsondesc.plan;
         }
+        params = jsondesc;
 
         var table;
         var ll,mypoly, borderLine, featGroup;
