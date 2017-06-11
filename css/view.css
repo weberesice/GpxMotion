@@ -164,6 +164,9 @@ body { margin: 0; }
     display: grid;
     grid-template-columns: 70% 30%;
 }
+#optiondiv input{
+    min-height: 0px;
+}
 #optiondiv label{
     margin-top: auto;
     margin-bottom: auto;
