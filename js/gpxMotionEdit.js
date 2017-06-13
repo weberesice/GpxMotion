@@ -463,7 +463,7 @@
     function parseDesc(desc) {
         var json = $.parseJSON(desc);
         var i, p;
-        if (json.plan) {
+        if (json && json.plan) {
             for (i = 0; i < json.plan.length; i++) {
                 p = json.plan[i];
                 addSection(p.nbElements,
@@ -658,7 +658,22 @@
         if (gpxmotion.currentGpxDom) {
             desc = generateJsonDescTxt();
             var xx = $(gpxmotion.currentGpxDom);
-            xx.find('gpx>metadata>desc').html(desc);
+            var domdesc = xx.find('gpx>metadata>desc');
+            if (domdesc.length !== 0) {
+                domdesc.html(desc);
+            }
+            else {
+                var dommeta = xx.find('gpx>metadata');
+                if (dommeta.length !== 0) {
+                    dommeta.append('<desc>' + desc + '</desc>');
+                }
+                else {
+                    var domgpx = xx.find('gpx');
+                    if (domgpx.length !== 0) {
+                        domgpx.append('<metadata><desc>' + desc + '</desc></metadata>');
+                    }
+                }
+            }
             return xmlToString(gpxmotion.currentGpxDom);
         }
         else {
