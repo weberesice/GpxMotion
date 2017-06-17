@@ -109,13 +109,13 @@
             }
 
             // update current title
-            $('div#summary').text((plan[currentMarkerIndex]['title'] || t('gpxmotion', 'no title'))+
-                ' (~'+formatDistance(plan[currentMarkerIndex]['totalDistance']) +
+            $('div#summary').text((plan[currentMarkerIndex].title || t('gpxmotion', 'no title'))+
+                ' (~'+formatDistance(plan[currentMarkerIndex].totalDistance) +
                     ' ; ' + t('gpxmotion', 'Section') +
                     ' ' + (currentMarkerIndex+1) + '/' + markers.length + ')');
 
             // add next marker pin at start point and get its time
-            var timeout = plan[currentMarkerIndex]['time'];
+            var timeout = plan[currentMarkerIndex].time;
             beginMarkers[currentMarkerIndex].addTo(gpxMotionView.map);
 
             //$(markers[currentMarkerIndex]._icon).show();
@@ -690,7 +690,9 @@
 
     function processXml(xml) {
         var jsondesc, params;
-        var defaultDesc = '{"elementUnit": "track",' +
+        var defaultDesc =
+            '{"elementUnit": "track",' +
+            '"proportionalTime": "true",' +
             '"plan": [' +
             '     {' +
             '          "nbElements": 1000,' +
@@ -704,7 +706,7 @@
             '          "beginDescription": null,' +
             '          "beginPictureUrl": null,' +
             '          "beginDetailUrl": null' +
-            '          }]}';
+            '}]}';
         if (xml.gpx === '') {
             showEmptyMessage();
             return;
@@ -726,7 +728,8 @@
         }
         params = jsondesc;
 
-        var table;
+        var i, j, lat, lon, name, time, table, timetable;
+        var time1, time2;
         var ll,mypoly, borderLine, featGroup;
         var emptyPoly, emptyBorderLine, drawFeatGroup;
         var popupString, linePopupString;
@@ -737,7 +740,6 @@
         var popupString;
         var iline = 0;
         var nblinesInserted;
-        var geogpx = toGeoJSON.gpx(gpxml);
         var coords = [];
         var planNamesFromGpxTrk =[];
         var pinSummaryContent = '';
@@ -748,7 +750,7 @@
         // we get the number of features we want for each plan Section
         var featureNumberPerSection = [];
         if (params.elementUnit === 'track') {
-            for (var i=0; i<plan.length; i++) {
+            for (i = 0; i < plan.length; i++) {
                 featureNumberPerSection.push(plan[i]['nbElements']);
                 plan[i]['nbElements'] = 0;
                 planNamesFromGpxTrk.push('');
@@ -757,40 +759,68 @@
         var iplancoord = 0;
         // concatenate all tracks/routes coordinates in one array
         // avoid waypoints
-        for (var i=0; i<geogpx.features.length; i++) {
-            if (geogpx.features[i].geometry.type !== 'Point'){
-                //alert(geogpx.features[i].geometry.type);
-                var featureLength = 0;
-                if (geogpx.features[i].geometry.type === 'MultiLineString') {
-                    for(var j=0; j<geogpx.features[i].geometry.coordinates.length; j++) {
-                        coords = coords.concat(geogpx.features[i].geometry.coordinates[j]);
-                        featureLength += geogpx.features[i].geometry.coordinates[j].length;
-                    }
-                }
-                else {
-                    coords = coords.concat(geogpx.features[i].geometry.coordinates);
-                    featureLength = geogpx.features[i].geometry.coordinates.length;
-                }
-                // if we count the features, get the correct number of segments
-                if (params.elementUnit === 'track' && iplancoord < plan.length) {
-                    plan[iplancoord]['nbElements'] += featureLength;
-                    planNamesFromGpxTrk[iplancoord] += geogpx.features[i].properties.name + '; ';
-                    featureNumberPerSection[iplancoord]--;
-                    if (featureNumberPerSection[iplancoord] === 0) {
-                        planNamesFromGpxTrk[iplancoord] = planNamesFromGpxTrk[iplancoord].replace(/;\s$/g, '');
-                        iplancoord++;
-                    }
+        $(gpxml).find('trk, rte').each(function() {
+            var featureLength = 0;
+            name = $(this).find('>name').text();
+
+            $(this).find('trkpt, rtept').each(function() {
+                lat = $(this).attr('lat');
+                lon = $(this).attr('lon');
+                time = moment($(this).find('time').text().replace(' ', 'T'));
+                coords.push([lat, lon, time]);
+                featureLength++;
+            });
+
+            // if we count the features, get the correct number of segments
+            if (params.elementUnit === 'track' && iplancoord < plan.length) {
+                plan[iplancoord]['nbElements'] += featureLength;
+                planNamesFromGpxTrk[iplancoord] += name + '; ';
+                featureNumberPerSection[iplancoord]--;
+                if (featureNumberPerSection[iplancoord] === 0) {
+                    planNamesFromGpxTrk[iplancoord] = planNamesFromGpxTrk[iplancoord].replace(/;\s$/g, '');
+                    iplancoord++;
                 }
             }
-        }
+        });
         while (iplan < plan.length && iline < coords.length) {
             planSection = plan[iplan];
             nblinesInserted = 0;
             table = [];
-            while (nblinesInserted < planSection['nbElements']+1 && iline < coords.length) {
+            timetable = [];
+            // get the times if we need to
+            if ( params.proportionalTime && params.proportionalTime === 'true' ) {
+                i = nblinesInserted;
+                j = iline;
+                while (i < planSection['nbElements'] + 1 && j < coords.length - 1) {
+                    time1 = coords[j][2];
+                    time2 = coords[j+1][2];
+                    var diff = time2.diff(time1);
+                    if (diff < 0) {
+                        timetable.push(0);
+                    }
+                    else {
+                        timetable.push(time2.diff(time1));
+                    }
+                    i++;
+                    j++;
+                }
+                // make the time fit the section time
+                var sumTimes = timetable.reduce(function(previousValue, currentValue){
+                    return currentValue + previousValue;
+                });
+                time = planSection.time;
+                var ratio = time/sumTimes;
+                for (i = 0; i < timetable.length; i++) {
+                    timetable[i] = ratio * timetable[i];
+                }
+            }
+            else {
+                timetable = planSection.time;
+            }
+            // get the coords
+            while (nblinesInserted < planSection['nbElements'] + 1 && iline < coords.length) {
                 thecoord = coords[iline];
-                ll = L.latLng(thecoord[1], thecoord[0]);
-                //console.log('section '+iplan+' : '+thecoord[1]+' ; '+ thecoord[0]);
+                ll = L.latLng(thecoord[0], thecoord[1]);
                 table.push(ll);
                 iline++;
                 nblinesInserted++;
@@ -831,7 +861,7 @@
             drawPolylines.push(drawFeatGroup);
 
             totalTime += planSection['time'];
-            marker = L.Marker.movingMarker(mypoly.getLatLngs(), planSection['time'],{
+            marker = L.Marker.movingMarker(mypoly.getLatLngs(), timetable,{
                 autostart: false,
                 icon: theicon
             });
@@ -943,7 +973,7 @@
 
         // get the global bounds to zoom on the whole trip
         globalBounds = L.latLngBounds(polylines[0].getBounds().getSouthWest(), polylines[0].getBounds().getNorthEast());
-        for (var i=0; i<polylines.length; i++) {
+        for (i = 0; i < polylines.length; i++) {
             globalBounds.extend(polylines[i].getBounds());
         }
 

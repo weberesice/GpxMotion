@@ -1,7 +1,7 @@
 <?php
 script('gpxmotion', 'leaflet');
 script('gpxmotion', 'jquery-ui.min');
-script('gpxmotion', 'togeojson');
+script('gpxmotion', 'moment-with-locales.min');
 script('gpxmotion', 'L.Control.MousePosition');
 script('gpxmotion', 'ActiveLayers');
 script('gpxmotion', 'MovingMarker');
