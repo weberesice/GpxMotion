@@ -70,6 +70,8 @@ OC.L10N.register(
     "More about" : "Plus d'infos sur",
     "final" : "dernier",
     "Edit current file" : "Éditer le fichier courant",
+    "Options" : "Options",
+    "autozoom" : "zoom auto",
     "View in GpxMotion" : "Voir dans GpxMotion"
     },
 "nplurals=2; plural=(n > 1);");

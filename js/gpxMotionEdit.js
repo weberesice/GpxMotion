@@ -711,6 +711,12 @@
             sectionlist.push(section);
         });
         json.elementUnit = 'track';
+        if ($('#proportionaltimecheck').is(':checked')) {
+            json.proportionalTime = 'true';
+        }
+        else {
+            json.proportionalTime = 'false';
+        }
         json.plan = sectionlist;
         return JSON.stringify(json);
     }

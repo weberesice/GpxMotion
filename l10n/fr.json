@@ -28,6 +28,7 @@
     "File name" : "Nom de fichier",
 	"loading file" : "chargement du fichier",
     "toggle sidebar" : "montrer/cacher la barre latérale",
+    "Use real time proportions" : "Utiliser les proportions du temps réel",
     "GpxMotion" : "GpxMotion"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

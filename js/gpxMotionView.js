@@ -690,10 +690,8 @@
 
     function processXml(xml) {
         var jsondesc, params;
-        var defaultDesc =
-            '{"elementUnit": "track",' +
-            '"proportionalTime": "true",' +
-            '"plan": [' +
+        var defaultPlan =
+            '[' +
             '     {' +
             '          "nbElements": 1000,' +
             '          "vehicule": "no vehicle",' +
@@ -706,7 +704,12 @@
             '          "beginDescription": null,' +
             '          "beginPictureUrl": null,' +
             '          "beginDetailUrl": null' +
-            '}]}';
+            '}]';
+        var defaultDesc =
+            '{"elementUnit": "track",' +
+            '"proportionalTime": "true",' +
+            '"plan": ' + defaultPlan +
+            '}';
         if (xml.gpx === '') {
             showEmptyMessage();
             return;
@@ -723,7 +726,7 @@
         plan = jsondesc.plan;
         // if the plan is empty, we take the default one
         if (!plan || plan.length === 0) {
-            jsondesc = $.parseJSON(defaultDesc);
+            jsondesc.plan = $.parseJSON(defaultPlan);
             plan = jsondesc.plan;
         }
         params = jsondesc;

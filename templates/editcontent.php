@@ -40,6 +40,10 @@
     </form>
     <div style="clear:both"></div>
     <hr/>
+    <div>
+    <label for="proportionaltimecheck"><?php p($l->t('Use real time proportions'));?></label>
+    <input type="checkbox" id="proportionaltimecheck"/>
+    </div>
     <button id="clearButton"><i class="fa fa-bomb"></i> <?php p($l->t('Clear animation sections'));?></button>
     <button id="addSectionButton"><i class="fa fa-plus-circle"></i> <?php p($l->t('Add animation section'));?></button>
     <div id="saved"><p>
