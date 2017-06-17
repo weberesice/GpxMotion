@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- option to make segment times proportional to real time, enable it in default animation
+[#2](https://gitlab.com/eneiluj/gpxmotion-oc/issues/2) @klakla2
+
+### Changed
+- removed useless conversion to geojson, now parsing gpx directly as xml
 
 ## 0.0.2 – 2017-06-14
 ### Added
