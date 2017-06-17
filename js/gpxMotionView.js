@@ -754,8 +754,8 @@
         var featureNumberPerSection = [];
         if (params.elementUnit === 'track') {
             for (i = 0; i < plan.length; i++) {
-                featureNumberPerSection.push(plan[i]['nbElements']);
-                plan[i]['nbElements'] = 0;
+                featureNumberPerSection.push(plan[i].nbElements);
+                plan[i].nbElements = 0;
                 planNamesFromGpxTrk.push('');
             }
         }
@@ -776,7 +776,7 @@
 
             // if we count the features, get the correct number of segments
             if (params.elementUnit === 'track' && iplancoord < plan.length) {
-                plan[iplancoord]['nbElements'] += featureLength;
+                plan[iplancoord].nbElements += featureLength;
                 planNamesFromGpxTrk[iplancoord] += name + '; ';
                 featureNumberPerSection[iplancoord]--;
                 if (featureNumberPerSection[iplancoord] === 0) {
@@ -785,13 +785,24 @@
                 }
             }
         });
+        // check missing times in each plan section
+        var cpt = 0;
+        for (i = 0; i < plan.length; i++) {
+            plan[i].missingTime = false;
+            for (j = 0; j < plan[i].nbElements; j++) {
+                if (! coords[cpt][2].isValid()) {
+                    plan[i].missingTime = true;
+                }
+                cpt++;
+            }
+        }
         while (iplan < plan.length && iline < coords.length) {
             planSection = plan[iplan];
             nblinesInserted = 0;
             table = [];
             timetable = [];
-            // get the times if we need to
-            if ( params.proportionalTime && params.proportionalTime === 'true' ) {
+            // get the times if the option is on and there is no missing time
+            if (params.proportionalTime && params.proportionalTime === 'true' && !planSection.missingTime) {
                 i = nblinesInserted;
                 j = iline;
                 while (i < planSection['nbElements'] + 1 && j < coords.length - 1) {
