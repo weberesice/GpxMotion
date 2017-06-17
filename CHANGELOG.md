@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - option to make segment times proportional to real time, enable it in default animation
 [#2](https://gitlab.com/eneiluj/gpxmotion-oc/issues/2) @klakla2
+- import from gpxedit : support for WMS tile and overlay servers. base and user servers
 
 ### Changed
 - removed useless conversion to geojson, now parsing gpx directly as xml

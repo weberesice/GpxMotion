@@ -52,7 +52,7 @@ If you look for alternatives, take a look at :
     <licence>AGPL</licence>
     <summary>GPX file animation on an interactive map</summary>
     <author>Julien Veyssier</author>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <namespace>GpxMotion</namespace>
     <documentation>
         <user>https://gitlab.com/eneiluj/gpxmotion-oc/wikis/userdoc</user>

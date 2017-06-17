@@ -140,6 +140,8 @@ class PageController extends Controller {
 
         $tss = $this->getUserTileServers('tile');
         $oss = $this->getUserTileServers('overlay');
+        $tssw = $this->getUserTileServers('tilewms');
+        $ossw = $this->getUserTileServers('overlaywms');
 
         // PARAMS to view
 
@@ -147,8 +149,10 @@ class PageController extends Controller {
         $params = [
             'username'=>$this->userId,
 			'basetileservers'=>$baseTileServers,
-			'tileservers'=>$tss,
-			'overlayservers'=>$oss,
+			'usertileservers'=>$tss,
+			'useroverlayservers'=>$oss,
+			'usertileserverswms'=>$tssw,
+			'useroverlayserverswms'=>$ossw,
             'gpxmotion_version'=>$this->appVersion
         ];
         $response = new TemplateResponse('gpxmotion', 'main', $params);
@@ -175,6 +179,8 @@ class PageController extends Controller {
 
         $tss = $this->getUserTileServers('tile');
         $oss = $this->getUserTileServers('overlay');
+        $tssw = $this->getUserTileServers('tilewms');
+        $ossw = $this->getUserTileServers('overlaywms');
 
         // PARAMS to view
 
@@ -184,8 +190,10 @@ class PageController extends Controller {
 			'publicgpx'=>'',
 			'token'=>'',
 			'basetileservers'=>$baseTileServers,
-			'tileservers'=>$tss,
-			'overlayservers'=>$oss,
+			'usertileservers'=>$tss,
+			'useroverlayservers'=>$oss,
+			'usertileserverswms'=>$tssw,
+			'useroverlayserverswms'=>$ossw,
             'gpxmotion_version'=>$this->appVersion
         ];
         $response = new TemplateResponse('gpxmotion', 'view', $params);
@@ -309,8 +317,10 @@ class PageController extends Controller {
         require_once('tileservers.php');
         $params = [
             'basetileservers'=>$baseTileServers,
-            'tileservers'=>Array(),
-            'overlayservers'=>Array(),
+			'usertileservers'=>Array(),
+			'useroverlayservers'=>Array(),
+			'usertileserverswms'=>Array(),
+			'useroverlayserverswms'=>Array(),
             'publicgpx'=>$gpxContent,
             'token'=>$dl_url,
             'gpxmotion_version'=>$this->appVersion
@@ -335,16 +345,16 @@ class PageController extends Controller {
      */
     public function preview($gpxContent) {
         $dbconnection = \OC::$server->getDatabaseConnection();
-        error_log('plop ');
-        error_log('plop '.$gpxContent);
 
         // PARAMS to send to template
 
         require_once('tileservers.php');
         $params = [
             'basetileservers'=>$baseTileServers,
-            'tileservers'=>Array(),
-            'overlayservers'=>Array(),
+			'usertileservers'=>Array(),
+			'useroverlayservers'=>Array(),
+			'usertileserverswms'=>Array(),
+			'useroverlayserverswms'=>Array(),
             'publicgpx'=>$gpxContent,
             'token'=>'',
             'gpxmotion_version'=>$this->appVersion
@@ -426,14 +436,17 @@ class PageController extends Controller {
 
     private function getUserTileServers($type){
         // custom tile servers management
-        $sqlts = 'SELECT servername, url FROM *PREFIX*gpxmotion_tile_servers ';
+        $sqlts = 'SELECT servername, type, url, layers, version, format, opacity, transparent, minzoom, maxzoom, attribution FROM *PREFIX*gpxmotion_tile_servers ';
         $sqlts .= 'WHERE '.$this->dbdblquotes.'user'.$this->dbdblquotes.'='.$this->db_quote_escape_string($this->userId).' ';
         $sqlts .= 'AND type='.$this->db_quote_escape_string($type).';';
         $req = $this->dbconnection->prepare($sqlts);
         $req->execute();
         $tss = Array();
         while ($row = $req->fetch()){
-            $tss[$row["servername"]] = $row["url"];
+            $tss[$row["servername"]] = Array();
+            foreach (Array('servername', 'type', 'url', 'layers', 'version', 'format', 'opacity', 'transparent', 'minzoom', 'maxzoom', 'attribution') as $field) {
+                $tss[$row['servername']][$field] = $row[$field];
+            }
         }
         $req->closeCursor();
         return $tss;
