@@ -621,7 +621,11 @@
                                 txt = '<i class="fa fa-check-circle" style="color:green;" aria-hidden="true"></i> ';
                                 url = OC.generateUrl('/apps/gpxmotion/publicview?');
                                 var activeLayerName = gpxMotionView.activeLayers.getActiveBaseLayer().name;
-                                urlparams = {token: token, layer: encodeURIComponent(activeLayerName)};
+                                urlparams = {
+                                    token: token,
+                                    layer: encodeURIComponent(activeLayerName),
+                                    autoplay: 1
+                                };
                                 if (path && filename) {
                                     urlparams.path = path;
                                     urlparams.filename = filename;
@@ -1143,6 +1147,12 @@
                                     formatDistance(allSectionTotalDistance)+')'
         $('div#summary').text(gpxMotionView.summaryText);
         ready = true;
+        // AUTOPLAY
+        if (isPublicPage()) {
+            if (getUrlParameter('autoplay') === '1') {
+                nextMarker();
+            }
+        }
     }
 
     function drawslider(ossz, meik) {
