@@ -626,6 +626,7 @@
                                     layer: encodeURIComponent(activeLayerName),
                                     autoplay: 1
                                 };
+                                Object.assign(urlparams, getOptionValues());
                                 if (path && filename) {
                                     urlparams.path = path;
                                     urlparams.filename = filename;
@@ -778,6 +779,21 @@
         });
         gpxMotionView.playButton.addTo(gpxMotionView.map);
         $('span.fa-play-circle-o').parent().parent().prop('disabled', true);
+    }
+
+    function getOptionValues() {
+        var res = {
+            autozoom: 0,
+            loop: 0
+        };
+        if ($('#loopcheck').is(':checked')) {
+            res.loop = 1;
+        }
+        if ($('#zoomcheck').is(':checked')) {
+            res.autozoom = 1;
+        }
+
+        return res;
     }
 
     function showEmptyMessage() {
@@ -1227,8 +1243,28 @@
         gpxMotionView.map.setView([0, 0], 2);
     }
 
+    function restoreOptionsFromURL() {
+        var zoom = getUrlParameter('autozoom');
+        if (zoom === '1') {
+            $('#zoomcheck').prop('checked', true);
+        }
+        if (zoom === '0') {
+            $('#zoomcheck').prop('checked', false);
+        }
+        var loop = getUrlParameter('loop');
+        if (loop === '1') {
+            $('#loopcheck').prop('checked', true);
+        }
+        if (loop === '0') {
+            $('#loopcheck').prop('checked', false);
+        }
+    }
+
     // load gpx file with plan and build our markers, pins...
     function main(path='') {
+        if (isPublicPage()) {
+            restoreOptionsFromURL();
+        }
         clearAll();
         var req;
         // public file or preview
