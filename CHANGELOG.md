@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - option to make segment times proportional to real time, enable it in default animation
 [#2](https://gitlab.com/eneiluj/gpxmotion-oc/issues/2) @klakla2
 - import from gpxedit : support for WMS tile and overlay servers. base and user servers
+- add autoplay option in public links, default to 1
+[#3](https://gitlab.com/eneiluj/gpxmotion-oc/issues/3) @klakla2
+- put options values in public link, restore them on public page load
 
 ### Changed
 - removed useless conversion to geojson, now parsing gpx directly as xml
