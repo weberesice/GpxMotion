@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## 0.0.3 – 2017-06-22
 ### Added
 - option to make segment times proportional to real time, enable it in default animation
 [#2](https://gitlab.com/eneiluj/gpxmotion-oc/issues/2) @klakla2
