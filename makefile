@@ -49,6 +49,7 @@ appstore: clean
 	# adapt info.xml
 	sed -i '/[^<][oO]wn[cC]loud[^>]/d' $(sign_dir)/$(app_name)/appinfo/info.xml
 	sed -i '/[nN]extcloud/d' $(sign_dir_own)/$(app_name)/appinfo/info.xml
+	sed -i 's/&amp;.*/)/g' $(sign_dir_own)/$(app_name)/appinfo/info.xml
 	# give the webserver user the right to create signature file
 	sudo chown $(webserveruser) $(sign_dir)/$(app_name)/appinfo $(sign_dir_own)/$(app_name)/appinfo
 	sudo -u $(webserveruser) php $(occ_dir)/occ integrity:sign-app --privateKey=$(cert_dir)/$(app_name).key --certificate=$(cert_dir)/$(app_name).crt --path=$(sign_dir)/$(app_name)/
