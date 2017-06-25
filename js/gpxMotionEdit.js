@@ -1058,5 +1058,18 @@
         if (fileparam && fileparam !== undefined) {
             loadAction(fileparam);
         }
+
+        $('body').on('click','h3.customtiletitle', function(e) {
+            var forAttr = $(this).attr('for');
+            if ($('#'+forAttr).is(':visible')) {
+                $('#'+forAttr).slideUp();
+                $(this).find('i').removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
+            }
+            else{
+                $('#'+forAttr).slideDown();
+                $(this).find('i').removeClass('fa-angle-double-down').addClass('fa-angle-double-up');
+            }
+        });
+
     });
 }(jQuery, OC));

@@ -954,3 +954,10 @@ label[for=proportionaltimecheck], #proportionaltimecheck {
 #overlayserveradd input[type=text]{
     width:100%;
 }
+#tileserverdiv, #tilewmsserverdiv,
+#overlayserverdiv, #overlaywmsserverdiv {
+    display: none;
+}
+.customtiletitle {
+    cursor: pointer;
+}
