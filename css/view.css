@@ -171,3 +171,7 @@ body { margin: 0; }
     margin-top: auto;
     margin-bottom: auto;
 }
+#timediv {
+    text-align: center;
+    font-weight: bold;
+}

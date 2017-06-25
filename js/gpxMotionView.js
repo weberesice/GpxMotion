@@ -84,13 +84,20 @@
     function updateSnakeLine(e) {
         var ll = e.target.getLatLng();
         if (currentMarkerIndex > 0) {
-            drawPolylines[currentMarkerIndex-1].eachLayer( function (l) {
+            drawPolylines[currentMarkerIndex - 1].eachLayer( function (l) {
                 l.addLatLng(ll);
             });
+            if (! plan[currentMarkerIndex - 1].missingTime) {
+                $('div#timediv').html(moment(e.target._currentLine[0].time).format('HH:mm:ss'));
+            }
         }
     }
 
     function nextMarker() {
+        // show time if we just start
+        if (currentMarkerIndex === 0 && params.proportionalTime === 'true') {
+            gpxMotionView.timeDialog.open();
+        }
         if (currentMarkerIndex < markers.length) {
             gpxMotionView.playButton.state('pause');
 
@@ -171,6 +178,12 @@
             if ($('#loopcheck').is(':checked')) {
                 reset();
                 nextMarker();
+            }
+            else {
+                // hide time if this is the end
+                if (params.proportionalTime === 'true') {
+                    gpxMotionView.timeDialog.close();
+                }
             }
         }
     }
@@ -404,6 +417,19 @@
         })
             .setContent(summaryText)
             .addTo(gpxMotionView.map);
+
+        var timeDialogText = '<div id="timediv"></div>';
+        gpxMotionView.timeDialog = L.control.dialog({
+            anchor: [-25, 130],
+            position: 'bottomleft',
+            minSize: [30, 20],
+            maxSize: [900, 900],
+            size: [200, 20]
+        })
+            .setContent(timeDialogText)
+            .addTo(gpxMotionView.map);
+        gpxMotionView.timeDialog.close();
+        $('div#timediv').parent().parent().parent().css('opacity', '0.6');
 
         ////////////////// TILE LAYERS
 
@@ -804,7 +830,7 @@
     }
 
     function processXml(xml) {
-        var jsondesc, params;
+        var jsondesc;
         var defaultPlan =
             '[' +
             '     {' +
@@ -950,6 +976,7 @@
             while (nblinesInserted < planSection['nbElements'] + 1 && iline < coords.length) {
                 thecoord = coords[iline];
                 ll = L.latLng(thecoord[0], thecoord[1]);
+                ll.time = thecoord[2];
                 table.push(ll);
                 iline++;
                 nblinesInserted++;
