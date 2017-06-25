@@ -1164,10 +1164,8 @@
         $('div#summary').text(gpxMotionView.summaryText);
         ready = true;
         // AUTOPLAY
-        if (isPublicPage()) {
-            if (getUrlParameter('autoplay') === '1') {
-                nextMarker();
-            }
+        if (getUrlParameter('autoplay') === '1') {
+            nextMarker();
         }
     }
 
