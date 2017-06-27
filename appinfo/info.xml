@@ -16,7 +16,7 @@ save the result to a GPX file (the animation data is saved as JSON in the GPX de
 To watch an animation, go to the "view" page of GpxMotion and load a GPX file.
 If no animation information was set, a default one (all tracks/routes in 10 seconds) is shown.
 If no time information is missing in an animation section and the "use real time proportions"
-option is checked, the animation time will not change but the animation speed will be proportional to real speed.
+option is checked, the animation duration will not change but the animation speed will be proportional to real speed.
 
 In the "view" page, if the file is
 publicly shared without password in "Files" app, you can produce a GpxMotion public link to
@@ -52,7 +52,7 @@ If you look for alternatives, take a look at :
     <licence>AGPL</licence>
     <summary>GPX file animation on an interactive map</summary>
     <author>Julien Veyssier</author>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
     <namespace>GpxMotion</namespace>
     <documentation>
         <user>https://gitlab.com/eneiluj/gpxmotion-oc/wikis/userdoc</user>

@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 0.0.4 – 2017-06-27
+### Added
+- when viewing in real time and there is no missing time, display the time in a new dialog (bottomleft)
+[#4](https://gitlab.com/eneiluj/gpxmotion-oc/issues/4) @klakla2
+
+### Changed
+- style of custom tile server management
+- make autoplay URL param also work with normal view page
+- autoplay when view from files app
+
 ## 0.0.3 – 2017-06-22
 ### Added
 - option to make segment times proportional to real time, enable it in default animation

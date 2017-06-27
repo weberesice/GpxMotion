@@ -7,7 +7,7 @@ $(document).ready(function() {
         function openViewFile(file, data){
             // if we are logged
             if (!token){
-				var url = OC.generateUrl('apps/gpxmotion/view?path={filepath}',{'filepath': data.dir+'/'+file});
+				var url = OC.generateUrl('apps/gpxmotion/view?path={filepath}&autoplay=1',{'filepath': data.dir+'/'+file});
             }
             // if we are in share browsing
             else{
