@@ -12,7 +12,6 @@ script('gpxmotion', 'gpxMotionView');
 style('gpxmotion', 'leaflet');
 style('gpxmotion', 'jquery-ui.min');
 style('gpxmotion', 'L.Control.MousePosition');
-style('gpxmotion', 'leaflet-sidebar');
 style('gpxmotion', 'font-awesome.min');
 style('gpxmotion', 'easy-button');
 style('gpxmotion', 'Leaflet.Dialog');

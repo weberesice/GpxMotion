@@ -7,7 +7,7 @@ script('gpxmotion', 'gpxMotionEdit');
 
 style('gpxmotion', 'leaflet');
 style('gpxmotion', 'L.Control.MousePosition');
-style('gpxmotion', 'leaflet-sidebar');
+style('gpxmotion', 'leaflet-sidebar.min');
 style('gpxmotion', 'font-awesome.min');
 style('gpxmotion', 'edit');
 
