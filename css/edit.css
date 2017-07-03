@@ -924,7 +924,8 @@ div.section .insertSectionAfter i, div.section .insertSectionBefore i{
 /*div.section .removeSection{
     grid-column: 1/3;
 }*/
-label[for=proportionaltimecheck], #proportionaltimecheck {
+label[for=proportionaltimecheck], #proportionaltimecheck,
+label[for=simultaneouscheck], #simultaneouscheck {
     margin-top: auto;
     margin-bottom: auto;
     margin-left: 10px;
@@ -959,4 +960,7 @@ label[for=proportionaltimecheck], #proportionaltimecheck {
 }
 .customtiletitle {
     cursor: pointer;
+}
+.sidebar {
+    z-index: 1990;
 }

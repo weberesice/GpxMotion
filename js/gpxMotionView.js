@@ -83,17 +83,88 @@
     // add coordinates to the current snake line when marker moves
     function updateSnakeLine(e) {
         var ll = e.target.getLatLng();
+        var markerIndex = e.target.gpxMotionIndex;
         if (currentMarkerIndex > 0) {
-            drawPolylines[currentMarkerIndex - 1].eachLayer( function (l) {
+            drawPolylines[markerIndex].eachLayer( function (l) {
                 l.addLatLng(ll);
             });
-            if (! plan[currentMarkerIndex - 1].missingTime) {
+            if (params.proportionalTime === 'true' && (! plan[markerIndex].missingTime)) {
                 $('div#timediv').html(moment(e.target._currentLine[0].time).format('HH:mm:ss'));
             }
         }
     }
 
+    function simultaneousDraw() {
+        gpxMotionView.playButton.state('pause');
+        // update current title
+        $('div#summary').text('');
+        var timeout;
+        var maxTime = 0;
+        // create and launch markers
+        for (var i = 0; i < plan.length; i++) {
+            // add marker pin at start point and get its time
+            timeout = plan[i].time;
+            if (timeout > maxTime) {
+                maxTime = timeout;
+            }
+            beginMarkers[i].addTo(gpxMotionView.map);
+
+            // add the moving marker and start it
+            gpxMotionView.map.addLayer(markers[i]);
+            markers[i].start();
+
+            // draw a line for current marker
+            drawPolylines[i].addTo(gpxMotionView.map);
+            drawPolylines[i].eachLayer(function (l){
+                l.addLatLng(beginMarkers[i].getLatLng());
+            });
+        }
+        currentMarkerIndex++;
+
+        // zoom on all sections with 20% padding
+        var b = polylines[0].getBounds();
+        for (var i = 1; i < plan.length; i++) {
+            b.extend(polylines[i].getBounds());
+        }
+        gpxMotionView.map.fitBounds(b.pad(0.2), {animate:true});
+
+        // schedule call to end
+        currentTimer = new Timer(function() {
+            endSimultaneousDraw();
+        }, maxTime);
+    }
+
+    function endSimultaneousDraw() {
+        for (var i = 0; i < plan.length; i++) {
+            markers[i].stop();
+            gpxMotionView.map.removeLayer(markers[i]);
+            // add the entire line
+            gpxMotionView.map.addLayer(polylines[i]);
+            // remove the partial drawing
+            gpxMotionView.map.removeLayer(drawPolylines[i]);
+            // reset the partial drawing
+            drawPolylines[i].eachLayer( function (l) {
+                l.setLatLngs([]);
+            });
+        }
+        currentMarkerIndex = 0;
+        gpxMotionView.playButton.state('play');
+        if ($('#loopcheck').is(':checked')) {
+            reset();
+            nextMarker();
+        }
+    }
+
     function nextMarker() {
+        if (params.simultaneousSections === 'true') {
+            if (currentMarkerIndex === 0) {
+                simultaneousDraw();
+            }
+            else {
+                endSimultaneousDraw();
+            }
+            return;
+        }
         // show time if we just start
         if (currentMarkerIndex === 0 && params.proportionalTime === 'true') {
             gpxMotionView.timeDialog.open();
@@ -189,15 +260,33 @@
     }
 
     function playPause() {
-        if (markers[currentMarkerIndex-1].isPaused()) {
-            currentTimer.resume();
-            markers[currentMarkerIndex-1].resume();
-            gpxMotionView.playButton.state('pause');
+        if (params.simultaneousSections === 'true') {
+            if (markers[0].isPaused()) {
+                currentTimer.resume();
+                for (var i=0; i < plan.length; i++) {
+                    markers[i].resume();
+                }
+                gpxMotionView.playButton.state('pause');
+            }
+            else {
+                currentTimer.pause();
+                for (var i=0; i < plan.length; i++) {
+                    markers[i].pause();
+                }
+                gpxMotionView.playButton.state('play');
+            }
         }
         else {
-            currentTimer.pause();
-            markers[currentMarkerIndex-1].pause();
-            gpxMotionView.playButton.state('play');
+            if (markers[currentMarkerIndex-1].isPaused()) {
+                currentTimer.resume();
+                markers[currentMarkerIndex-1].resume();
+                gpxMotionView.playButton.state('pause');
+            }
+            else {
+                currentTimer.pause();
+                markers[currentMarkerIndex-1].pause();
+                gpxMotionView.playButton.state('play');
+            }
         }
     }
 
@@ -223,6 +312,11 @@
         for (i = 0; i < polylines.length; i++) {
             gpxMotionView.map.removeLayer(polylines[i]);
         }
+        // remove moving markers
+        for (i = 0; i < markers.length; i++) {
+            markers[i].stop();
+            gpxMotionView.map.removeLayer(markers[i]);
+        }
         // remove draw polylines
         for (i=0; i < drawPolylines.length; i++) {
             gpxMotionView.map.removeLayer(drawPolylines[i]);
@@ -231,11 +325,6 @@
             });
         }
 
-        // remove moving markers
-        for (i = 0; i < markers.length; i++) {
-            markers[i].stop();
-            gpxMotionView.map.removeLayer(markers[i]);
-        }
         gpxMotionView.playButton.state('play');
     }
 
@@ -271,6 +360,12 @@
         currentTimer.pause();
         window.clearTimeout(currentTimer);
         currentTimer = null;
+
+        if (params.simultaneousSections === 'true') {
+            endSimultaneousDraw();
+            nextMarker();
+            return;
+        }
 
         // remove current marker and polyline and begin marker
         if (currentMarkerIndex > 0) {
@@ -852,6 +947,7 @@
         var defaultDesc =
             '{"elementUnit": "track",' +
             '"proportionalTime": "true",' +
+            '"simultaneousSections": "false",' +
             '"plan": ' + defaultPlan +
             '}';
         if (xml.gpx === '') {
@@ -1019,6 +1115,7 @@
                 autostart: false,
                 icon: theicon
             });
+            marker.gpxMotionIndex = iplan;
             marker.on('move', updateSnakeLine);
             var pinIcon = gpxMotionView.normalPinIcon;
             if (iplan === 0) {

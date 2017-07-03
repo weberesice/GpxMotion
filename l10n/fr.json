@@ -43,6 +43,7 @@
     "Your overlay tile servers" : "Vos serveurs de revêtements personnels",
     "Your WMS overlay tile servers" : "Vos serveurs de revêtements WMS personnels",
     "Transparent" : "Transparent",
+    "Play all sections simultaneously" : "Jouer toutes les sections simultanément",
     "GpxMotion" : "GpxMotion"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

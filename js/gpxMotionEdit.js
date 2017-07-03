@@ -841,6 +841,12 @@
         else {
             json.proportionalTime = 'false';
         }
+        if ($('#simultaneouscheck').is(':checked')) {
+            json.simultaneousSections = 'true';
+        }
+        else {
+            json.simultaneousSections = 'false';
+        }
         json.plan = sectionlist;
         return JSON.stringify(json);
     }
