@@ -1045,7 +1045,7 @@
             if (params.proportionalTime && params.proportionalTime === 'true' && !planSection.missingTime) {
                 i = nblinesInserted;
                 j = iline;
-                while (i < planSection['nbElements'] + 1 && j < coords.length - 1) {
+                while (i < planSection.nbElements - 1 && j < coords.length - 1) {
                     time1 = coords[j][2];
                     time2 = coords[j+1][2];
                     var diff = time2.diff(time1);
@@ -1072,7 +1072,7 @@
                 timetable = planSection.time;
             }
             // get the coords
-            while (nblinesInserted < planSection['nbElements'] + 1 && iline < coords.length) {
+            while (nblinesInserted < planSection.nbElements && iline < coords.length) {
                 thecoord = coords[iline];
                 ll = L.latLng(thecoord[0], thecoord[1]);
                 ll.time = thecoord[2];
