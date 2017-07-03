@@ -981,11 +981,6 @@
                 iline++;
                 nblinesInserted++;
             }
-            // if this is the last coord, there is nothing to link with after
-            // else : we artificialy put the last point we took as the start of next section
-            if (iline !== coords.length) {
-                iline--;
-            }
 
             thevehicule = planSection['vehicule'];
             theicon = gpxMotionView.vehicule[thevehicule].icon;
