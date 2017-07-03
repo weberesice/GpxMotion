@@ -121,12 +121,14 @@
         }
         currentMarkerIndex++;
 
-        // zoom on all sections with 20% padding
-        var b = polylines[0].getBounds();
-        for (var i = 1; i < plan.length; i++) {
-            b.extend(polylines[i].getBounds());
+        if ($('#zoomcheck').is(':checked')) {
+            // zoom on all sections with 20% padding
+            var b = polylines[0].getBounds();
+            for (var i = 1; i < plan.length; i++) {
+                b.extend(polylines[i].getBounds());
+            }
+            gpxMotionView.map.fitBounds(b.pad(0.2), {animate:true});
         }
-        gpxMotionView.map.fitBounds(b.pad(0.2), {animate:true});
 
         // schedule call to end
         currentTimer = new Timer(function() {
@@ -166,8 +168,13 @@
             return;
         }
         // show time if we just start
-        if (currentMarkerIndex === 0 && params.proportionalTime === 'true') {
-            gpxMotionView.timeDialog.open();
+        if (params.proportionalTime === 'true') {
+            if (plan[currentMarkerIndex].missingTime) {
+                gpxMotionView.timeDialog.close();
+            }
+            else {
+                gpxMotionView.timeDialog.open();
+            }
         }
         if (currentMarkerIndex < markers.length) {
             gpxMotionView.playButton.state('pause');
