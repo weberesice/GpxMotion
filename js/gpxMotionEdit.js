@@ -985,7 +985,7 @@
         });
 
         $('button#saveButton').click(function(e) {
-            if (gpxmotion.lineList.length === 0 || $('div.section').length === 0) {
+            if (gpxmotion.lineList.length === 0) {
                 showFailAnimation(t('gpxmotion', 'There is nothing to save'));
             }
             else{

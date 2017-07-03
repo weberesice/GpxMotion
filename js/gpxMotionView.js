@@ -101,7 +101,7 @@
         var timeout;
         var maxTime = 0;
         // create and launch markers
-        for (var i = 0; i < plan.length; i++) {
+        for (var i = 0; i < markers.length; i++) {
             // add marker pin at start point and get its time
             timeout = plan[i].time;
             if (timeout > maxTime) {
@@ -124,7 +124,7 @@
         if ($('#zoomcheck').is(':checked')) {
             // zoom on all sections with 20% padding
             var b = polylines[0].getBounds();
-            for (var i = 1; i < plan.length; i++) {
+            for (var i = 1; i < markers.length; i++) {
                 b.extend(polylines[i].getBounds());
             }
             gpxMotionView.map.fitBounds(b.pad(0.2), {animate:true});
@@ -137,7 +137,7 @@
     }
 
     function endSimultaneousDraw() {
-        for (var i = 0; i < plan.length; i++) {
+        for (var i = 0; i < markers.length; i++) {
             markers[i].stop();
             gpxMotionView.map.removeLayer(markers[i]);
             // add the entire line
@@ -268,16 +268,17 @@
 
     function playPause() {
         if (params.simultaneousSections === 'true') {
+            var i;
             if (markers[0].isPaused()) {
                 currentTimer.resume();
-                for (var i=0; i < plan.length; i++) {
+                for (i = 0; i < markers.length; i++) {
                     markers[i].resume();
                 }
                 gpxMotionView.playButton.state('pause');
             }
             else {
                 currentTimer.pause();
-                for (var i=0; i < plan.length; i++) {
+                for (i = 0; i < markers.length; i++) {
                     markers[i].pause();
                 }
                 gpxMotionView.playButton.state('play');
