@@ -167,16 +167,16 @@
             }
             return;
         }
-        // show time if we just start
-        if (params.proportionalTime === 'true') {
-            if (plan[currentMarkerIndex].missingTime) {
-                gpxMotionView.timeDialog.close();
-            }
-            else {
-                gpxMotionView.timeDialog.open();
-            }
-        }
         if (currentMarkerIndex < markers.length) {
+            // show time if we can
+            if (params.proportionalTime === 'true') {
+                if (plan[currentMarkerIndex].missingTime) {
+                    gpxMotionView.timeDialog.close();
+                }
+                else {
+                    gpxMotionView.timeDialog.open();
+                }
+            }
             gpxMotionView.playButton.state('pause');
 
             // remove marker when it ends
