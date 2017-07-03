@@ -831,10 +831,11 @@
 
     function processXml(xml) {
         var jsondesc;
-        var defaultPlan =
-            '[' +
+        var defaultPlan = '[';
+        for (var i = 0; i < 20; i++) {
+            defaultPlan = defaultPlan +
             '     {' +
-            '          "nbElements": 1000,' +
+            '          "nbElements": 1,' +
             '          "vehicule": "no vehicle",' +
             '          "time": 10000,' +
             '          "title": null,' +
@@ -845,7 +846,9 @@
             '          "beginDescription": null,' +
             '          "beginPictureUrl": null,' +
             '          "beginDetailUrl": null' +
-            '}]';
+            '},';
+        }
+        defaultPlan = defaultPlan.replace(/,$/,'') + ']';
         var defaultDesc =
             '{"elementUnit": "track",' +
             '"proportionalTime": "true",' +
