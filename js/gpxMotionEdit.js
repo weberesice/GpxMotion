@@ -847,6 +847,12 @@
         else {
             json.simultaneousSections = 'false';
         }
+        if ($('#synchrocheck').is(':checked')) {
+            json.synchroSections = 'true';
+        }
+        else {
+            json.synchroSections = 'false';
+        }
         json.plan = sectionlist;
         return JSON.stringify(json);
     }

@@ -21,6 +21,8 @@
     // used to add permanent sections markers
     var beginMarkers = [];
     var globalBounds;
+    var currentTime;
+    var minBeginTime, maxEndTime;
     var ready = false;
 
     function basename(str) {
@@ -89,13 +91,31 @@
                 l.addLatLng(ll);
             });
             if (params.proportionalTime === 'true' && (! plan[markerIndex].missingTime)) {
-                $('div#timediv').html(moment(e.target._currentLine[0].time).format('HH:mm:ss'));
+                var time = e.target._currentLine[0].time;
+                if (params.synchroSections === 'true' && params.simultaneousSections === 'true') {
+                    if (time) {
+                        if (currentTime.diff(time) < 0) {
+                            $('div#timediv').html(time.format('HH:mm:ss'));
+                            currentTime = time;
+                        }
+                    }
+                }
+                else if (params.synchroSections !== 'true' && params.simultaneousSections !== 'true') {
+                    if (time) {
+                        $('div#timediv').html(time.format('HH:mm:ss'));
+                    }
+                }
             }
         }
     }
 
     function simultaneousDraw() {
         gpxMotionView.playButton.state('pause');
+        if (params.synchroSections === 'true') {
+            gpxMotionView.timeDialog.open();
+            currentTime = minBeginTime;
+        }
+
         // update current title
         $('div#summary').text('');
         var timeout;
@@ -107,7 +127,7 @@
             if (timeout > maxTime) {
                 maxTime = timeout;
             }
-            beginMarkers[i].addTo(gpxMotionView.map);
+            //beginMarkers[i].addTo(gpxMotionView.map);
 
             // add the moving marker and start it
             gpxMotionView.map.addLayer(markers[i]);
@@ -130,6 +150,9 @@
             gpxMotionView.map.fitBounds(b.pad(0.2), {animate:true});
         }
 
+        if (params.synchroSections === 'true') {
+            maxTime = 20000;
+        }
         // schedule call to end
         currentTimer = new Timer(function() {
             endSimultaneousDraw();
@@ -137,6 +160,9 @@
     }
 
     function endSimultaneousDraw() {
+        if (params.synchroSections === 'true') {
+            gpxMotionView.timeDialog.close();
+        }
         for (var i = 0; i < markers.length; i++) {
             markers[i].stop();
             gpxMotionView.map.removeLayer(markers[i]);
@@ -996,6 +1022,8 @@
         var pinSummaryContent = '';
         var lineSummaryContent = '';
         var totalTime = 0;
+        minBeginTime = null;
+        maxEndTime = null;
 
         // used in feature unit only
         // we get the number of features we want for each plan Section
@@ -1013,6 +1041,28 @@
         $(gpxml).find('trk, rte').each(function() {
             var featureLength = 0;
             name = $(this).find('>name').text();
+
+            // find minimum first point time
+            var firstPoint = $(this).find('trkpt, rtept').first();
+            time = moment(firstPoint.find('time').text().replace(' ', 'T'));
+            if (minBeginTime === null) {
+                minBeginTime = time;
+            }
+            else {
+                if (time.diff(minBeginTime) < 0) {
+                    minBeginTime = time;
+                }
+            }
+            var lastPoint = $(this).find('trkpt, rtept').last();
+            time = moment(lastPoint.find('time').text().replace(' ', 'T'));
+            if (maxEndTime === null) {
+                maxEndTime = time;
+            }
+            else {
+                if (time.diff(maxEndTime) > 0) {
+                    maxEndTime = time;
+                }
+            }
 
             $(this).find('trkpt, rtept').each(function() {
                 lat = $(this).attr('lat');
@@ -1049,8 +1099,45 @@
             nblinesInserted = 0;
             table = [];
             timetable = [];
+            if (params.synchroSections && params.synchroSections === 'true' && !planSection.missingTime) {
+                i = nblinesInserted;
+                j = iline;
+                time1 = minBeginTime;
+                time2 = coords[j+1][2];
+                var diff = time2.diff(time1);
+                if (diff < 0) {
+                    timetable.push(0);
+                }
+                else {
+                    timetable.push(time2.diff(time1));
+                }
+                i++;
+                j++;
+                while (i < planSection.nbElements - 1 && j < coords.length - 1) {
+                    time1 = coords[j][2];
+                    time2 = coords[j+1][2];
+                    var diff = time2.diff(time1);
+                    if (diff < 0) {
+                        timetable.push(0);
+                    }
+                    else {
+                        timetable.push(time2.diff(time1));
+                    }
+                    i++;
+                    j++;
+                }
+                // make the time fit the section time
+                var sumTimes = timetable.reduce(function(previousValue, currentValue){
+                    return currentValue + previousValue;
+                });
+                time = 20000;
+                var ratio = time/sumTimes;
+                for (i = 0; i < timetable.length; i++) {
+                    timetable[i] = ratio * timetable[i];
+                }
+            }
             // get the times if the option is on and there is no missing time
-            if (params.proportionalTime && params.proportionalTime === 'true' && !planSection.missingTime) {
+            else if (params.proportionalTime && params.proportionalTime === 'true' && !planSection.missingTime) {
                 i = nblinesInserted;
                 j = iline;
                 while (i < planSection.nbElements - 1 && j < coords.length - 1) {
@@ -1087,6 +1174,9 @@
                 table.push(ll);
                 iline++;
                 nblinesInserted++;
+            }
+            if (params.synchroSections && params.synchroSections === 'true') {
+                table[0].time = minBeginTime;
             }
 
             thevehicule = planSection['vehicule'];

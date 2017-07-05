@@ -46,6 +46,9 @@
     <br/>
     <label for="simultaneouscheck"><?php p($l->t('Play all sections simultaneously'));?></label>
     <input type="checkbox" id="simultaneouscheck"/>
+    <br/>
+    <label for="synchrocheck"><?php p($l->t('Play all sections synchronized in real time'));?></label>
+    <input type="checkbox" id="synchrocheck"/>
     </div>
     <button id="clearButton"><i class="fa fa-bomb"></i> <?php p($l->t('Clear animation sections'));?></button>
     <button id="addSectionButton"><i class="fa fa-plus-circle"></i> <?php p($l->t('Add animation section'));?></button>
