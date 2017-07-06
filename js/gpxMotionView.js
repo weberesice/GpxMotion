@@ -1113,7 +1113,7 @@
                 }
                 i++;
                 j++;
-                while (i < planSection.nbElements - 1 && j < coords.length - 1) {
+                while (i < planSection.nbElements - 2 && j < coords.length - 2) {
                     time1 = coords[j][2];
                     time2 = coords[j+1][2];
                     var diff = time2.diff(time1);
@@ -1126,10 +1126,19 @@
                     i++;
                     j++;
                 }
+                time1 = coords[j][2];
+                time2 = maxEndTime;
+                var diff = time2.diff(time1);
+                if (diff < 0) {
+                    timetable.push(0);
+                }
+                else {
+                    timetable.push(time2.diff(time1));
+                }
+                i++;
+                j++;
                 // make the time fit the section time
-                var sumTimes = timetable.reduce(function(previousValue, currentValue){
-                    return currentValue + previousValue;
-                });
+                var sumTimes = maxEndTime.diff(minBeginTime);
                 time = 20000;
                 var ratio = time/sumTimes;
                 for (i = 0; i < timetable.length; i++) {
@@ -1177,18 +1186,19 @@
             }
             if (params.synchroSections && params.synchroSections === 'true') {
                 table[0].time = minBeginTime;
+                table[table.length - 1].time = maxEndTime;
             }
 
-            thevehicule = planSection['vehicule'];
+            thevehicule = planSection.vehicule;
             theicon = gpxMotionView.vehicule[thevehicule].icon;
             thecolor = gpxMotionView.vehicule[thevehicule].color;
 
             // calculate approximate plan section total distance
-            planSection['totalDistance'] = 0;
+            planSection.totalDistance = 0;
             for (var ii = 0; ii < table.length - 1; ii++) {
-                planSection['totalDistance'] += gpxMotionView.map.distance(table[ii], table[ii+1]);
+                planSection.totalDistance += gpxMotionView.map.distance(table[ii], table[ii+1]);
             }
-            allSectionTotalDistance += planSection['totalDistance'];
+            allSectionTotalDistance += planSection.totalDistance;
 
             mypoly = L.polyline(table, {color:thecolor, weight:5});
             if (border) {
@@ -1208,7 +1218,7 @@
             drawFeatGroup = L.featureGroup([emptyBorderLine, emptyPoly]);
             drawPolylines.push(drawFeatGroup);
 
-            totalTime += planSection['time'];
+            totalTime += planSection.time;
             marker = L.Marker.movingMarker(mypoly.getLatLngs(), timetable,{
                 autostart: false,
                 icon: theicon
@@ -1225,10 +1235,10 @@
 
             // popup for line
             if (planSection.hasOwnProperty('title')) {
-                linkDest = planSection['detailUrl'];
-                title = planSection['title'];
-                text = planSection['description'];
-                photoUrl = planSection['pictureUrl'];
+                linkDest = planSection.detailUrl;
+                title = planSection.title;
+                text = planSection.description;
+                photoUrl = planSection.pictureUrl;
                 if (!title) {
                     title = '';
                     if (params.elementUnit === 'track') {
@@ -1273,10 +1283,10 @@
             }
             // popup for begin pin
             if (planSection.hasOwnProperty('beginTitle')) {
-                linkDest = planSection['beginDetailUrl'];
-                beginTitle = planSection['beginTitle'];
-                text = planSection['beginDescription'];
-                photoUrl = planSection['beginPictureUrl'];
+                linkDest = planSection.beginDetailUrl;
+                beginTitle = planSection.beginTitle;
+                text = planSection.beginDescription;
+                photoUrl = planSection.beginPictureUrl;
                 if (!beginTitle) {
                     beginTitle = '';
                     if (params.elementUnit === 'track'){
@@ -1332,12 +1342,12 @@
         var lastPopup = lastTooltip;
         if (iplan < plan.length && plan[iplan].hasOwnProperty('beginTitle')) {
             lastTooltip = t('gpxmotion', 'Step') + ' ' + iplan + ' (final) : ' +
-                          plan[iplan]['beginTitle'] + '<br/>' + t('gpxmotion', 'Click for more details');
+                          plan[iplan].beginTitle + '<br/>' + t('gpxmotion', 'Click for more details');
 
-            linkDest = plan[iplan]['beginDetailUrl'];
-            beginTitle = plan[iplan]['beginTitle'];
-            text = plan[iplan]['beginDescription'];
-            photoUrl = plan[iplan]['beginPictureUrl'];
+            linkDest = plan[iplan].beginDetailUrl;
+            beginTitle = plan[iplan].beginTitle;
+            text = plan[iplan].beginDescription;
+            photoUrl = plan[iplan].beginPictureUrl;
             if (!beginTitle) {
                 beginTitle = '';
                 if (params.elementUnit === 'track') {
@@ -1369,18 +1379,30 @@
         lastMarker.bindTooltip(lastTooltip);
         beginMarkers.push(lastMarker);
 
-        //$('#summary').html('<p><table id="pinSummaryTable">'+pinSummaryContent+'</table><br/><table id="lineSummaryTable">'+lineSummaryContent+'</table></p>');
-
         // stop loading animation
         $('span.fa-spinner').parent().parent().prop('disabled', false);
         $('span.fa-spinner').removeClass('fa-spinner fa-pulse').addClass('fa-play-circle-o');
 
-        var totsec = Math.floor(totalTime/1000);
-        var minutes = Math.floor(totsec/60);
-        var remsec = totsec%60;
+        if (params.synchroSections === 'true') {
+            var totsec = Math.floor(20000 / 1000);
+        }
+        else if (params.simultaneousSections === 'true'){
+            var maxTime = 0;
+            for (var x = 0; x < markers.length; x++) {
+                if (plan[x].time > maxTime) {
+                    maxTime = plan[x].time;
+                }
+            }
+            var totsec = Math.floor(maxTime / 1000);
+        }
+        else {
+            var totsec = Math.floor(totalTime / 1000);
+        }
+        var minutes = Math.floor(totsec / 60);
+        var remsec = totsec % 60;
         gpxMotionView.summaryText = t('gpxmotion', 'Ready to play') +
-                                    ' !!! ('+minutes+' min '+remsec+' sec ; '+
-                                    formatDistance(allSectionTotalDistance)+')'
+                                    ' !!! (' + minutes + ' min ' + remsec +' sec ; ' +
+                                    formatDistance(allSectionTotalDistance) + ')'
         $('div#summary').text(gpxMotionView.summaryText);
         ready = true;
         // AUTOPLAY
