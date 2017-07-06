@@ -70,15 +70,19 @@
         return theString;
     }
 
-    function long2tile(lon,zoom) { return (Math.floor((lon+180)/360*Math.pow(2,zoom))); }
-    function lat2tile(lat,zoom)  { return (Math.floor((1-Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2 *Math.pow(2,zoom))); }
+    function long2tile(lon,zoom) {
+        return (Math.floor((lon + 180) / 360 * Math.pow(2, zoom)));
+    }
+    function lat2tile(lat,zoom) {
+        return (Math.floor((1 - Math.log(Math.tan(lat * Math.PI / 180) + 1 / Math.cos(lat * Math.PI / 180)) / Math.PI) / 2 * Math.pow(2, zoom)));
+    }
 
     function formatDistance(d) {
         if (d > 1000) {
-            return ((d/1000).toFixed(2)+'km');
+            return ((d / 1000).toFixed(2) + 'km');
         }
         else {
-            return (parseInt(d)+'m');
+            return (parseInt(d) + 'm');
         }
     }
 
@@ -350,7 +354,7 @@
         currentMarkerIndex = 0;
         var i;
         // remove begin markers
-        for (i=0; i < beginMarkers.length; i++) {
+        for (i = 0; i < beginMarkers.length; i++) {
             gpxMotionView.map.removeLayer(beginMarkers[i]);
         }
 
@@ -364,7 +368,7 @@
             gpxMotionView.map.removeLayer(markers[i]);
         }
         // remove draw polylines
-        for (i=0; i < drawPolylines.length; i++) {
+        for (i = 0; i < drawPolylines.length; i++) {
             gpxMotionView.map.removeLayer(drawPolylines[i]);
             drawPolylines[i].eachLayer( function (l) {
                 l.setLatLngs([]);
@@ -375,11 +379,12 @@
     }
 
     function displayCompleteTravel() {
+        var i;
         $('div#summary').text(gpxMotionView.summaryText);
-        for (var i=0; i<beginMarkers.length; i++) {
+        for (i = 0; i < beginMarkers.length; i++) {
             beginMarkers[i].addTo(gpxMotionView.map);
         }
-        for (var i = 0; i < polylines.length; i++) {
+        for (i = 0; i < polylines.length; i++) {
             polylines[i].addTo(gpxMotionView.map);
         }
         // zoom on whole travel
@@ -1030,7 +1035,7 @@
         var iline = 0;
         var nblinesInserted;
         var coords = [];
-        var planNamesFromGpxTrk =[];
+        var planNamesFromGpxTrk = [];
         var pinSummaryContent = '';
         var lineSummaryContent = '';
         var totalTime = 0;
@@ -1424,9 +1429,9 @@
     }
 
     function drawslider(ossz, meik) {
-        var slidertext=Math.round((meik*100)/ossz);
-        document.getElementById("sliderbar").style.width=slidertext+'%';
-        document.getElementById("slidertext").innerHTML='Loading '+slidertext+'%';
+        var slidertext=Math.round((meik * 100) / ossz);
+        document.getElementById("sliderbar").style.width = slidertext + '%';
+        document.getElementById("slidertext").innerHTML = 'Loading ' + slidertext + '%';
     }
 
     function updateDisplaySizes() {
@@ -1558,11 +1563,11 @@
             $('span.fa-spinner').parent().parent().prop('disabled', true);
             var url = OC.generateUrl('/apps/gpxmotion/getgpx');
             $('div#summary').html(
-                '<div id="slider">'+
-                '<div id="sliderbar">'+
-                '</div>'+
-                '<div id="slidertext">'+
-                '</div>'+
+                '<div id="slider">' +
+                '<div id="sliderbar">' +
+                '</div>' +
+                '<div id="slidertext">' +
+                '</div>' +
                 '</div>'
             );
 
@@ -1632,7 +1637,7 @@
             if (kc === 32) {
                 e.preventDefault();
                 if (ready) {
-                    if (currentMarkerIndex === 0){
+                    if (currentMarkerIndex === 0) {
                         reset();
                         nextMarker();
                     }

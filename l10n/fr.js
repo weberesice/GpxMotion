@@ -72,6 +72,8 @@ OC.L10N.register(
     "Edit current file" : "Éditer le fichier courant",
     "Options" : "Options",
     "autozoom" : "zoom auto",
+    "All sections synchronized" : "Toutes les sections synchronisées",
+    "All sections" : "Toutes les sections",
     "View in GpxMotion" : "Voir dans GpxMotion"
     },
 "nplurals=2; plural=(n > 1);");
