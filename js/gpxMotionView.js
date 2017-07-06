@@ -114,10 +114,12 @@
         if (params.synchroSections === 'true') {
             gpxMotionView.timeDialog.open();
             currentTime = minBeginTime;
+            $('div#summary').text(t('gpxmotion', 'All sections synchronized') + ' (' + markers.length + ')');
+        }
+        else {
+            $('div#summary').text(t('gpxmotion', 'All sections') + ' (' + markers.length + ')');
         }
 
-        // update current title
-        $('div#summary').text('');
         var timeout;
         var maxTime = 0;
         // create and launch markers
@@ -292,10 +294,20 @@
         }
     }
 
+    function oneMarkerIsPaused() {
+        var i;
+        for (i = 0; i < markers.length; i++) {
+            if (markers[i].isPaused()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     function playPause() {
         if (params.simultaneousSections === 'true') {
             var i;
-            if (markers[0].isPaused()) {
+            if (oneMarkerIsPaused()) {
                 currentTimer.resume();
                 for (i = 0; i < markers.length; i++) {
                     markers[i].resume();
