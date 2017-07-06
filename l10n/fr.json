@@ -44,6 +44,7 @@
     "Your WMS overlay tile servers" : "Vos serveurs de revêtements WMS personnels",
     "Transparent" : "Transparent",
     "Play all sections simultaneously" : "Jouer toutes les sections simultanément",
+    "Play all sections synchronized in real time" : "Jouer et synchroniser toutes les sections en temps réel",
     "GpxMotion" : "GpxMotion"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

@@ -587,24 +587,34 @@
     function parseDesc(desc) {
         var json = $.parseJSON(desc);
         var i, p;
-        if (json && json.plan) {
-            for (i = 0; i < json.plan.length; i++) {
-                p = json.plan[i];
-                addSection(p.nbElements,
-                        p.vehicule,
-                        p.time,
-                        p.title,
-                        p.description,
-                        p.pictureUrl,
-                        p.detailUrl,
-                        p.beginTitle,
-                        p.beginDescription,
-                        p.beginPictureUrl,
-                        p.beginDetailUrl,
-                        false,
-                        $('#addSectionButton')
-                );
+        if (json) {
+            $('#simultaneouscheck').prop('checked', json.simultaneousSections === 'true');
+            $('#synchrocheck').prop('checked', json.synchroSections === 'true');
+            $('#proportionaltimecheck').prop('checked', json.proportionalTime === 'true');
+            if (json.plan) {
+                for (i = 0; i < json.plan.length; i++) {
+                    p = json.plan[i];
+                    addSection(p.nbElements,
+                            p.vehicule,
+                            p.time,
+                            p.title,
+                            p.description,
+                            p.pictureUrl,
+                            p.detailUrl,
+                            p.beginTitle,
+                            p.beginDescription,
+                            p.beginPictureUrl,
+                            p.beginDetailUrl,
+                            false,
+                            $('#addSectionButton')
+                    );
+                }
             }
+        }
+        else {
+            $('#simultaneouscheck').prop('checked', false);
+            $('#synchrocheck').prop('checked', false);
+            $('#proportionaltimecheck').prop('checked', false);
         }
     }
 
