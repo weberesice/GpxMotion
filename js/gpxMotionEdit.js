@@ -616,6 +616,8 @@
             $('#synchrocheck').prop('checked', false);
             $('#proportionaltimecheck').prop('checked', false);
         }
+
+        checkOptionsConstraints();
     }
 
     function addSection(nbElements=1,
@@ -937,6 +939,24 @@
         return errors;
     }
 
+    function checkOptionsConstraints() {
+        if ($('#simultaneouscheck').is(':checked')) {
+            $('#synchrocheck').removeAttr('disabled');
+        }
+        else {
+            $('#synchrocheck').attr('checked', false);
+            $('#synchrocheck').attr('disabled', true);
+        }
+        if ($('#synchrocheck').is(':checked')) {
+            $('#proportionaltimecheck').attr('checked', true);
+            $('#proportionaltimecheck').attr('disabled', true);
+        }
+        else {
+            $('#proportionaltimecheck').attr('disabled', true);
+            $('#proportionaltimecheck').removeAttr('disabled');
+        }
+    }
+
     $(document).ready(function() {
         document.onkeydown = checkKey;
         load_map();
@@ -1092,6 +1112,12 @@
                 $(this).find('i').removeClass('fa-angle-double-down').addClass('fa-angle-double-up');
             }
         });
+
+        // manage options constraints
+        $('#simultaneouscheck, #synchrocheck').change(function (e) {
+            checkOptionsConstraints();
+        });
+
 
     });
 }(jQuery, OC));

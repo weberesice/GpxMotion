@@ -414,6 +414,7 @@
 
         if (params.simultaneousSections === 'true') {
             endSimultaneousDraw();
+            reset();
             nextMarker();
             return;
         }
