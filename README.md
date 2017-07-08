@@ -2,18 +2,18 @@
 
 GpxMotion is an ownCloud/Nextcloud application to create and display path animations on an interactive map.
 
-To produce an animation, go to GpxMotion main page and load a GPX file already containing ordered tracks/routes.
+To watch an animation, click the "Load and view file" button in GpxMotion main page.
+If no animation information was set, a default one (one section of 10 seconds per tracks/routes) is shown.
+If no time information is missing in an animation section and the "use real time proportions"
+is enabled (by default, it is), the animation duration will not change but the animation speed will be proportional to real speed.
+
+To define an animation, go to GpxMotion main page and load a GPX file already containing ordered tracks/routes.
 Then define the animation steps. Then check you are satisfied with the animation preview. Then
 save the result to a GPX file (the animation data is saved as JSON in the GPX description field).
 
-To watch an animation, go to the "view" page of GpxMotion and load a GPX file.
-If no animation information was set, a default one (all tracks/routes in 10 seconds) is shown.
-If no time information is missing in an animation section and the "use real time proportions"
-option is checked, the animation duration will not change but the animation speed will be proportional to real speed.
-
-In the "view" page, if the file is
+If a file is
 publicly shared without password in "Files" app, you can produce a GpxMotion public link to
-the current animation with the "Share" button.
+its animation with the "Share" button in the "view" page.
 
 This app is tested on ownCloud 10 with Firefox and Chromium.
 This app is tested on Nextcloud 11 and 12 with Firefox and Chromium.
@@ -24,8 +24,11 @@ If you want to help to translate this app in your language, take the english=>fr
 
 ## Demo
 
-* [First demo](https://nuage.pluton.cassio.pe/index.php/apps/gpxmotion/publicview?token=EqPISeOfUQ6hUtq&autoplay=1&loop=1&autozoom=1)
-* [Second demo](https://nuage.pluton.cassio.pe/index.php/apps/gpxmotion/publicview?token=f0Wj7VxIITbLuVG&autoplay=1&loop=1&autozoom=1)
+* [First demo (dummy bike trip)](https://nuage.pluton.cassio.pe/index.php/apps/gpxmotion/publicview?token=EqPISeOfUQ6hUtq&autoplay=1&loop=1&autozoom=1)
+* [Second demo (dummy world travel)](https://nuage.pluton.cassio.pe/index.php/apps/gpxmotion/publicview?token=f0Wj7VxIITbLuVG&autoplay=1&loop=1&autozoom=1)
+* [Third demo (simple real time speed)](https://nuage.pluton.cassio.pe/apps/gpxmotion/publicview?token=D9H8VURFUK0qzz1&layer=OpenStreetMap&autoplay=1&autozoom=1&loop=1)
+* [Fourth demo (simple simultaneous drawing)](https://nuage.pluton.cassio.pe/apps/gpxmotion/publicview?token=whUvTpOXcMwmscn&layer=OpenStreetMap&autoplay=1&autozoom=1&loop=1)
+* [Fifth demo (dummy synchronized simultaneous drawing)](https://nuage.pluton.cassio.pe/apps/gpxmotion/publicview?token=dahOsWhyJPS6pAX&layer=OpenStreetMap&autoplay=1&autozoom=1&loop=1)
 
 ## Donation
 

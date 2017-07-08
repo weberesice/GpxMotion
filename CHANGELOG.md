@@ -5,9 +5,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- option to play all sections simultaneously
+- option to play synchronous simultaneous drawing
+[#5](https://gitlab.com/eneiluj/gpxmotion-oc/issues/5) @klakla2
+
 ### Changed
 - update leaflet to 1.1.0
 - update sidebarv2
+- do not artificially link sections together
+[#5](https://gitlab.com/eneiluj/gpxmotion-oc/issues/5) @klakla2
+- default section plan is now making one section per track/route
+
+### Fixed
+- allow to save file when there is no section set
 
 ## 0.0.4 – 2017-06-27
 ### Added
