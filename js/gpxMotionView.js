@@ -1,6 +1,13 @@
 (function ($, OC) {
     'use strict';
 
+    var colors = [
+        'MediumPurple', 'Maroon', 'Lime', 'Khaki',
+        'orange', 'Indigo', 'brown', 'Chartreuse',
+        'Crimson', 'DeepPink', 'Gold'
+    ];
+    var lastColorUsed = -1;
+
     var gpxMotionView = {
         map: null,
         vehicule: null,
@@ -126,8 +133,9 @@
 
         var timeout;
         var maxTime = 0;
+        var i;
         // create and launch markers
-        for (var i = 0; i < markers.length; i++) {
+        for (i = 0; i < markers.length; i++) {
             // add marker pin at start point and get its time
             timeout = plan[i].time;
             if (timeout > maxTime) {
@@ -1209,7 +1217,12 @@
 
             thevehicule = planSection.vehicule;
             theicon = gpxMotionView.vehicule[thevehicule].icon;
-            thecolor = gpxMotionView.vehicule[thevehicule].color;
+            if (thevehicule === 'no vehicle') {
+                thecolor = colors[++lastColorUsed % colors.length];
+            }
+            else {
+                thecolor = gpxMotionView.vehicule[thevehicule].color;
+            }
 
             // calculate approximate plan section total distance
             planSection.totalDistance = 0;
@@ -1218,10 +1231,10 @@
             }
             allSectionTotalDistance += planSection.totalDistance;
 
-            mypoly = L.polyline(table, {color:thecolor, weight:5});
+            mypoly = L.polyline(table, {color:thecolor, weight:5, opacity: 0.6});
             if (border) {
                 borderLine = L.polyline(table,
-                    {opacity:1, weight: parseInt(5*1.6), color:'black'});
+                    {opacity:0.6, weight: parseInt(5 * 1.6), color:'white'});
                 featGroup = L.featureGroup([borderLine, mypoly]);
             }
             else {
@@ -1230,9 +1243,9 @@
             polylines.push(featGroup);
 
             // empty elements to be drawn progressively
-            emptyPoly = L.polyline([], {color:thecolor, weight:5});
+            emptyPoly = L.polyline([], {color: thecolor, weight: 5, opacity: 0.6});
             emptyBorderLine = L.polyline([],
-                {opacity:1, weight: parseInt(5*1.6), color:'black'});
+                {opacity: 0.6, weight: parseInt(5 * 1.6), color: 'white'});
             drawFeatGroup = L.featureGroup([emptyBorderLine, emptyPoly]);
             drawPolylines.push(drawFeatGroup);
 
