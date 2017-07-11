@@ -899,6 +899,7 @@
         featgr.eachLayer(function(l) {
             l.setStyle(zoomStyle);
             l.bindTooltip('Section '+sectionnum, {permanent: true});
+            l.bringToFront();
         });
     }
 
