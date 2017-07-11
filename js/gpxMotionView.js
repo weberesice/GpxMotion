@@ -174,10 +174,11 @@
     }
 
     function endSimultaneousDraw() {
+        var i;
         if (params.synchroSections === 'true') {
             gpxMotionView.timeDialog.close();
         }
-        for (var i = 0; i < markers.length; i++) {
+        for (i = 0; i < markers.length; i++) {
             markers[i].stop();
             gpxMotionView.map.removeLayer(markers[i]);
             // add the entire line
@@ -298,6 +299,8 @@
                 nextMarker();
             }
             else {
+                reset();
+                displayCompleteTravel();
                 // hide time if this is the end
                 if (params.proportionalTime === 'true') {
                     gpxMotionView.timeDialog.close();
@@ -1440,6 +1443,9 @@
         // AUTOPLAY
         if (getUrlParameter('autoplay') === '1') {
             nextMarker();
+        }
+        else {
+            displayCompleteTravel();
         }
     }
 
