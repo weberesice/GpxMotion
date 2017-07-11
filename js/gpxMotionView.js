@@ -392,8 +392,10 @@
     function displayCompleteTravel() {
         var i;
         $('div#summary').text(gpxMotionView.summaryText);
-        for (i = 0; i < beginMarkers.length; i++) {
-            beginMarkers[i].addTo(gpxMotionView.map);
+        if (params.simultaneousSections !== 'true') {
+            for (i = 0; i < beginMarkers.length; i++) {
+                beginMarkers[i].addTo(gpxMotionView.map);
+            }
         }
         for (i = 0; i < polylines.length; i++) {
             polylines[i].addTo(gpxMotionView.map);
@@ -1243,6 +1245,9 @@
             else {
                 featGroup = L.featureGroup([mypoly]);
             }
+            featGroup.on('mouseover', function(e) {
+                e.target.bringToFront();
+            });
             polylines.push(featGroup);
 
             // empty elements to be drawn progressively
