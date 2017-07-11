@@ -1274,6 +1274,7 @@
                     title = '';
                     if (params.elementUnit === 'track') {
                         title += ' ' + planNamesFromGpxTrk[iplan];
+                        planSection.title = title;
                     }
                 }
                 linePopupString = '<h2 class="popupTitle">' + t('gpxmotion', 'Section') + ' ' + (iplan+1) + ' : ' + title + '</h2>';
