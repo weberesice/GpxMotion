@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - option to play all sections simultaneously
 - option to play synchronous simultaneous drawing
 [#5](https://gitlab.com/eneiluj/gpxmotion-oc/issues/5) @klakla2
+- new edit field to set synchronized animation duration
+[#9](https://gitlab.com/eneiluj/gpxmotion-oc/issues/9) @klakla2
 
 ### Changed
 - update leaflet to 1.1.0
@@ -16,9 +18,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - do not artificially link sections together
 [#5](https://gitlab.com/eneiluj/gpxmotion-oc/issues/5) @klakla2
 - default section plan is now making one section per track/route
+- lines style
+- display all on page load if no autoplay
+- display all when animation ends if no loop no simultaneous
+[#8](https://gitlab.com/eneiluj/gpxmotion-oc/issues/8) @eneiluj
+- bring polylines layers to front on mouseover
+- don't display beginmarkers if simultaneous
+- in simultaneous drawing (synchro or not) begin markers and moving markers are circles containing section numbers
+[#10](https://gitlab.com/eneiluj/gpxmotion-oc/issues/10) @klakla2
 
 ### Fixed
 - allow to save file when there is no section set
+- if no section title, take the trk name, fix summary text
+[#7](https://gitlab.com/eneiluj/gpxmotion-oc/issues/7) @eneiluj
+- bring sections layers to front when zoomed in editor
+[#6](https://gitlab.com/eneiluj/gpxmotion-oc/issues/6) @eneiluj
 
 ## 0.0.4 – 2017-06-27
 ### Added
