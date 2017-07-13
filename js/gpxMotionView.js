@@ -141,7 +141,7 @@
             if (timeout > maxTime) {
                 maxTime = timeout;
             }
-            //beginMarkers[i].addTo(gpxMotionView.map);
+            beginMarkers[i].addTo(gpxMotionView.map);
 
             // add the moving marker and start it
             gpxMotionView.map.addLayer(markers[i]);
@@ -1257,6 +1257,26 @@
             drawFeatGroup = L.featureGroup([emptyBorderLine, emptyPoly]);
             drawPolylines.push(drawFeatGroup);
 
+            if (params.simultaneousSections !== 'true') {
+                var pinIcon = gpxMotionView.normalPinIcon;
+                if (iplan === 0) {
+                    pinIcon = gpxMotionView.beginPinIcon;
+                }
+            }
+            else {
+                pinIcon = L.divIcon({
+                    iconAnchor: [6, 6],
+                    className: 'numberBeginMarker',
+                    html: '<b>' + (iplan + 1) + '</b>'
+                });
+                theicon = L.divIcon({
+                    iconAnchor: [6, 6],
+                    className: 'numberMarker',
+                    html: '<b>' + (iplan + 1) + '</b>'
+                });
+            }
+            var beginMarker = L.marker(table[0], {icon: pinIcon});
+
             totalTime += planSection.time;
             marker = L.Marker.movingMarker(mypoly.getLatLngs(), timetable,{
                 autostart: false,
@@ -1264,11 +1284,7 @@
             });
             marker.gpxMotionIndex = iplan;
             marker.on('move', updateSnakeLine);
-            var pinIcon = gpxMotionView.normalPinIcon;
-            if (iplan === 0) {
-                pinIcon = gpxMotionView.beginPinIcon;
-            }
-            var beginMarker = L.marker(table[0], {icon: pinIcon});
+
             linePopupString = '';
             popupString = '';
 
