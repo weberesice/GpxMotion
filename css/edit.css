@@ -926,6 +926,7 @@ div.section .insertSectionAfter i, div.section .insertSectionBefore i{
 }*/
 label[for=proportionaltimecheck], #proportionaltimecheck,
 label[for=synchrocheck], #synchrocheck,
+label[for=synchroduration], #synchroduration,
 label[for=simultaneouscheck], #simultaneouscheck {
     margin-top: auto;
     margin-bottom: auto;

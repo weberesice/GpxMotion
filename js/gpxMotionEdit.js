@@ -591,6 +591,9 @@
             $('#simultaneouscheck').prop('checked', json.simultaneousSections === 'true');
             $('#synchrocheck').prop('checked', json.synchroSections === 'true');
             $('#proportionaltimecheck').prop('checked', json.proportionalTime === 'true');
+            if (json.synchroDuration && !isNaN(json.synchroDuration)) {
+                $('#synchroduration').val(json.synchroDuration / 1000);
+            }
             if (json.plan) {
                 for (i = 0; i < json.plan.length; i++) {
                     p = json.plan[i];
@@ -865,6 +868,13 @@
         else {
             json.synchroSections = 'false';
         }
+        var synchroDuration = $('#synchroduration').val();
+        if (isNaN(synchroDuration)) {
+            json.synchroDuration = 20000;
+        }
+        else {
+            json.synchroDuration = parseInt(synchroDuration) * 1000;
+        }
         json.plan = sectionlist;
         return JSON.stringify(json);
     }
@@ -951,10 +961,12 @@
         if ($('#synchrocheck').is(':checked')) {
             $('#proportionaltimecheck').attr('checked', true);
             $('#proportionaltimecheck').attr('disabled', true);
+            $('#synchroduration').removeAttr('disabled');
         }
         else {
             $('#proportionaltimecheck').attr('disabled', true);
             $('#proportionaltimecheck').removeAttr('disabled');
+            $('#synchroduration').attr('disabled', true);
         }
     }
 

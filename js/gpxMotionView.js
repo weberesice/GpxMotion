@@ -165,7 +165,7 @@
         }
 
         if (params.synchroSections === 'true') {
-            maxTime = 20000;
+            maxTime = params.synchroDuration;
         }
         // schedule call to end
         currentTimer = new Timer(function() {
@@ -1056,6 +1056,10 @@
         minBeginTime = null;
         maxEndTime = null;
 
+        if (! params.synchroDuration || isNaN(params.synchroDuration)) {
+            params.synchroDuration = 20000;
+        }
+
         // used in feature unit only
         // we get the number of features we want for each plan Section
         var featureNumberPerSection = [];
@@ -1170,7 +1174,7 @@
                 j++;
                 // make the time fit the section time
                 var sumTimes = maxEndTime.diff(minBeginTime);
-                time = 20000;
+                time = params.synchroDuration;
                 var ratio = time/sumTimes;
                 for (i = 0; i < timetable.length; i++) {
                     timetable[i] = ratio * timetable[i];
@@ -1440,7 +1444,7 @@
         $('span.fa-spinner').removeClass('fa-spinner fa-pulse').addClass('fa-play-circle-o');
 
         if (params.synchroSections === 'true') {
-            var totsec = Math.floor(20000 / 1000);
+            var totsec = Math.floor(params.synchroDuration / 1000);
         }
         else if (params.simultaneousSections === 'true'){
             var maxTime = 0;
