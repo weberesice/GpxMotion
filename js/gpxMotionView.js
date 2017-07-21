@@ -496,49 +496,56 @@
                     iconSize: [4, 4],
                     className: 'invisible-icon'
                 }),
-                color : 'orange'
+                color : '#FFA316',
+                rgbColor: '255,163,22'
             },
             plane : {
                 icon: L.divIcon({
                     className: 'marker-icon-plane',
                     iconAnchor: [20, 52]
                 }),
-                color : 'purple'
+                color : '#FF16DF',
+                rgbColor: '255,22,223'
             },
             train : {
                 icon: L.divIcon({
                     className: 'marker-icon-train',
                     iconAnchor: [20, 52]
                 }),
-                color : 'red'
+                color : '#FF1B16',
+                rgbColor: '255,27,22'
             },
             bus : {
                 icon: L.divIcon({
                     className: 'marker-icon-bus',
                     iconAnchor: [20, 52]
                 }),
-                color : 'cyan'
+                color : '#16ECFF',
+                rgbColor: '22,236,255'
             },
             hike : {
                 icon: L.divIcon({
                     className: 'marker-icon-hike',
                     iconAnchor: [20, 52]
                 }),
-                color : 'yellow'
+                color : '#FFF316',
+                rgbColor: '255,243,22'
             },
             car : {
                 icon: L.divIcon({
                     className: 'marker-icon-car',
                     iconAnchor: [20, 52]
                 }),
-                color : 'blue'
+                color : '#163BFF',
+                rgbColor: '22,59,255'
             },
             bike : {
                 icon: L.divIcon({
                     className: 'marker-icon-bike',
                     iconAnchor: [20, 52]
                 }),
-                color : 'green'
+                color : '#00D13D',
+                rgbColor: '0,209,61'
             }
         }
 
@@ -569,7 +576,6 @@
             '<input type="checkbox" id="zoomcheck" checked/>' +
             '</div>' +
             '<h3>' + t('gpxmotion', 'Legend') + '</h3><div class="legendVehicules">' +
-            defaultLegendVehicules +
             '</div>' +
             '<h3>' + t('gpxmotion', 'Pins') + '</h3>' +
             '<div class="legendPins">' +
@@ -1248,12 +1254,13 @@
             theicon = gpxMotionView.vehicule[thevehicule].icon;
             if (thevehicule === 'no vehicle') {
                 thecolor = hexColors[++lastColorUsed % hexColors.length];
+                planSection.rgbColor = rgbColors[lastColorUsed % rgbColors.length];
             }
             else {
                 thecolor = gpxMotionView.vehicule[thevehicule].color;
+                planSection.rgbColor = gpxMotionView.vehicule[thevehicule].rgbColor;
             }
             planSection.hexColor = thecolor;
-            planSection.rgbColor = rgbColors[lastColorUsed % rgbColors.length];
 
             // calculate approximate plan section total distance
             planSection.totalDistance = 0;
@@ -1509,7 +1516,10 @@
             }
         }
         else {
-            legendContent = defaultLegendVehicules;
+            for (i = 0; i < markers.length; i++) {
+                legendContent = legendContent + '<div class="dialogicon" icon="' + plan[i].vehicule + '">  </div>' +
+                    '<p class="legendTitle" style="background: rgba(' + plan[i].rgbColor + ', 0.6);">  ' + plan[i].title + '</p>';
+            }
         }
         $('div.legendVehicules').html(legendContent);
     }
