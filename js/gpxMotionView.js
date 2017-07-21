@@ -1,11 +1,10 @@
 (function ($, OC) {
     'use strict';
 
-    var colors = [
-        'MediumPurple', 'Maroon', 'Lime', 'Khaki',
-        'orange', 'Indigo', 'brown', 'Chartreuse',
-        'Crimson', 'DeepPink', 'Gold'
+    var hexColors = [
     ];
+    var rgbColors = [
+    ]
     var lastColorUsed = -1;
 
     var gpxMotionView = {
@@ -31,6 +30,32 @@
     var currentTime;
     var minBeginTime, maxEndTime;
     var ready = false;
+
+    var defaultLegendVehicules =
+        '<div class="dialogicon" icon="plane">  </div><b style="color:purple;">  ' + t('gpxmotion', 'plane') + '</b>' +
+        '<div class="dialogicon" icon="bike"> </div>  <b style="color:green;"> ' + t('gpxmotion', 'bike') + '</b>' +
+        '<div class="dialogicon" icon="hike"> </div>  <b style="color:yellow;">' + t('gpxmotion', 'foot') + '</b>' +
+        '<div class="dialogicon" icon="car">  </div>  <b style="color:blue;">' + t('gpxmotion', 'car') + '</b>' +
+        '<div class="dialogicon" icon="bus">  </div>  <b style="color:cyan;">' + t('gpxmotion', 'bus') + '</b>' +
+        '<div class="dialogicon" icon="train"></div>  <b style="color:red;">   ' + t('gpxmotion', 'train') + '</b>';
+
+    function initColors() {
+        var i;
+        var r, g, b, hex;
+        for (i = 0; i < 20; i++) {
+            r = Math.floor((Math.random() * 256));
+            g = Math.floor((Math.random() * 256));
+            b = Math.floor((Math.random() * 256));
+            hex = colorToHex(r, g, b);
+            hexColors.push(hex);
+            rgbColors.push(r+','+g+','+b);
+        }
+    }
+
+    function colorToHex(r, g, b) {
+        var rgb = b | (g << 8) | (r << 16);
+        return '#' + rgb.toString(16);
+    };
 
     function basename(str) {
         var base = new String(str).substring(str.lastIndexOf('/') + 1);
@@ -401,8 +426,8 @@
             polylines[i].addTo(gpxMotionView.map);
         }
         // zoom on whole travel
-        //map.fitBounds(globalBounds, {animate:true, padding: [100,100]});
-        gpxMotionView.map.flyToBounds(globalBounds, {animate:true, padding: [100,100]});
+        gpxMotionView.map.fitBounds(globalBounds, {animate:true, padding: [100,100]});
+        //gpxMotionView.map.flyToBounds(globalBounds, {animate:true, padding: [100,100]});
     }
 
     function nextSection() {
@@ -544,12 +569,7 @@
             '<input type="checkbox" id="zoomcheck" checked/>' +
             '</div>' +
             '<h3>' + t('gpxmotion', 'Legend') + '</h3><div class="legendVehicules">' +
-            '<div class="dialogicon" icon="plane">  </div><b style="color:purple;">  ' + t('gpxmotion', 'plane') + '</b>' +
-            '<div class="dialogicon" icon="bike"> </div>  <b style="color:green;"> ' + t('gpxmotion', 'bike') + '</b>' +
-            '<div class="dialogicon" icon="hike"> </div>  <b style="color:yellow;">' + t('gpxmotion', 'foot') + '</b>' +
-            '<div class="dialogicon" icon="car">  </div>  <b style="color:blue;">' + t('gpxmotion', 'car') + '</b>' +
-            '<div class="dialogicon" icon="bus">  </div>  <b style="color:cyan;">' + t('gpxmotion', 'bus') + '</b>' +
-            '<div class="dialogicon" icon="train"></div>  <b style="color:red;">   ' + t('gpxmotion', 'train') + '</b>' +
+            defaultLegendVehicules +
             '</div>' +
             '<h3>' + t('gpxmotion', 'Pins') + '</h3>' +
             '<div class="legendPins">' +
@@ -562,7 +582,7 @@
             position: 'topleft',
             minSize: [30, 20],
             maxSize: [900, 900],
-            size: [120, parseInt(gpxMotionView.map.getSize().y - 140)]
+            size: [180, parseInt(gpxMotionView.map.getSize().y - 140)]
         })
             .setContent(legendText)
             .addTo(gpxMotionView.map);
@@ -580,7 +600,7 @@
 
         var timeDialogText = '<div id="timediv"></div>';
         gpxMotionView.timeDialog = L.control.dialog({
-            anchor: [-25, 130],
+            anchor: [-25, 190],
             position: 'bottomleft',
             minSize: [30, 20],
             maxSize: [900, 900],
@@ -1227,11 +1247,13 @@
             thevehicule = planSection.vehicule;
             theicon = gpxMotionView.vehicule[thevehicule].icon;
             if (thevehicule === 'no vehicle') {
-                thecolor = colors[++lastColorUsed % colors.length];
+                thecolor = hexColors[++lastColorUsed % hexColors.length];
             }
             else {
                 thecolor = gpxMotionView.vehicule[thevehicule].color;
             }
+            planSection.hexColor = thecolor;
+            planSection.rgbColor = rgbColors[lastColorUsed % rgbColors.length];
 
             // calculate approximate plan section total distance
             planSection.totalDistance = 0;
@@ -1472,6 +1494,24 @@
         else {
             displayCompleteTravel();
         }
+        // update legend
+        updateLegendContent();
+    }
+
+    function updateLegendContent() {
+        var legendContent = '';
+        var i;
+        if (params.simultaneousSections === 'true') {
+            for (i = 0; i < markers.length; i++) {
+                legendContent = legendContent + '<b class="circlebackground">' + (i + 1) + '</b>' +
+                    '<p class="legendTitle" style="background: rgba(' + plan[i].rgbColor + ', 0.6);">' +
+                    plan[i].title + '</p>';
+            }
+        }
+        else {
+            legendContent = defaultLegendVehicules;
+        }
+        $('div.legendVehicules').html(legendContent);
     }
 
     function drawslider(ossz, meik) {
@@ -1484,7 +1524,7 @@
         gpxMotionView.summaryDialog.setLocation([0, parseInt(gpxMotionView.map.getSize().x * 0.2)]);
         gpxMotionView.summaryDialog.setSize([parseInt(gpxMotionView.map.getSize().x * 0.6), 20]);
 
-        gpxMotionView.dialog.setSize([120, parseInt(gpxMotionView.map.getSize().y - 140)]);
+        gpxMotionView.dialog.setSize([180, parseInt(gpxMotionView.map.getSize().y - 140)]);
     }
 
     // preload tiles needed when a polyline is displayed
@@ -1657,6 +1697,7 @@
     }
 
     $(document).ready(function() {
+        initColors();
         load_map();
         $('#global').click(function() {
             reset();

@@ -93,7 +93,7 @@ body { margin: 0; }
 .legendVehicules{
     font-size: 16px;
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 15% 85%;
 }
 .legendPins{
     font-size: 16px;
@@ -187,4 +187,14 @@ body { margin: 0; }
 }
 .numberBeginMarker {
     background-color: lightgreen;
+}
+.circlebackground {
+    border-radius: 50%;
+    background-color: lightgreen;
+    height: 24px;
+    text-align: center;
+}
+.legendTitle {
+    border-radius: 10px;
+    text-align: center;
 }
