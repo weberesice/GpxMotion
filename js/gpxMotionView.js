@@ -243,6 +243,8 @@
                 $(this).removeClass('bordered');
             });
             $('.legendTitle').eq(currentMarkerIndex).addClass('bordered');
+            $('div#optiondiv').parent().scrollTop(0);
+            $('div#optiondiv').parent().scrollTop($('.bordered').position().top);
 
             // show time if we can
             if (params.proportionalTime === 'true') {
