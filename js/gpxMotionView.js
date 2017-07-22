@@ -3,8 +3,6 @@
 
     var hexColors = [
     ];
-    var rgbColors = [
-    ]
     var lastColorUsed = -1;
 
     var gpxMotionView = {
@@ -48,7 +46,6 @@
             b = Math.floor((Math.random() * 256));
             hex = colorToHex(r, g, b);
             hexColors.push(hex);
-            rgbColors.push(r+','+g+','+b);
         }
     }
 
@@ -56,6 +53,13 @@
         var rgb = b | (g << 8) | (r << 16);
         return '#' + rgb.toString(16);
     };
+
+    function hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ?
+            parseInt(result[1], 16) + ',' + parseInt(result[2], 16) + ',' + parseInt(result[3], 16)
+        : null;
+    }
 
     function basename(str) {
         var base = new String(str).substring(str.lastIndexOf('/') + 1);
@@ -497,7 +501,6 @@
                     className: 'invisible-icon'
                 }),
                 color : '#FFA316',
-                rgbColor: '255,163,22'
             },
             plane : {
                 icon: L.divIcon({
@@ -505,7 +508,6 @@
                     iconAnchor: [20, 52]
                 }),
                 color : '#FF16DF',
-                rgbColor: '255,22,223'
             },
             train : {
                 icon: L.divIcon({
@@ -513,7 +515,6 @@
                     iconAnchor: [20, 52]
                 }),
                 color : '#FF1B16',
-                rgbColor: '255,27,22'
             },
             bus : {
                 icon: L.divIcon({
@@ -521,7 +522,6 @@
                     iconAnchor: [20, 52]
                 }),
                 color : '#16ECFF',
-                rgbColor: '22,236,255'
             },
             hike : {
                 icon: L.divIcon({
@@ -529,7 +529,6 @@
                     iconAnchor: [20, 52]
                 }),
                 color : '#FFF316',
-                rgbColor: '255,243,22'
             },
             car : {
                 icon: L.divIcon({
@@ -537,7 +536,6 @@
                     iconAnchor: [20, 52]
                 }),
                 color : '#163BFF',
-                rgbColor: '22,59,255'
             },
             bike : {
                 icon: L.divIcon({
@@ -545,7 +543,6 @@
                     iconAnchor: [20, 52]
                 }),
                 color : '#00D13D',
-                rgbColor: '0,209,61'
             }
         }
 
@@ -1252,15 +1249,18 @@
 
             thevehicule = planSection.vehicule;
             theicon = gpxMotionView.vehicule[thevehicule].icon;
-            if (thevehicule === 'no vehicle') {
-                thecolor = hexColors[++lastColorUsed % hexColors.length];
-                planSection.rgbColor = rgbColors[lastColorUsed % rgbColors.length];
+            if (planSection.color && planSection.color !== '#000000') {
+                thecolor = planSection.color;
             }
             else {
-                thecolor = gpxMotionView.vehicule[thevehicule].color;
-                planSection.rgbColor = gpxMotionView.vehicule[thevehicule].rgbColor;
+                if (thevehicule === 'no vehicle') {
+                    thecolor = hexColors[++lastColorUsed % hexColors.length];
+                }
+                else {
+                    thecolor = gpxMotionView.vehicule[thevehicule].color;
+                }
+                planSection.color = thecolor;
             }
-            planSection.hexColor = thecolor;
 
             // calculate approximate plan section total distance
             planSection.totalDistance = 0;
@@ -1511,14 +1511,14 @@
         if (params.simultaneousSections === 'true') {
             for (i = 0; i < markers.length; i++) {
                 legendContent = legendContent + '<b class="circlebackground">' + (i + 1) + '</b>' +
-                    '<p class="legendTitle" style="background: rgba(' + plan[i].rgbColor + ', 0.6);">' +
+                    '<p class="legendTitle" style="background: rgba(' + hexToRgb(plan[i].color) + ', 0.6);">' +
                     plan[i].title + '</p>';
             }
         }
         else {
             for (i = 0; i < markers.length; i++) {
                 legendContent = legendContent + '<div class="dialogicon" icon="' + plan[i].vehicule + '">  </div>' +
-                    '<p class="legendTitle" style="background: rgba(' + plan[i].rgbColor + ', 0.6);">  ' + plan[i].title + '</p>';
+                    '<p class="legendTitle" style="background: rgba(' + hexToRgb(plan[i].color) + ', 0.6);">  ' + plan[i].title + '</p>';
             }
         }
         $('div.legendVehicules').html(legendContent);

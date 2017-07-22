@@ -529,11 +529,11 @@
     }
 
     function insertSectionBefore(elem) {
-        addSection(1, 'no vehicle', 5000, '', '', '', '', '', '', '', '', false, elem);
+        addSection(1, 'no vehicle', 5000, '', '', '', '', '', '', '', '', '', false, elem);
     }
 
     function insertSectionAfter(elem) {
-        addSection(1, 'no vehicle', 5000, '', '', '', '', '', '', '', '', true, elem);
+        addSection(1, 'no vehicle', 5000, '', '', '', '', '', '', '', '', '', true, elem);
     }
 
     function clearTrack() {
@@ -601,6 +601,7 @@
                             p.vehicule,
                             p.time,
                             p.title,
+                            p.color,
                             p.description,
                             p.pictureUrl,
                             p.detailUrl,
@@ -627,6 +628,7 @@
                      vehicule="no vehicle",
                      time=5000,
                      title='',
+                     color='',
                      description='',
                      pictureUrl='',
                      detailUrl='',
@@ -651,6 +653,7 @@
             vehicule: vehicule,
             time: ftime,
             title: title,
+            color: color,
             description: description,
             pictureUrl: pictureUrl,
             detailUrl: detailUrl,
@@ -686,6 +689,8 @@
         divtxt = divtxt + '<input role="title" type="text" value="' + escapeHTML(values.title) + '"></input>';
         divtxt = divtxt + '<p class="morebutton"><i class="fa fa-angle-double-down"></i> <b>more</b></p>';
         divtxt = divtxt + '<div class="sectionmore">';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Color') + ' :</label>';
+        divtxt = divtxt + '<input id="colorinput" type="color" role="color" value="' + escapeHTML(values.color) + '"></input>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Description') + ' :</label>';
         divtxt = divtxt + '<textarea role="description">' + escapeHTML(values.description) + '</textarea>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Picture URL') + ' :</label>';
@@ -826,6 +831,7 @@
             vehicule,
             time,
             title,
+            color,
             description,
             pictureUrl,
             detailUrl,
@@ -840,6 +846,7 @@
             section.vehicule = $(this).find('select[role=vehicule]').val();
             section.time = parseInt($(this).find('input[role=time]').val()) * 1000;
             section.title = $(this).find('input[role=title]').val();
+            section.color = $(this).find('input[role=color]').val();
             section.description = $(this).find('textarea[role=description]').val();
             section.pictureUrl = $(this).find('input[role=pictureUrl]').val();
             section.detailUrl = $(this).find('input[role=detailUrl]').val();
