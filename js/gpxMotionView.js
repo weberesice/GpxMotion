@@ -586,11 +586,13 @@
             '</div>' +
             '<h3>' + t('gpxmotion', 'Legend') + '</h3><div class="legendVehicules">' +
             '</div>' +
+            '<div id="legendPinsDiv">' +
             '<h3>' + t('gpxmotion', 'Pins') + '</h3>' +
             '<div class="legendPins">' +
             '<div icon="pin"></div><p>' + t('gpxmotion', 'start') + '</p>' +
             '<div icon="pinblue"></div><p>' + t('gpxmotion', 'step') + '</p>' +
             '<div icon="pinred"></div><p>' + t('gpxmotion', 'end') + '</p>' +
+            '</div>' +
             '</div>';
         gpxMotionView.dialog = L.control.dialog({
             anchor: [110, 0],
@@ -1526,12 +1528,14 @@
                     '<p class="legendTitle" style="background: rgba(' + hexToRgb(plan[i].color) + ', 0.6);">' +
                     plan[i].title + '</p>';
             }
+            $('#legendPinsDiv').hide();
         }
         else {
             for (i = 0; i < markers.length; i++) {
                 legendContent = legendContent + '<div class="dialogicon" icon="' + plan[i].vehicule + '">  </div>' +
                     '<p class="legendTitle" style="background: rgba(' + hexToRgb(plan[i].color) + ', 0.6);">  ' + plan[i].title + '</p>';
             }
+            $('#legendPinsDiv').show();
         }
         $('div.legendVehicules').html(legendContent);
     }
