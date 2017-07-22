@@ -198,3 +198,6 @@ body { margin: 0; }
     border-radius: 10px;
     text-align: center;
 }
+.bordered {
+    border: 2px solid red;
+}

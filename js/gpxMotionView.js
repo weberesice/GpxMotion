@@ -238,6 +238,12 @@
             return;
         }
         if (currentMarkerIndex < markers.length) {
+            // manage legend borders
+            $('.legendTitle').each(function () {
+                $(this).removeClass('bordered');
+            });
+            $('.legendTitle').eq(currentMarkerIndex).addClass('bordered');
+
             // show time if we can
             if (params.proportionalTime === 'true') {
                 if (plan[currentMarkerIndex].missingTime) {
@@ -381,6 +387,10 @@
     }
 
     function reset() {
+        // manage legend borders
+        $('.legendTitle').each(function () {
+            $(this).removeClass('bordered');
+        });
         // empty title
         $('div#summary').text('');
 
