@@ -1503,6 +1503,8 @@
                                     ' !!! (' + minutes + ' min ' + remsec +' sec ; ' +
                                     formatDistance(allSectionTotalDistance) + ')'
         $('div#summary').text(gpxMotionView.summaryText);
+        // update legend
+        updateLegendContent();
         ready = true;
         // AUTOPLAY
         if (getUrlParameter('autoplay') === '1') {
@@ -1511,8 +1513,6 @@
         else {
             displayCompleteTravel();
         }
-        // update legend
-        updateLegendContent();
     }
 
     function updateLegendContent() {
