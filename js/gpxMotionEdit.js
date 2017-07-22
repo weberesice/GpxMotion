@@ -567,6 +567,7 @@
                 });
             });
             l = L.polyline(latlngs, normalStyle);
+            l.name = name;
             gpxmotion.featureGroup.addLayer(l);
             gpxmotion.lineList.push(l);
         });
@@ -579,6 +580,7 @@
                 latlngs.push([lat, lon]);
             });
             l = L.polyline(latlngs, normalStyle);
+            l.name = name;
             gpxmotion.featureGroup.addLayer(l);
             gpxmotion.lineList.push(l);
         });
@@ -685,7 +687,9 @@
         divtxt = divtxt + '</select>';
         divtxt = divtxt + '<label>' + t('gpxmotion', 'Duration (sec)') + ' :</label>';
         divtxt = divtxt + '<input role="time" type="text" value="' + escapeHTML(values.time) + '"></input>';
-        divtxt = divtxt + '<label>' + t('gpxmotion', 'Section title') + ' :</label>';
+        divtxt = divtxt + '<label>' + t('gpxmotion', 'Section title') +
+            ' <a href="#" class="guesstitle" style="color:blue;" title="' + t('gpxmotion', 'Guess title from track/route name') + '">' +
+            '<i class="fa fa-magic" aria-hidden="true"></i></a> : </label>';
         divtxt = divtxt + '<input role="title" type="text" value="' + escapeHTML(values.title) + '"></input>';
         divtxt = divtxt + '<p class="morebutton"><i class="fa fa-angle-double-down"></i> <b>more</b></p>';
         divtxt = divtxt + '<div class="sectionmore">';
@@ -884,6 +888,27 @@
         }
         json.plan = sectionlist;
         return JSON.stringify(json);
+    }
+
+    function guessTitle(elem) {
+        var title = '';
+        var i = 0;
+        var cpt = 0;
+        var sectionnum = parseInt(elem.parent().parent().find('h3').attr('section'));
+        var nbelems = parseInt(elem.parent().parent().find('input[role=nbelem]').val());
+        $('div.section').each(function() {
+            if (sectionnum > parseInt($(this).find('h3').attr('section'))) {
+                i = i + parseInt($(this).find('input[role=nbelem]').val());
+            }
+        });
+
+        while (i < gpxmotion.lineList.length && cpt < nbelems) {
+            title = title + gpxmotion.lineList[i].name + ' ; ';
+            i++;
+            cpt++;
+        }
+        title = title.replace(/ ; $/, '');
+        elem.parent().parent().find('input[role=title]').val(title);
     }
 
     function zoomOnSection(sectiondiv) {
@@ -1120,6 +1145,10 @@
         if (fileparam && fileparam !== undefined) {
             loadAction(fileparam);
         }
+
+        $('body').on('click','.guesstitle', function(e) {
+            guessTitle($(this));
+        });
 
         $('body').on('click','h3.customtiletitle', function(e) {
             var forAttr = $(this).attr('for');

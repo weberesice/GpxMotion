@@ -23,7 +23,7 @@ OC.L10N.register(
     "Load file" : "Charger un fichier",
     "File successfully saved as" : "Fichier enregistré avec succès :",
     "Share current file" : "Partager le fichier courant",
-    "Section title" : "Titre de l'étape",
+    "Section title" : "Titre de la section",
     "start" : "début",
     "step" : "étape",
     "Pins" : "Épingles",
@@ -74,6 +74,7 @@ OC.L10N.register(
     "autozoom" : "zoom auto",
     "All sections synchronized" : "Toutes les sections synchronisées",
     "All sections" : "Toutes les sections",
+    "Guess title from track/route name" : "Deviner le titre à partir du nom de la track/route",
     "View in GpxMotion" : "Voir dans GpxMotion"
     },
 "nplurals=2; plural=(n > 1);");
