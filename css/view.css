@@ -204,3 +204,6 @@ body { margin: 0; }
 #legendPinsDiv {
     display: none;
 }
+#legendh {
+    cursor: pointer;
+}

@@ -584,7 +584,9 @@
             '<label for="zoomcheck">' + t('gpxmotion', 'autozoom') + '</label>' +
             '<input type="checkbox" id="zoomcheck" checked/>' +
             '</div>' +
-            '<h3>' + t('gpxmotion', 'Legend') + '</h3><div class="legendVehicules">' +
+            '<h3 id="legendh">' + t('gpxmotion', 'Legend') + ' <i class="fa fa-angle-double-up"></i></h3>' +
+            '<div id="legendDiv">' +
+            '<div class="legendVehicules">' +
             '</div>' +
             '<div id="legendPinsDiv">' +
             '<h3>' + t('gpxmotion', 'Pins') + '</h3>' +
@@ -592,6 +594,7 @@
             '<div icon="pin"></div><p>' + t('gpxmotion', 'start') + '</p>' +
             '<div icon="pinblue"></div><p>' + t('gpxmotion', 'step') + '</p>' +
             '<div icon="pinred"></div><p>' + t('gpxmotion', 'end') + '</p>' +
+            '</div>' +
             '</div>' +
             '</div>';
         gpxMotionView.dialog = L.control.dialog({
@@ -1785,6 +1788,17 @@
         document.onkeydown = checkKey;
 
         gpxMotionView.map.on('resize', updateDisplaySizes);
+
+        $('#legendh').click( function(e) {
+            if ($('#legendDiv').is(':visible')) {
+                $('#legendDiv').slideUp();
+                $('#legendh i').removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
+            }
+            else{
+                $('#legendDiv').slideDown();
+                $('#legendh i').removeClass('fa-angle-double-down').addClass('fa-angle-double-up');
+            }
+        });
 
         main();
 
