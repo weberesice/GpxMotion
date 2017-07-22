@@ -201,3 +201,6 @@ body { margin: 0; }
 .bordered {
     border: 2px solid red;
 }
+#legendPinsDiv {
+    display: none;
+}
