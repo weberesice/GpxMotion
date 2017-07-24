@@ -43,7 +43,7 @@
         for (i = 0; i < 20; i++) {
             r = Math.floor((Math.random() * 256));
             g = Math.floor((Math.random() * 256));
-            b = Math.floor((Math.random() * 256));
+            b = 255 - Math.floor((Math.random() * 256));
             hex = colorToHex(r, g, b);
             hexColors.push(hex);
         }
@@ -154,10 +154,12 @@
         if (params.synchroSections === 'true') {
             gpxMotionView.timeDialog.open();
             currentTime = minBeginTime;
-            $('div#summary').text(t('gpxmotion', 'All sections synchronized') + ' (' + markers.length + ')');
+            $('div#summary').text(t('gpxmotion', 'All sections synchronized') +
+                ' (' + markers.length + ')');
         }
         else {
-            $('div#summary').text(t('gpxmotion', 'All sections') + ' (' + markers.length + ')');
+            $('div#summary').text(t('gpxmotion', 'All sections') +
+                ' (' + markers.length + ')');
         }
 
         var timeout;
@@ -914,6 +916,19 @@
             gpxMotionView.loadButton.addTo(gpxMotionView.map);
         }
 
+        gpxMotionView.zoomButton = L.easyButton({
+            position: 'bottomright',
+            states: [{
+                stateName: 'prev',
+                icon:      'fa-compress',
+                title:     t('gpxmotion', 'Restrict animation to current view'),
+                onClick: function(btn, map) {
+                    zoomView();
+                }
+            }]
+        });
+        gpxMotionView.zoomButton.addTo(gpxMotionView.map);
+
         var nextButton = L.easyButton({
             position: 'bottomright',
             states: [{
@@ -1100,6 +1115,16 @@
             params.synchroDuration = 20000;
         }
 
+        var ttop, bottom, left, right, limitBounds;
+        limitBounds = null;
+        ttop = getUrlParameter('top');
+        bottom = getUrlParameter('bottom');
+        left = getUrlParameter('left');
+        right = getUrlParameter('right');
+        if (ttop && bottom && left && right) {
+            limitBounds = L.latLngBounds(L.latLng(ttop, left), L.latLng(bottom, right));
+        }
+
         // used in feature unit only
         // we get the number of features we want for each plan Section
         var featureNumberPerSection = [];
@@ -1116,9 +1141,38 @@
         $(gpxml).find('trk, rte').each(function() {
             var featureLength = 0;
             name = $(this).find('>name').text();
+            var firstPoint, lastPoint;
+            var firstFound = false;
+
+            if (limitBounds) {
+                $(this).find('trkpt, rtept').each(function() {
+                    lat = $(this).attr('lat');
+                    lon = $(this).attr('lon');
+                    if (limitBounds.contains(L.latLng(lat, lon))) {
+                        time = moment($(this).find('time').text().replace(' ', 'T'));
+                        coords.push([lat, lon, time]);
+                        featureLength++;
+                        lastPoint = $(this);
+                        if (!firstFound) {
+                            firstPoint = $(this);
+                            firstFound = true;
+                        }
+                    }
+                });
+            }
+            else {
+                $(this).find('trkpt, rtept').each(function() {
+                    lat = $(this).attr('lat');
+                    lon = $(this).attr('lon');
+                    time = moment($(this).find('time').text().replace(' ', 'T'));
+                    coords.push([lat, lon, time]);
+                    featureLength++;
+                });
+                firstPoint = $(this).find('trkpt, rtept').first();
+                lastPoint = $(this).find('trkpt, rtept').last();
+            }
 
             // find minimum first point time
-            var firstPoint = $(this).find('trkpt, rtept').first();
             time = moment(firstPoint.find('time').text().replace(' ', 'T'));
             if (minBeginTime === null) {
                 minBeginTime = time;
@@ -1128,7 +1182,6 @@
                     minBeginTime = time;
                 }
             }
-            var lastPoint = $(this).find('trkpt, rtept').last();
             time = moment(lastPoint.find('time').text().replace(' ', 'T'));
             if (maxEndTime === null) {
                 maxEndTime = time;
@@ -1138,14 +1191,6 @@
                     maxEndTime = time;
                 }
             }
-
-            $(this).find('trkpt, rtept').each(function() {
-                lat = $(this).attr('lat');
-                lon = $(this).attr('lon');
-                time = moment($(this).find('time').text().replace(' ', 'T'));
-                coords.push([lat, lon, time]);
-                featureLength++;
-            });
 
             // if we count the features, get the correct number of segments
             if (params.elementUnit === 'track' && iplancoord < plan.length) {
@@ -1723,6 +1768,33 @@
 
     function isPreviewPage() {
         return (endsWith(window.location.href, '/preview'));
+    }
+
+    function zoomView() {
+        // get map bounds
+        var b = gpxMotionView.map.getBounds();
+        var ttop = b.getNorth();
+        var bottom = b.getSouth();
+        var left = b.getWest();
+        var right = b.getEast();
+        var url;
+        if (!isPublicPage()) {
+            url = OC.generateUrl('apps/gpxmotion/view?path={filepath}&top={top}&bottom={bottom}&left={left}&right={right}',
+                {'filepath': gpxMotionView.currentFilePath, 'top': ttop, 'left': left, 'bottom': bottom, 'right': right});
+        }
+        else {
+            var token = getUrlParameter('token');
+            var path = getUrlParameter('path');
+            if (path) {
+                url = OC.generateUrl('apps/gpxmotion/publicview?token={token}&path={path}&top={top}&bottom={bottom}&left={left}&right={right}',
+                    {'token': token, 'path': path, 'top': ttop, 'left': left, 'bottom': bottom, 'right': right});
+            }
+            else {
+                url = OC.generateUrl('apps/gpxmotion/publicview?token={token}&top={top}&bottom={bottom}&left={left}&right={right}',
+                    {'token': token, 'top': ttop, 'left': left, 'bottom': bottom, 'right': right});
+            }
+        }
+        window.location.href = url;
     }
 
     $(document).ready(function() {

@@ -75,6 +75,8 @@ OC.L10N.register(
     "All sections synchronized" : "Toutes les sections synchronisées",
     "All sections" : "Toutes les sections",
     "Guess title from track/route name" : "Deviner le titre à partir du nom de la track/route",
+    "Restrict animation to current view" : "Limiter l'animation à la vue actuelle",
+    "Color" : "Couleur",
     "View in GpxMotion" : "Voir dans GpxMotion"
     },
 "nplurals=2; plural=(n > 1);");
