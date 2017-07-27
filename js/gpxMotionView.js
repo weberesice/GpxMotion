@@ -1299,14 +1299,16 @@
                     i++;
                     j++;
                 }
-                // make the time fit the section time
-                var sumTimes = timetable.reduce(function(previousValue, currentValue){
-                    return currentValue + previousValue;
-                });
-                time = planSection.time;
-                var ratio = time/sumTimes;
-                for (i = 0; i < timetable.length; i++) {
-                    timetable[i] = ratio * timetable[i];
+                if (timetable.length > 1) {
+                    // make the time fit the section time
+                    var sumTimes = timetable.reduce(function(previousValue, currentValue){
+                        return currentValue + previousValue;
+                    });
+                    time = planSection.time;
+                    var ratio = time/sumTimes;
+                    for (i = 0; i < timetable.length; i++) {
+                        timetable[i] = ratio * timetable[i];
+                    }
                 }
             }
             else {
