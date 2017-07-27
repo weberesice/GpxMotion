@@ -172,17 +172,23 @@
             if (timeout > maxTime) {
                 maxTime = timeout;
             }
-            beginMarkers[i].addTo(gpxMotionView.map);
+            if (beginMarkers[i].getLatLng()) {
+                beginMarkers[i].addTo(gpxMotionView.map);
+            }
 
-            // add the moving marker and start it
-            gpxMotionView.map.addLayer(markers[i]);
-            markers[i].start();
+            if (markers[i]._latlngs.length > 0) {
+                // add the moving marker and start it
+                gpxMotionView.map.addLayer(markers[i]);
+                markers[i].start();
+            }
 
-            // draw a line for current marker
-            drawPolylines[i].addTo(gpxMotionView.map);
-            drawPolylines[i].eachLayer(function (l){
-                l.addLatLng(beginMarkers[i].getLatLng());
-            });
+            if (beginMarkers[i].getLatLng()) {
+                // draw a line for current marker
+                drawPolylines[i].addTo(gpxMotionView.map);
+                drawPolylines[i].eachLayer(function (l){
+                    l.addLatLng(beginMarkers[i].getLatLng());
+                });
+            }
         }
         currentMarkerIndex++;
 
@@ -1141,7 +1147,8 @@
         $(gpxml).find('trk, rte').each(function() {
             var featureLength = 0;
             name = $(this).find('>name').text();
-            var firstPoint, lastPoint;
+            var firstPoint = null;
+            var lastPoint = null;
             var firstFound = false;
 
             if (limitBounds) {
@@ -1173,22 +1180,27 @@
             }
 
             // find minimum first point time
-            time = moment(firstPoint.find('time').text().replace(' ', 'T'));
-            if (minBeginTime === null) {
-                minBeginTime = time;
-            }
-            else {
-                if (time.diff(minBeginTime) < 0) {
+            if (firstPoint !== null) {
+                time = moment(firstPoint.find('time').text().replace(' ', 'T'));
+                if (minBeginTime === null) {
                     minBeginTime = time;
                 }
+                else {
+                    if (time.diff(minBeginTime) < 0) {
+                        minBeginTime = time;
+                    }
+                }
             }
-            time = moment(lastPoint.find('time').text().replace(' ', 'T'));
-            if (maxEndTime === null) {
-                maxEndTime = time;
-            }
-            else {
-                if (time.diff(maxEndTime) > 0) {
+            // find maximum first point time
+            if (lastPoint !== null) {
+                time = moment(lastPoint.find('time').text().replace(' ', 'T'));
+                if (maxEndTime === null) {
                     maxEndTime = time;
+                }
+                else {
+                    if (time.diff(maxEndTime) > 0) {
+                        maxEndTime = time;
+                    }
                 }
             }
 
@@ -1203,6 +1215,11 @@
                 }
             }
         });
+
+        if (coords.length === 0) {
+            $('div#summary').text(t('gpxmotion', 'Nothing to display'));
+            return;
+        }
         // check missing times in each plan section
         var cpt = 0;
         for (i = 0; i < plan.length; i++) {
@@ -1305,8 +1322,10 @@
                 nblinesInserted++;
             }
             if (params.synchroSections && params.synchroSections === 'true') {
-                table[0].time = minBeginTime;
-                table[table.length - 1].time = maxEndTime;
+                if (table.length > 1) {
+                    table[0].time = minBeginTime;
+                    table[table.length - 1].time = maxEndTime;
+                }
             }
 
             thevehicule = planSection.vehicule;
