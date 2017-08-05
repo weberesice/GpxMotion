@@ -198,7 +198,13 @@
             for (var i = 1; i < markers.length; i++) {
                 b.extend(polylines[i].getBounds());
             }
-            gpxMotionView.map.fitBounds(b.pad(0.2), {animate:true});
+            var bottom = getUrlParameter('bottom');
+            var padding = 0.2;
+            if (bottom) {
+                padding = 0;
+            }
+            console.log('padding  : '+padding);
+            gpxMotionView.map.fitBounds(b.pad(padding), {animate: true});
         }
 
         if (params.synchroSections === 'true') {
@@ -287,7 +293,14 @@
 
             // add next marker pin at start point and get its time
             var timeout = plan[currentMarkerIndex].time;
-            beginMarkers[currentMarkerIndex].addTo(gpxMotionView.map);
+            if (beginMarkers[currentMarkerIndex]._latlng) {
+                beginMarkers[currentMarkerIndex].addTo(gpxMotionView.map);
+            }
+            else {
+                currentMarkerIndex++;
+                nextMarker();
+                return;
+            }
 
             //$(markers[currentMarkerIndex]._icon).show();
 
@@ -443,14 +456,22 @@
         $('div#summary').text(gpxMotionView.summaryText);
         if (params.simultaneousSections !== 'true') {
             for (i = 0; i < beginMarkers.length; i++) {
-                beginMarkers[i].addTo(gpxMotionView.map);
+                if (beginMarkers[i]._latlng) {
+                    beginMarkers[i].addTo(gpxMotionView.map);
+                }
             }
         }
         for (i = 0; i < polylines.length; i++) {
             polylines[i].addTo(gpxMotionView.map);
         }
         // zoom on whole travel
-        gpxMotionView.map.fitBounds(globalBounds, {animate:true, padding: [100,100]});
+        var bottom = getUrlParameter('bottom');
+        var padding = 0.2;
+        if (bottom) {
+            padding = 0;
+        }
+        console.log('padding  : '+padding);
+        gpxMotionView.map.fitBounds(globalBounds.pad(padding), {animate:true});
         //gpxMotionView.map.flyToBounds(globalBounds, {animate:true, padding: [100,100]});
     }
 
