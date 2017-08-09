@@ -1819,21 +1819,25 @@
         var bottom = b.getSouth();
         var left = b.getWest();
         var right = b.getEast();
+        var loop = 0;
         var url;
+        if ($('#loopcheck').is(':checked')) {
+            loop = 1;
+        }
         if (!isPublicPage()) {
-            url = OC.generateUrl('apps/gpxmotion/view?path={filepath}&top={top}&bottom={bottom}&left={left}&right={right}&autoplay=1',
-                {'filepath': gpxMotionView.currentFilePath, 'top': ttop, 'left': left, 'bottom': bottom, 'right': right});
+            url = OC.generateUrl('apps/gpxmotion/view?path={filepath}&top={top}&bottom={bottom}&left={left}&right={right}&autoplay=1&loop={loop}',
+                {'filepath': gpxMotionView.currentFilePath, 'top': ttop, 'left': left, 'bottom': bottom, 'right': right, 'loop': loop});
         }
         else {
             var token = getUrlParameter('token');
             var path = getUrlParameter('path');
             if (path) {
-                url = OC.generateUrl('apps/gpxmotion/publicview?token={token}&path={path}&top={top}&bottom={bottom}&left={left}&right={right}&autoplay=1',
-                    {'token': token, 'path': path, 'top': ttop, 'left': left, 'bottom': bottom, 'right': right});
+                url = OC.generateUrl('apps/gpxmotion/publicview?token={token}&path={path}&top={top}&bottom={bottom}&left={left}&right={right}&autoplay=1&loop={loop}',
+                    {'token': token, 'path': path, 'top': ttop, 'left': left, 'bottom': bottom, 'right': right, 'loop': loop});
             }
             else {
-                url = OC.generateUrl('apps/gpxmotion/publicview?token={token}&top={top}&bottom={bottom}&left={left}&right={right}&autoplay=1',
-                    {'token': token, 'top': ttop, 'left': left, 'bottom': bottom, 'right': right});
+                url = OC.generateUrl('apps/gpxmotion/publicview?token={token}&top={top}&bottom={bottom}&left={left}&right={right}&autoplay=1&loop={loop}',
+                    {'token': token, 'top': ttop, 'left': left, 'bottom': bottom, 'right': right, 'loop': loop});
             }
         }
         window.location.href = url;
