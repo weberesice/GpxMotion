@@ -1758,7 +1758,7 @@
                     path: path
                 }
                 document.title = 'GpxMotion - view - ' + basename(path);
-                window.history.pushState({'html': '', 'pageTitle': ''},'', 'view?path='+encodeURIComponent(path));
+                window.history.pushState({'html': '', 'pageTitle': ''},'', 'view?path=' + encodeURIComponent(path));
             }
             gpxMotionView.currentFilePath = req.path;
             $('span.fa-play-circle-o').removeClass('fa-play-circle-o').addClass('fa-spinner').addClass('fa-pulse');
@@ -1821,18 +1821,18 @@
         var right = b.getEast();
         var url;
         if (!isPublicPage()) {
-            url = OC.generateUrl('apps/gpxmotion/view?path={filepath}&top={top}&bottom={bottom}&left={left}&right={right}',
+            url = OC.generateUrl('apps/gpxmotion/view?path={filepath}&top={top}&bottom={bottom}&left={left}&right={right}&autoplay=1',
                 {'filepath': gpxMotionView.currentFilePath, 'top': ttop, 'left': left, 'bottom': bottom, 'right': right});
         }
         else {
             var token = getUrlParameter('token');
             var path = getUrlParameter('path');
             if (path) {
-                url = OC.generateUrl('apps/gpxmotion/publicview?token={token}&path={path}&top={top}&bottom={bottom}&left={left}&right={right}',
+                url = OC.generateUrl('apps/gpxmotion/publicview?token={token}&path={path}&top={top}&bottom={bottom}&left={left}&right={right}&autoplay=1',
                     {'token': token, 'path': path, 'top': ttop, 'left': left, 'bottom': bottom, 'right': right});
             }
             else {
-                url = OC.generateUrl('apps/gpxmotion/publicview?token={token}&top={top}&bottom={bottom}&left={left}&right={right}',
+                url = OC.generateUrl('apps/gpxmotion/publicview?token={token}&top={top}&bottom={bottom}&left={left}&right={right}&autoplay=1',
                     {'token': token, 'top': ttop, 'left': left, 'bottom': bottom, 'right': right});
             }
         }
