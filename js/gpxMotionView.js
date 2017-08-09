@@ -871,6 +871,7 @@
                             var path = response.path;
                             var filename = response.filename;
                             var txt, url, urlparams;
+                            var left, right, ttop, bottom;
 
                             if (isShareable) {
                                 txt = '<i class="fa fa-check-circle" style="color:green;" aria-hidden="true"></i> ';
@@ -882,6 +883,16 @@
                                     autoplay: 1
                                 };
                                 Object.assign(urlparams, getOptionValues());
+                                ttop = getUrlParameter('top');
+                                bottom = getUrlParameter('bottom');
+                                left = getUrlParameter('left');
+                                right = getUrlParameter('right');
+                                if (left && right && ttop && bottom) {
+                                    urlparams.left = left;
+                                    urlparams.top = ttop;
+                                    urlparams.bottom = bottom;
+                                    urlparams.right = right;
+                                }
                                 if (path && filename) {
                                     urlparams.path = path;
                                     urlparams.filename = filename;
