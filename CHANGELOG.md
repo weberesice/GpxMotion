@@ -11,9 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [#5](https://gitlab.com/eneiluj/gpxmotion-oc/issues/5) @klakla2
 - new edit field to set synchronized animation duration
 [#9](https://gitlab.com/eneiluj/gpxmotion-oc/issues/9) @klakla2
+- new button to reload view/public page with restriction bounds on animation
 
 ### Changed
-- update leaflet to 1.1.0
+- update leaflet to 1.2.0
 - update sidebarv2
 - do not artificially link sections together
 [#5](https://gitlab.com/eneiluj/gpxmotion-oc/issues/5) @klakla2
@@ -26,6 +27,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - don't display beginmarkers if simultaneous
 - in simultaneous drawing (synchro or not) begin markers and moving markers are circles containing section numbers
 [#10](https://gitlab.com/eneiluj/gpxmotion-oc/issues/10) @klakla2
+- improve legend and make random colors in simultaneous mode
+[#11](https://gitlab.com/eneiluj/gpxmotion-oc/issues/11) @klakla2
+- make legend scroll when changing section
+- no padding in zoomed page except when zooming on one section during playing in normal mode
+[#12](https://gitlab.com/eneiluj/gpxmotion-oc/issues/12) @klakla2
+- add autoplay for zoom view, keep loop option when zooming, keep zoomed view when generating share link
+[#13](https://gitlab.com/eneiluj/gpxmotion-oc/issues/13) @klakla2
 
 ### Fixed
 - allow to save file when there is no section set
