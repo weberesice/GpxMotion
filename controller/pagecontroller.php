@@ -326,6 +326,7 @@ class PageController extends Controller {
             'gpxmotion_version'=>$this->appVersion
         ];
         $response = new TemplateResponse('gpxmotion', 'view', $params);
+        $response->setHeaders(Array('X-Frame-Options'=>''));
         $csp = new ContentSecurityPolicy();
         $csp->addAllowedImageDomain('*')
             ->addAllowedMediaDomain('*')
