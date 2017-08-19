@@ -1119,7 +1119,12 @@
             jsondesc = $.parseJSON(defaultDesc);
         }
         else {
-            jsondesc = $.parseJSON(desc);
+            try {
+                jsondesc = $.parseJSON(desc);
+            }
+            catch(e) {
+                jsondesc = $.parseJSON(defaultDesc);
+            }
         }
         plan = jsondesc.plan;
         // if the plan is empty, we take the default one
