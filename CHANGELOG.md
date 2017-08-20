@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## 0.0.5 – 2017-08-20
 ### Added
 - option to play all sections simultaneously
 - option to play synchronous simultaneous drawing
@@ -34,6 +36,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [#12](https://gitlab.com/eneiluj/gpxmotion-oc/issues/12) @klakla2
 - add autoplay for zoom view, keep loop option when zooming, keep zoomed view when generating share link
 [#13](https://gitlab.com/eneiluj/gpxmotion-oc/issues/13) @klakla2
+- remove x-frame-options for public page
 
 ### Fixed
 - allow to save file when there is no section set
@@ -41,6 +44,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [#7](https://gitlab.com/eneiluj/gpxmotion-oc/issues/7) @eneiluj
 - bring sections layers to front when zoomed in editor
 [#6](https://gitlab.com/eneiluj/gpxmotion-oc/issues/6) @eneiluj
+- set default plan when metadata-desc is not valid JSON
 
 ## 0.0.4 – 2017-06-27
 ### Added
