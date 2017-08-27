@@ -123,7 +123,7 @@ class UtilsController extends Controller {
                     $layers, $version, $tformat, $opacity, $transparent,
                     $minzoom, $maxzoom, $attribution) {
         // first we check it does not already exist
-        $sqlts = 'SELECT servername FROM *PREFIX*gpxmotion_tile_servers ';
+        $sqlts = 'SELECT servername FROM *PREFIX*gpxmotion_tile_server ';
         $sqlts .= 'WHERE '.$this->dbdblquotes.'user'.$this->dbdblquotes.'=\''.$this->userId.'\' ';
         $sqlts .= 'AND servername='.$this->db_quote_escape_string($servername).' AND type='.$this->db_quote_escape_string($type).' ';
         $req = $this->dbconnection->prepare($sqlts);
@@ -137,7 +137,7 @@ class UtilsController extends Controller {
 
         // then if not, we insert it
         if ($ts === null){
-            $sql = 'INSERT INTO *PREFIX*gpxmotion_tile_servers';
+            $sql = 'INSERT INTO *PREFIX*gpxmotion_tile_server';
             $sql .= ' ('.$this->dbdblquotes.'user'.$this->dbdblquotes.', type, servername, url, layers, version, format, opacity, transparent, minzoom, maxzoom, attribution) ';
             $sql .= 'VALUES (\''.$this->userId.'\',';
             $sql .= $this->db_quote_escape_string($type).',';
@@ -178,7 +178,7 @@ class UtilsController extends Controller {
      * @NoAdminRequired
      */
     public function deleteTileServer($servername, $type) {
-        $sqldel = 'DELETE FROM *PREFIX*gpxmotion_tile_servers ';
+        $sqldel = 'DELETE FROM *PREFIX*gpxmotion_tile_server ';
         $sqldel .= 'WHERE '.$this->dbdblquotes.'user'.$this->dbdblquotes.'='.$this->db_quote_escape_string($this->userId).' AND servername=';
         $sqldel .= $this->db_quote_escape_string($servername).' AND type='.$this->db_quote_escape_string($type).';';
         $req = $this->dbconnection->prepare($sqldel);
@@ -204,7 +204,7 @@ class UtilsController extends Controller {
      */
     public function saveOptionsValues($optionsValues) {
         // first we check if user already has options values in DB
-        $sqlts = 'SELECT jsonvalues FROM *PREFIX*gpxmotion_options_values ';
+        $sqlts = 'SELECT jsonvalues FROM *PREFIX*gpxmotion_options ';
         $sqlts .= 'WHERE '.$this->dbdblquotes.'user'.$this->dbdblquotes.'=\''.$this->userId.'\' ';
         $req = $this->dbconnection->prepare($sqlts);
         $req->execute();
@@ -217,7 +217,7 @@ class UtilsController extends Controller {
 
         // if nothing is there, we insert
         if ($check === null){
-            $sql = 'INSERT INTO *PREFIX*gpxmotion_options_values';
+            $sql = 'INSERT INTO *PREFIX*gpxmotion_options';
             $sql .= ' ('.$this->dbdblquotes.'user'.$this->dbdblquotes.', jsonvalues) ';
             $sql .= 'VALUES (\''.$this->userId.'\',';
             $sql .= '\''.$optionsValues.'\');';
@@ -227,7 +227,7 @@ class UtilsController extends Controller {
         }
         // else we update the values
         else{
-            $sqlupd = 'UPDATE *PREFIX*gpxmotion_options_values ';
+            $sqlupd = 'UPDATE *PREFIX*gpxmotion_options ';
             $sqlupd .= 'SET jsonvalues=\''.$optionsValues.'\' ';
             $sqlupd .= 'WHERE '.$this->dbdblquotes.'user'.$this->dbdblquotes.'=\''.$this->userId.'\' ; ';
             $req = $this->dbconnection->prepare($sqlupd);
@@ -253,7 +253,7 @@ class UtilsController extends Controller {
      * @NoAdminRequired
      */
     public function getOptionsValues($optionsValues) {
-        $sqlov = 'SELECT jsonvalues FROM *PREFIX*gpxmotion_options_values ';
+        $sqlov = 'SELECT jsonvalues FROM *PREFIX*gpxmotion_options ';
         $sqlov .= 'WHERE '.$this->dbdblquotes.'user'.$this->dbdblquotes.'='.$this->db_quote_escape_string($this->userId).' ;';
         $req = $this->dbconnection->prepare($sqlov);
         $req->execute();

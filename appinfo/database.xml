@@ -5,7 +5,7 @@
  <overwrite>false</overwrite>
  <charset>utf8</charset>
  <table>
-  <name>*dbprefix*gpxmotion_tile_servers</name>
+  <name>*dbprefix*gpxmotion_tile_server</name>
   <declaration>
     <field>
       <name>id</name>
@@ -99,7 +99,7 @@
   </declaration>
 </table>
  <table>
-  <name>*dbprefix*gpxmotion_options_values</name>
+  <name>*dbprefix*gpxmotion_options</name>
   <declaration>
     <field>
       <name>id</name>

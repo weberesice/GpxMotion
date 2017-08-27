@@ -437,7 +437,7 @@ class PageController extends Controller {
 
     private function getUserTileServers($type){
         // custom tile servers management
-        $sqlts = 'SELECT servername, type, url, layers, version, format, opacity, transparent, minzoom, maxzoom, attribution FROM *PREFIX*gpxmotion_tile_servers ';
+        $sqlts = 'SELECT servername, type, url, layers, version, format, opacity, transparent, minzoom, maxzoom, attribution FROM *PREFIX*gpxmotion_tile_server ';
         $sqlts .= 'WHERE '.$this->dbdblquotes.'user'.$this->dbdblquotes.'='.$this->db_quote_escape_string($this->userId).' ';
         $sqlts .= 'AND type='.$this->db_quote_escape_string($type).';';
         $req = $this->dbconnection->prepare($sqlts);
