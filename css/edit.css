@@ -785,18 +785,12 @@ h2.popupTitle{
 #clearButton {
     width: 100%;
 }
-#saveButton i, #previewButton i{
-    color: blue;
-}
 #clearButton i{
     color: red;
 }
 
 #saveButton, #previewButton {
     width: 100%;
-}
-#loadButton i, #loadFolderButton i, #viewButton i{
-    color: blue;
 }
 #saveNameLabel, #savePathLabel{
     float:left;
@@ -965,4 +959,7 @@ label[for=simultaneouscheck], #simultaneouscheck {
 }
 .sidebar {
     z-index: 1990;
+}
+.sidebar-tabs > li.active {
+    background-color: #E8E8E8;
 }

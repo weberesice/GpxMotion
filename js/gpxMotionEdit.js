@@ -1167,6 +1167,13 @@
             checkOptionsConstraints();
         });
 
+		var buttonColor = 'blue';
+        if (OCA.Theming) {
+            buttonColor = OCA.Theming.color;
+        }
+
+        $('<style role="buttons">.fa { ' +
+            'color: ' + buttonColor + '; }</style>').appendTo('body');
 
     });
 }(jQuery, OC));
