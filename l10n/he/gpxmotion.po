@@ -1,0 +1,533 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gpxmotion\n"
+"Report-Msgid-Bugs-To: translations@owncloud.org\n"
+"POT-Creation-Date: 2017-11-10 15:35+0100\n"
+"PO-Revision-Date: 2017-11-10 09:55-0500\n"
+"Last-Translator: eneiluj <eneiluj@posteo.net>\n"
+"Language-Team: Hebrew\n"
+"Language: he_IL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: gpxmotion\n"
+"X-Crowdin-Language: he\n"
+"X-Crowdin-File: /master/l10n/templates/gpxmotion.pot\n"
+
+#: app.php:42
+msgid "GpxMotion"
+msgstr ""
+
+#: filetypes.js:22
+msgid "View in GpxMotion"
+msgstr ""
+
+#: filetypes.js:37
+msgid "Edit with GpxMotion"
+msgstr ""
+
+#: gpxMotionEdit.js:8
+msgid "no vehicle"
+msgstr ""
+
+#: gpxMotionEdit.js:9 gpxMotionView.js:33
+msgid "plane"
+msgstr ""
+
+#: gpxMotionEdit.js:10 gpxMotionView.js:36
+msgid "car"
+msgstr ""
+
+#: gpxMotionEdit.js:11 gpxMotionView.js:35
+msgid "foot"
+msgstr ""
+
+#: gpxMotionEdit.js:12 gpxMotionView.js:34
+msgid "bike"
+msgstr ""
+
+#: gpxMotionEdit.js:13 gpxMotionView.js:38
+msgid "train"
+msgstr ""
+
+#: gpxMotionEdit.js:14 gpxMotionView.js:37
+msgid "bus"
+msgstr ""
+
+#: gpxMotionEdit.js:293
+msgid "Tile server \"{ts}\" has been deleted"
+msgstr ""
+
+#: gpxMotionEdit.js:296 gpxMotionEdit.js:300
+msgid "Failed to delete tile server \"{ts}\""
+msgstr ""
+
+#: gpxMotionEdit.js:315
+msgid "Server name or server url should not be empty"
+msgstr ""
+
+#: gpxMotionEdit.js:316 gpxMotionEdit.js:321
+msgid "Impossible to add tile server"
+msgstr ""
+
+#: gpxMotionEdit.js:320
+msgid "A server with this name already exists"
+msgstr ""
+
+#: gpxMotionEdit.js:353 editcontent.php:136 editcontent.php:179
+#: editcontent.php:224 editcontent.php:273
+msgid "Delete"
+msgstr ""
+
+#: gpxMotionEdit.js:386
+msgid "Tile server \"{ts}\" has been added"
+msgstr ""
+
+#: gpxMotionEdit.js:389 gpxMotionEdit.js:393
+msgid "Failed to add tile server \"{ts}\""
+msgstr ""
+
+#: gpxMotionEdit.js:417
+msgid "File successfully saved as"
+msgstr ""
+
+#: gpxMotionEdit.js:446
+msgid "Impossible to load this file. "
+msgstr ""
+
+#: gpxMotionEdit.js:447
+msgid "Supported format : gpx"
+msgstr ""
+
+#: gpxMotionEdit.js:448 gpxMotionView.js:1080 gpxMotionView.js:1082
+msgid "Load error"
+msgstr ""
+
+#: gpxMotionEdit.js:674
+msgid "Number of tracks/routes"
+msgstr ""
+
+#: gpxMotionEdit.js:676
+msgid "Vehicle"
+msgstr ""
+
+#: gpxMotionEdit.js:688
+msgid "Duration (sec)"
+msgstr ""
+
+#: gpxMotionEdit.js:690
+msgid "Section title"
+msgstr ""
+
+#: gpxMotionEdit.js:691
+msgid "Guess title from track/route name"
+msgstr ""
+
+#: gpxMotionEdit.js:696
+msgid "Color"
+msgstr ""
+
+#: gpxMotionEdit.js:698
+msgid "Description"
+msgstr ""
+
+#: gpxMotionEdit.js:700
+msgid "Picture URL"
+msgstr ""
+
+#: gpxMotionEdit.js:702
+msgid "Detail URL"
+msgstr ""
+
+#: gpxMotionEdit.js:704
+msgid "Starting point title"
+msgstr ""
+
+#: gpxMotionEdit.js:706
+msgid "Starting point description"
+msgstr ""
+
+#: gpxMotionEdit.js:708
+msgid "Starting point picture URL"
+msgstr ""
+
+#: gpxMotionEdit.js:710
+msgid "Starting point detail URL"
+msgstr ""
+
+#: gpxMotionEdit.js:715
+msgid "Remove section"
+msgstr ""
+
+#: gpxMotionEdit.js:717
+msgid "Zoom on section"
+msgstr ""
+
+#: gpxMotionEdit.js:719
+msgid "Insert section before"
+msgstr ""
+
+#: gpxMotionEdit.js:721
+msgid "Insert section after"
+msgstr ""
+
+#: gpxMotionEdit.js:774 gpxMotionEdit.js:781 gpxMotionEdit.js:788
+msgid "Impossible to write file"
+msgstr ""
+
+#: gpxMotionEdit.js:775
+msgid "Write access denied"
+msgstr ""
+
+#: gpxMotionEdit.js:782
+msgid "Folder does not exist"
+msgstr ""
+
+#: gpxMotionEdit.js:789
+msgid "Folder write access denied"
+msgstr ""
+
+#: gpxMotionEdit.js:795
+msgid "Bad file name, must end with \".gpx\""
+msgstr ""
+
+#: gpxMotionEdit.js:1042 gpxMotionView.js:943
+msgid "Load file (gpx)"
+msgstr ""
+
+#: gpxMotionEdit.js:1070
+msgid "There is nothing to save"
+msgstr ""
+
+#: gpxMotionEdit.js:1077
+msgid "Where to save"
+msgstr ""
+
+#: gpxMotionEdit.js:1105
+msgid "Load and view animation file (gpx)"
+msgstr ""
+
+#: gpxMotionView.js:157
+msgid "All sections synchronized"
+msgstr ""
+
+#: gpxMotionView.js:161
+msgid "All sections"
+msgstr ""
+
+#: gpxMotionView.js:289
+msgid "no title"
+msgstr ""
+
+#: gpxMotionView.js:291 gpxMotionView.js:1457 gpxMotionView.js:1477
+#: gpxMotionView.js:1481 gpxMotionView.js:1485
+msgid "Section"
+msgstr ""
+
+#: gpxMotionView.js:609 editcontent.php:5 editcontent.php:99
+msgid "Options"
+msgstr ""
+
+#: gpxMotionView.js:611
+msgid "loop"
+msgstr ""
+
+#: gpxMotionView.js:613
+msgid "autozoom"
+msgstr ""
+
+#: gpxMotionView.js:616
+msgid "Legend"
+msgstr ""
+
+#: gpxMotionView.js:621
+msgid "Pins"
+msgstr ""
+
+#: gpxMotionView.js:623
+msgid "start"
+msgstr ""
+
+#: gpxMotionView.js:624
+msgid "step"
+msgstr ""
+
+#: gpxMotionView.js:625
+msgid "end"
+msgstr ""
+
+#: gpxMotionView.js:841
+msgid "Edit current file"
+msgstr ""
+
+#: gpxMotionView.js:855
+msgid "Share current file"
+msgstr ""
+
+#: gpxMotionView.js:857
+msgid "Public link to"
+msgstr ""
+
+#: gpxMotionView.js:905
+msgid "This public link will work only if \"{title}\" or one of its parent folder is shared in \"files\" app by public link without password"
+msgstr ""
+
+#: gpxMotionView.js:937
+msgid "Load file"
+msgstr ""
+
+#: gpxMotionView.js:962
+msgid "Restrict animation to current view"
+msgstr ""
+
+#: gpxMotionView.js:975
+msgid "Next section (n)"
+msgstr ""
+
+#: gpxMotionView.js:988
+msgid "Previous section (p)"
+msgstr ""
+
+#: gpxMotionView.js:1001
+msgid "Draw complete trip (g)"
+msgstr ""
+
+#: gpxMotionView.js:1017
+msgid "Reset (i)"
+msgstr ""
+
+#: gpxMotionView.js:1034 gpxMotionView.js:1047
+msgid "Play/Pause animation (spacebar)"
+msgstr ""
+
+#: gpxMotionView.js:1079
+msgid "No animation data found in the GPX file"
+msgstr ""
+
+#: gpxMotionView.js:1257
+msgid "Nothing to display"
+msgstr ""
+
+#: gpxMotionView.js:1464 gpxMotionView.js:1473 gpxMotionView.js:1512
+#: gpxMotionView.js:1521 gpxMotionView.js:1575 gpxMotionView.js:1584
+msgid "More about"
+msgstr ""
+
+#: gpxMotionView.js:1478 gpxMotionView.js:1482 gpxMotionView.js:1486
+#: gpxMotionView.js:1526 gpxMotionView.js:1554
+msgid "Click for more details"
+msgstr ""
+
+#: gpxMotionView.js:1505 gpxMotionView.js:1524 gpxMotionView.js:1550
+#: gpxMotionView.js:1553 gpxMotionView.js:1566
+msgid "Step"
+msgstr ""
+
+#: gpxMotionView.js:1567
+msgid "final"
+msgstr ""
+
+#: gpxMotionView.js:1612
+msgid "Ready to play"
+msgstr ""
+
+#: gpxMotionView.js:1768
+msgid "Load a file to display an animation"
+msgstr ""
+
+#: leaflet.js:5
+msgid "left"
+msgstr ""
+
+#: leaflet.js:5
+msgid "right"
+msgstr ""
+
+#: editcontent.php:4
+msgid "Load and save files"
+msgstr ""
+
+#: editcontent.php:6 editcontent.php:284
+msgid "About GpxMotion"
+msgstr ""
+
+#: editcontent.php:23
+msgid "Load and view file"
+msgstr ""
+
+#: editcontent.php:24
+msgid "Load and edit file"
+msgstr ""
+
+#: editcontent.php:28
+msgid "Save"
+msgstr ""
+
+#: editcontent.php:30
+msgid "File name"
+msgstr ""
+
+#: editcontent.php:34
+msgid "Choose directory and save"
+msgstr ""
+
+#: editcontent.php:38
+msgid "Preview current animation"
+msgstr ""
+
+#: editcontent.php:44
+msgid "Use real time proportions"
+msgstr ""
+
+#: editcontent.php:47
+msgid "Play all sections simultaneously"
+msgstr ""
+
+#: editcontent.php:50
+msgid "Play all sections synchronized in real time"
+msgstr ""
+
+#: editcontent.php:52
+msgid "Total duration (sec)"
+msgstr ""
+
+#: editcontent.php:55
+msgid "Clear animation sections"
+msgstr ""
+
+#: editcontent.php:56
+msgid "Add animation section"
+msgstr ""
+
+#: editcontent.php:67
+msgid "loading file"
+msgstr ""
+
+#: editcontent.php:71
+msgid "exporting file to gpx"
+msgstr ""
+
+#: editcontent.php:75
+msgid "saving file"
+msgstr ""
+
+#: editcontent.php:102
+msgid "Clear sections before loading"
+msgstr ""
+
+#: editcontent.php:106
+msgid "Custom tile servers"
+msgstr ""
+
+#: editcontent.php:109 editcontent.php:148 editcontent.php:191
+#: editcontent.php:236
+msgid "Server name"
+msgstr ""
+
+#: editcontent.php:110 editcontent.php:149 editcontent.php:192
+#: editcontent.php:237
+msgid "For example : my custom server"
+msgstr ""
+
+#: editcontent.php:111 editcontent.php:150 editcontent.php:193
+#: editcontent.php:238
+msgid "Server url"
+msgstr ""
+
+#: editcontent.php:112 editcontent.php:194
+msgid "For example : http://tile.server.org/cycle/{z}/{x}/{y}.png"
+msgstr ""
+
+#: editcontent.php:113 editcontent.php:152 editcontent.php:195
+#: editcontent.php:240
+msgid "Min zoom (1-20)"
+msgstr ""
+
+#: editcontent.php:115 editcontent.php:154 editcontent.php:197
+#: editcontent.php:242
+msgid "Max zoom (1-20)"
+msgstr ""
+
+#: editcontent.php:117 editcontent.php:160 editcontent.php:205
+#: editcontent.php:254
+msgid "Add"
+msgstr ""
+
+#: editcontent.php:120
+msgid "Your tile servers"
+msgstr ""
+
+#: editcontent.php:145
+msgid "Custom overlay tile servers"
+msgstr ""
+
+#: editcontent.php:151 editcontent.php:239
+msgid "For example : http://overlay.server.org/cycle/{z}/{x}/{y}.png"
+msgstr ""
+
+#: editcontent.php:156 editcontent.php:244
+msgid "Transparent"
+msgstr ""
+
+#: editcontent.php:158 editcontent.php:246
+msgid "Opacity (0.0-1.0)"
+msgstr ""
+
+#: editcontent.php:163
+msgid "Your overlay tile servers"
+msgstr ""
+
+#: editcontent.php:188
+msgid "Custom WMS tile servers"
+msgstr ""
+
+#: editcontent.php:199 editcontent.php:248
+msgid "Format"
+msgstr ""
+
+#: editcontent.php:201 editcontent.php:250
+msgid "WMS version"
+msgstr ""
+
+#: editcontent.php:203 editcontent.php:252
+msgid "Layers to display"
+msgstr ""
+
+#: editcontent.php:208
+msgid "Your WMS tile servers"
+msgstr ""
+
+#: editcontent.php:233
+msgid "Custom WMS overlay servers"
+msgstr ""
+
+#: editcontent.php:257
+msgid "Your WMS overlay tile servers"
+msgstr ""
+
+#: editcontent.php:286
+msgid "Features overview"
+msgstr ""
+
+#: editcontent.php:288
+msgid "Shortcuts"
+msgstr ""
+
+#: editcontent.php:290
+msgid "toggle sidebar"
+msgstr ""
+
+#: editcontent.php:293
+msgid "Documentation"
+msgstr ""
+
+#: editcontent.php:301
+msgid "Source management"
+msgstr ""
+
+#: editcontent.php:312
+msgid "Authors"
+msgstr ""
+
