@@ -1,6 +1,7 @@
 OC.L10N.register(
     "gpxmotion",
     {
+    "GpxMotion" : "GpxMotion",
     "View in GpxMotion" : "Просмотр в GpxMotion",
     "Edit with GpxMotion" : "Редактировать в GpxMotion",
     "no vehicle" : "без т/с",
@@ -26,8 +27,11 @@ OC.L10N.register(
     "Vehicle" : "Транспортное средство",
     "Duration (sec)" : "Длительность (сек)",
     "Section title" : "Название секции",
+    "Guess title from track/route name" : "Сформировать заголовок из названия трека/маршрута",
     "Color" : "Цвет",
     "Description" : "Описание",
+    "Picture URL" : "URL изображения",
+    "Detail URL" : "URL подробностей",
     "Starting point title" : "Заголовок стартовой позиции",
     "Starting point description" : "Описание стартовой позиции",
     "Starting point picture URL" : "URL изображения стратовой позиции",
@@ -53,6 +57,7 @@ OC.L10N.register(
     "loop" : "цикл",
     "autozoom" : "автозум",
     "Legend" : "Описание",
+    "Pins" : "Маркеры",
     "start" : "начало",
     "step" : "шаг",
     "end" : "конец",
@@ -75,6 +80,8 @@ OC.L10N.register(
     "final" : "конец",
     "Ready to play" : "Готово к воспроизведению",
     "Load a file to display an animation" : "Загрузка файла для отображения анимации",
+    "left" : "влево",
+    "right" : "вправо",
     "Load and save files" : "Загрузка и сохранение файлов",
     "About GpxMotion" : "О GpxMotion",
     "Load and view file" : "Загрузить и просмотреть файл",
@@ -118,6 +125,7 @@ OC.L10N.register(
     "Shortcuts" : "Ярлыки",
     "toggle sidebar" : "переключить панель",
     "Documentation" : "Документация",
+    "Source management" : "Управление источниками",
     "Authors" : "Авторы"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\nX-Generator: crowdin.com\nX-Crowdin-Project: gpxmotion\nX-Crowdin-Language: ru");
