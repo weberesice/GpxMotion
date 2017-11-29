@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gpxmotion\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
 "POT-Creation-Date: 2017-11-10 15:35+0100\n"
-"PO-Revision-Date: 2017-11-29 16:03-0500\n"
+"PO-Revision-Date: 2017-11-29 16:22-0500\n"
 "Last-Translator: eneiluj <eneiluj@posteo.net>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -308,118 +308,118 @@ msgstr "Keine Animationsdaten in der GPX-Datei gefunden"
 
 #: gpxMotionView.js:1257
 msgid "Nothing to display"
-msgstr ""
+msgstr "Nichts anzuzeigen"
 
 #: gpxMotionView.js:1464 gpxMotionView.js:1473 gpxMotionView.js:1512
 #: gpxMotionView.js:1521 gpxMotionView.js:1575 gpxMotionView.js:1584
 msgid "More about"
-msgstr ""
+msgstr "Weitere Informationen"
 
 #: gpxMotionView.js:1478 gpxMotionView.js:1482 gpxMotionView.js:1486
 #: gpxMotionView.js:1526 gpxMotionView.js:1554
 msgid "Click for more details"
-msgstr ""
+msgstr "Klicken Sie hier für weitere Details"
 
 #: gpxMotionView.js:1505 gpxMotionView.js:1524 gpxMotionView.js:1550
 #: gpxMotionView.js:1553 gpxMotionView.js:1566
 msgid "Step"
-msgstr ""
+msgstr "Schritt"
 
 #: gpxMotionView.js:1567
 msgid "final"
-msgstr ""
+msgstr "Endgültig"
 
 #: gpxMotionView.js:1612
 msgid "Ready to play"
-msgstr ""
+msgstr "Bereit zur Wiedergabe"
 
 #: gpxMotionView.js:1768
 msgid "Load a file to display an animation"
-msgstr ""
+msgstr "Datei zur Anzeige einer Animation laden"
 
 #: leaflet.js:5
 msgid "left"
-msgstr ""
+msgstr "Links"
 
 #: leaflet.js:5
 msgid "right"
-msgstr ""
+msgstr "Rechts"
 
 #: editcontent.php:4
 msgid "Load and save files"
-msgstr ""
+msgstr "Dateien laden und speichern"
 
 #: editcontent.php:6 editcontent.php:284
 msgid "About GpxMotion"
-msgstr ""
+msgstr "Über GpxMotion"
 
 #: editcontent.php:23
 msgid "Load and view file"
-msgstr ""
+msgstr "Dateien laden und anzeigen"
 
 #: editcontent.php:24
 msgid "Load and edit file"
-msgstr ""
+msgstr "Dateien laden und bearbeiten"
 
 #: editcontent.php:28
 msgid "Save"
-msgstr ""
+msgstr "Speichern"
 
 #: editcontent.php:30
 msgid "File name"
-msgstr ""
+msgstr "Dateiname"
 
 #: editcontent.php:34
 msgid "Choose directory and save"
-msgstr ""
+msgstr "Verzeichnis wählen und speichern"
 
 #: editcontent.php:38
 msgid "Preview current animation"
-msgstr ""
+msgstr "Vorschau der aktuellen Animation"
 
 #: editcontent.php:44
 msgid "Use real time proportions"
-msgstr ""
+msgstr "Echtzeitverhältnisse verwenden"
 
 #: editcontent.php:47
 msgid "Play all sections simultaneously"
-msgstr ""
+msgstr "Alle Abschnitte gleichzeitig wiedergeben"
 
 #: editcontent.php:50
 msgid "Play all sections synchronized in real time"
-msgstr ""
+msgstr "Alle Abschnitte synchronisiert in Echtzeit wiedergeben"
 
 #: editcontent.php:52
 msgid "Total duration (sec)"
-msgstr ""
+msgstr "Gesamtdauer (sek)"
 
 #: editcontent.php:55
 msgid "Clear animation sections"
-msgstr ""
+msgstr "Animationsbereiche leeren"
 
 #: editcontent.php:56
 msgid "Add animation section"
-msgstr ""
+msgstr "Animationsbereiche hinzufügen"
 
 #: editcontent.php:67
 msgid "loading file"
-msgstr ""
+msgstr "Datei wird geladen"
 
 #: editcontent.php:71
 msgid "exporting file to gpx"
-msgstr ""
+msgstr "Datei als GPX exportieren"
 
 #: editcontent.php:75
 msgid "saving file"
-msgstr ""
+msgstr "Datei wird gespeichert"
 
 #: editcontent.php:102
 msgid "Clear sections before loading"
-msgstr ""
+msgstr "Abschnitte vor dem Laden leeren"
 
 #: editcontent.php:106
 msgid "Custom tile servers"
-msgstr ""
+msgstr "Benutzerdefinierte Kachelserver"
 
 #: editcontent.php:109 editcontent.php:148 editcontent.php:191
 #: editcontent.php:236
