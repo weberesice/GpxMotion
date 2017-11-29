@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gpxmotion\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
 "POT-Creation-Date: 2017-11-10 15:35+0100\n"
-"PO-Revision-Date: 2017-11-29 15:42-0500\n"
+"PO-Revision-Date: 2017-11-29 15:52-0500\n"
 "Last-Translator: eneiluj <eneiluj@posteo.net>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -175,47 +175,47 @@ msgstr "Abschnitt einfügen nach"
 
 #: gpxMotionEdit.js:774 gpxMotionEdit.js:781 gpxMotionEdit.js:788
 msgid "Impossible to write file"
-msgstr ""
+msgstr "Datei konnte nicht geschrieben werden"
 
 #: gpxMotionEdit.js:775
 msgid "Write access denied"
-msgstr ""
+msgstr "Schreibzugriff verweigert"
 
 #: gpxMotionEdit.js:782
 msgid "Folder does not exist"
-msgstr ""
+msgstr "Ordner existiert nicht"
 
 #: gpxMotionEdit.js:789
 msgid "Folder write access denied"
-msgstr ""
+msgstr "Schreibzugriff auf Verzeichnis verweigert"
 
 #: gpxMotionEdit.js:795
 msgid "Bad file name, must end with \".gpx\""
-msgstr ""
+msgstr "Ungültiger Dateiname: Dateiendung GPX erforderlich"
 
 #: gpxMotionEdit.js:1042 gpxMotionView.js:943
 msgid "Load file (gpx)"
-msgstr ""
+msgstr "GPX-Datei laden"
 
 #: gpxMotionEdit.js:1070
 msgid "There is nothing to save"
-msgstr ""
+msgstr "Es gibt nichts zu speichern"
 
 #: gpxMotionEdit.js:1077
 msgid "Where to save"
-msgstr ""
+msgstr "Speicherort angeben"
 
 #: gpxMotionEdit.js:1105
 msgid "Load and view animation file (gpx)"
-msgstr ""
+msgstr "Animationsdatei (GPX) laden und anzeigen"
 
 #: gpxMotionView.js:157
 msgid "All sections synchronized"
-msgstr ""
+msgstr "Alle Abschnitte synchronisiert"
 
 #: gpxMotionView.js:161
 msgid "All sections"
-msgstr ""
+msgstr "Alle Abschnitte"
 
 #: gpxMotionView.js:289
 msgid "no title"
@@ -424,12 +424,12 @@ msgstr ""
 #: editcontent.php:109 editcontent.php:148 editcontent.php:191
 #: editcontent.php:236
 msgid "Server name"
-msgstr ""
+msgstr "Servername"
 
 #: editcontent.php:110 editcontent.php:149 editcontent.php:192
 #: editcontent.php:237
 msgid "For example : my custom server"
-msgstr ""
+msgstr "Zum Beispiel: Mein XY-Server"
 
 #: editcontent.php:111 editcontent.php:150 editcontent.php:193
 #: editcontent.php:238
