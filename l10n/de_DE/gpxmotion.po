@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gpxmotion\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
 "POT-Creation-Date: 2017-11-10 15:35+0100\n"
-"PO-Revision-Date: 2017-11-29 15:35-0500\n"
+"PO-Revision-Date: 2017-11-29 15:42-0500\n"
 "Last-Translator: eneiluj <eneiluj@posteo.net>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -95,83 +95,83 @@ msgstr "Datei erfolgreich gespeichert als:"
 
 #: gpxMotionEdit.js:446
 msgid "Impossible to load this file. "
-msgstr ""
+msgstr "Datei kann nicht geladen werden. "
 
 #: gpxMotionEdit.js:447
 msgid "Supported format : gpx"
-msgstr ""
+msgstr "Unterstütztes Format: GPX"
 
 #: gpxMotionEdit.js:448 gpxMotionView.js:1080 gpxMotionView.js:1082
 msgid "Load error"
-msgstr ""
+msgstr "Ladefehler"
 
 #: gpxMotionEdit.js:674
 msgid "Number of tracks/routes"
-msgstr ""
+msgstr "Anzahl der Strecken/Routen"
 
 #: gpxMotionEdit.js:676
 msgid "Vehicle"
-msgstr ""
+msgstr "Fahrzeug"
 
 #: gpxMotionEdit.js:688
 msgid "Duration (sec)"
-msgstr ""
+msgstr "Dauer (sek)"
 
 #: gpxMotionEdit.js:690
 msgid "Section title"
-msgstr ""
+msgstr "Titel des Abschnitts"
 
 #: gpxMotionEdit.js:691
 msgid "Guess title from track/route name"
-msgstr ""
+msgstr "Titel aus Namen der Strecke/Route ableiten"
 
 #: gpxMotionEdit.js:696
 msgid "Color"
-msgstr ""
+msgstr "Farbe"
 
 #: gpxMotionEdit.js:698
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 #: gpxMotionEdit.js:700
 msgid "Picture URL"
-msgstr ""
+msgstr "Grafikadresse"
 
 #: gpxMotionEdit.js:702
 msgid "Detail URL"
-msgstr ""
+msgstr "Detailadresse"
 
 #: gpxMotionEdit.js:704
 msgid "Starting point title"
-msgstr ""
+msgstr "Titel des Startpunktes"
 
 #: gpxMotionEdit.js:706
 msgid "Starting point description"
-msgstr ""
+msgstr "Beschreibung des Startpunktes"
 
 #: gpxMotionEdit.js:708
 msgid "Starting point picture URL"
-msgstr ""
+msgstr "Grafikadresse des Startpunkts"
 
 #: gpxMotionEdit.js:710
 msgid "Starting point detail URL"
-msgstr ""
+msgstr "Detailadresse des Startpunkts"
 
 #: gpxMotionEdit.js:715
 msgid "Remove section"
-msgstr ""
+msgstr "Auswahl aufheben"
 
 #: gpxMotionEdit.js:717
 msgid "Zoom on section"
-msgstr ""
+msgstr "Ansicht auf Auswahl aufziehen"
 
 #: gpxMotionEdit.js:719
 msgid "Insert section before"
-msgstr ""
+msgstr "Abschnitt einfügen vor"
 
 #: gpxMotionEdit.js:721
 msgid "Insert section after"
-msgstr ""
+msgstr "Abschnitt einfügen nach"
 
 #: gpxMotionEdit.js:774 gpxMotionEdit.js:781 gpxMotionEdit.js:788
 msgid "Impossible to write file"
