@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gpxmotion\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
 "POT-Creation-Date: 2017-11-10 15:35+0100\n"
-"PO-Revision-Date: 2017-11-29 15:52-0500\n"
+"PO-Revision-Date: 2017-11-29 16:03-0500\n"
 "Last-Translator: eneiluj <eneiluj@posteo.net>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -219,92 +219,92 @@ msgstr "Alle Abschnitte"
 
 #: gpxMotionView.js:289
 msgid "no title"
-msgstr ""
+msgstr "Kein Titel"
 
 #: gpxMotionView.js:291 gpxMotionView.js:1457 gpxMotionView.js:1477
 #: gpxMotionView.js:1481 gpxMotionView.js:1485
 msgid "Section"
-msgstr ""
+msgstr "Abschnitt"
 
 #: gpxMotionView.js:609 editcontent.php:5 editcontent.php:99
 msgid "Options"
-msgstr ""
+msgstr "Einstellungen"
 
 #: gpxMotionView.js:611
 msgid "loop"
-msgstr ""
+msgstr "Schleife"
 
 #: gpxMotionView.js:613
 msgid "autozoom"
-msgstr ""
+msgstr "Automatische Ansicht"
 
 #: gpxMotionView.js:616
 msgid "Legend"
-msgstr ""
+msgstr "Zeichenerklärung"
 
 #: gpxMotionView.js:621
 msgid "Pins"
-msgstr ""
+msgstr "Stecknadeln"
 
 #: gpxMotionView.js:623
 msgid "start"
-msgstr ""
+msgstr "Start"
 
 #: gpxMotionView.js:624
 msgid "step"
-msgstr ""
+msgstr "Schritt"
 
 #: gpxMotionView.js:625
 msgid "end"
-msgstr ""
+msgstr "Ende"
 
 #: gpxMotionView.js:841
 msgid "Edit current file"
-msgstr ""
+msgstr "Aktuelle Datei bearbeiten"
 
 #: gpxMotionView.js:855
 msgid "Share current file"
-msgstr ""
+msgstr "Aktuelle Datei teilen"
 
 #: gpxMotionView.js:857
 msgid "Public link to"
-msgstr ""
+msgstr "Öffentlicher Link zu"
 
 #: gpxMotionView.js:905
 msgid "This public link will work only if \"{title}\" or one of its parent folder is shared in \"files\" app by public link without password"
-msgstr ""
+msgstr "Dieser öffentliche Link wird nur funktionieren, wenn „{title}”' oder einer seiner übergeordneten Ordner in der App „Dateien” durch einen öffentlichen Link ohne Passwort freigegeben wird."
 
 #: gpxMotionView.js:937
 msgid "Load file"
-msgstr ""
+msgstr "Datei laden"
 
 #: gpxMotionView.js:962
 msgid "Restrict animation to current view"
-msgstr ""
+msgstr "Animation auf die aktuelle Ansicht beschränken"
 
 #: gpxMotionView.js:975
 msgid "Next section (n)"
-msgstr ""
+msgstr "Nächsten Abschnitt (n)"
 
 #: gpxMotionView.js:988
 msgid "Previous section (p)"
-msgstr ""
+msgstr "Vorheriger Abschnitt (p)"
 
 #: gpxMotionView.js:1001
 msgid "Draw complete trip (g)"
-msgstr ""
+msgstr "Gesamte Wegstrecke zeichnen (g)"
 
 #: gpxMotionView.js:1017
 msgid "Reset (i)"
-msgstr ""
+msgstr "Zurücksetzen (i)"
 
 #: gpxMotionView.js:1034 gpxMotionView.js:1047
 msgid "Play/Pause animation (spacebar)"
-msgstr ""
+msgstr "Animation abspielen/anhalten (Leertaste)"
 
 #: gpxMotionView.js:1079
 msgid "No animation data found in the GPX file"
-msgstr ""
+msgstr "Keine Animationsdaten in der GPX-Datei gefunden"
 
 #: gpxMotionView.js:1257
 msgid "Nothing to display"
@@ -434,100 +434,100 @@ msgstr "Zum Beispiel: Mein XY-Server"
 #: editcontent.php:111 editcontent.php:150 editcontent.php:193
 #: editcontent.php:238
 msgid "Server url"
-msgstr ""
+msgstr "Serveradresse"
 
 #: editcontent.php:112 editcontent.php:194
 msgid "For example : http://tile.server.org/cycle/{z}/{x}/{y}.png"
-msgstr ""
+msgstr "Zum Beispiel: http://tile.server.org/cycle/{z}/{x}/{y}.png"
 
 #: editcontent.php:113 editcontent.php:152 editcontent.php:195
 #: editcontent.php:240
 msgid "Min zoom (1-20)"
-msgstr ""
+msgstr "Vergrößerung mind. (1-20)"
 
 #: editcontent.php:115 editcontent.php:154 editcontent.php:197
 #: editcontent.php:242
 msgid "Max zoom (1-20)"
-msgstr ""
+msgstr "Vergrößerung max. (1-20)"
 
 #: editcontent.php:117 editcontent.php:160 editcontent.php:205
 #: editcontent.php:254
 msgid "Add"
-msgstr ""
+msgstr "Hinzufügen"
 
 #: editcontent.php:120
 msgid "Your tile servers"
-msgstr ""
+msgstr "Ihr Kachelserver"
 
 #: editcontent.php:145
 msgid "Custom overlay tile servers"
-msgstr ""
+msgstr "Benutzerdefinierte Überlagerungs-Kachel-Server"
 
 #: editcontent.php:151 editcontent.php:239
 msgid "For example : http://overlay.server.org/cycle/{z}/{x}/{y}.png"
-msgstr ""
+msgstr "Zum Beispiel : http://overlay.server.org/cycle/{z}/{x}/{y}.png"
 
 #: editcontent.php:156 editcontent.php:244
 msgid "Transparent"
-msgstr ""
+msgstr "Transparent"
 
 #: editcontent.php:158 editcontent.php:246
 msgid "Opacity (0.0-1.0)"
-msgstr ""
+msgstr "Deckkraft (0.0-1.0)"
 
 #: editcontent.php:163
 msgid "Your overlay tile servers"
-msgstr ""
+msgstr "Eigener Überlagerungs-Kachelserver"
 
 #: editcontent.php:188
 msgid "Custom WMS tile servers"
-msgstr ""
+msgstr "Benutzerdefinierter WMS-Kachelserver"
 
 #: editcontent.php:199 editcontent.php:248
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 #: editcontent.php:201 editcontent.php:250
 msgid "WMS version"
-msgstr ""
+msgstr "WMS-Version"
 
 #: editcontent.php:203 editcontent.php:252
 msgid "Layers to display"
-msgstr ""
+msgstr "Anzuzeigende Ebenen"
 
 #: editcontent.php:208
 msgid "Your WMS tile servers"
-msgstr ""
+msgstr "Ihr WMS-Kachelserver"
 
 #: editcontent.php:233
 msgid "Custom WMS overlay servers"
-msgstr ""
+msgstr "Benutzerdefinierte WMS-Überlagerungs-Kachelserver"
 
 #: editcontent.php:257
 msgid "Your WMS overlay tile servers"
-msgstr ""
+msgstr "Ihr WMS-Überlagerungs-Kachelserver"
 
 #: editcontent.php:286
 msgid "Features overview"
-msgstr ""
+msgstr "Funktionsübersicht"
 
 #: editcontent.php:288
 msgid "Shortcuts"
-msgstr ""
+msgstr "Tastaturkürzel"
 
 #: editcontent.php:290
 msgid "toggle sidebar"
-msgstr ""
+msgstr "Seitenleiste ein-/ausblenden"
 
 #: editcontent.php:293
 msgid "Documentation"
-msgstr ""
+msgstr "Dokumentation"
 
 #: editcontent.php:301
 msgid "Source management"
-msgstr ""
+msgstr "Quellenverwaltung"
 
 #: editcontent.php:312
 msgid "Authors"
-msgstr ""
+msgstr "Autoren"
 
