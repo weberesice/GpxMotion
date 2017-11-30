@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gpxmotion\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
 "POT-Creation-Date: 2017-11-10 15:35+0100\n"
-"PO-Revision-Date: 2017-11-27 16:57-0500\n"
+"PO-Revision-Date: 2017-11-29 16:22-0500\n"
 "Last-Translator: eneiluj <eneiluj@posteo.net>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -18,516 +18,516 @@ msgstr ""
 
 #: app.php:42
 msgid "GpxMotion"
-msgstr ""
+msgstr "GpxMotion"
 
 #: filetypes.js:22
 msgid "View in GpxMotion"
-msgstr ""
+msgstr "In GpxMotion anzeigen"
 
 #: filetypes.js:37
 msgid "Edit with GpxMotion"
-msgstr ""
+msgstr "Mit GpxMotion bearbeiten"
 
 #: gpxMotionEdit.js:8
 msgid "no vehicle"
-msgstr ""
+msgstr "Kein Fahrzeug"
 
 #: gpxMotionEdit.js:9 gpxMotionView.js:33
 msgid "plane"
-msgstr ""
+msgstr "Flugzeug"
 
 #: gpxMotionEdit.js:10 gpxMotionView.js:36
 msgid "car"
-msgstr ""
+msgstr "Auto"
 
 #: gpxMotionEdit.js:11 gpxMotionView.js:35
 msgid "foot"
-msgstr ""
+msgstr "Zu Fuß"
 
 #: gpxMotionEdit.js:12 gpxMotionView.js:34
 msgid "bike"
-msgstr ""
+msgstr "Fahrrad"
 
 #: gpxMotionEdit.js:13 gpxMotionView.js:38
 msgid "train"
-msgstr ""
+msgstr "Bahn"
 
 #: gpxMotionEdit.js:14 gpxMotionView.js:37
 msgid "bus"
-msgstr ""
+msgstr "Bus"
 
 #: gpxMotionEdit.js:293
 msgid "Tile server \"{ts}\" has been deleted"
-msgstr ""
+msgstr "Kachelserver „{ts}” wurde gelöscht"
 
 #: gpxMotionEdit.js:296 gpxMotionEdit.js:300
 msgid "Failed to delete tile server \"{ts}\""
-msgstr ""
+msgstr "Kachelserver „{ts}” konnte nicht gelöscht werden"
 
 #: gpxMotionEdit.js:315
 msgid "Server name or server url should not be empty"
-msgstr ""
+msgstr "Servername oder -adresse dürfen nicht leer sein"
 
 #: gpxMotionEdit.js:316 gpxMotionEdit.js:321
 msgid "Impossible to add tile server"
-msgstr ""
+msgstr "Kachelserver konnte nicht hinzugefügt werden"
 
 #: gpxMotionEdit.js:320
 msgid "A server with this name already exists"
-msgstr ""
+msgstr "Ein Server mit diesem Namen existiert bereits"
 
 #: gpxMotionEdit.js:353 editcontent.php:136 editcontent.php:179
 #: editcontent.php:224 editcontent.php:273
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #: gpxMotionEdit.js:386
 msgid "Tile server \"{ts}\" has been added"
-msgstr ""
+msgstr "Kachelserver „{ts}” wurde hinzugefügt"
 
 #: gpxMotionEdit.js:389 gpxMotionEdit.js:393
 msgid "Failed to add tile server \"{ts}\""
-msgstr ""
+msgstr "Hinzufügen des Kachelservers „{ts}” fehlgeschlagen"
 
 #: gpxMotionEdit.js:417
 msgid "File successfully saved as"
-msgstr ""
+msgstr "Datei erfolgreich gespeichert als:"
 
 #: gpxMotionEdit.js:446
 msgid "Impossible to load this file. "
-msgstr ""
+msgstr "Datei kann nicht geladen werden. "
 
 #: gpxMotionEdit.js:447
 msgid "Supported format : gpx"
-msgstr ""
+msgstr "Unterstütztes Format: GPX"
 
 #: gpxMotionEdit.js:448 gpxMotionView.js:1080 gpxMotionView.js:1082
 msgid "Load error"
-msgstr ""
+msgstr "Ladefehler"
 
 #: gpxMotionEdit.js:674
 msgid "Number of tracks/routes"
-msgstr ""
+msgstr "Anzahl der Strecken/Routen"
 
 #: gpxMotionEdit.js:676
 msgid "Vehicle"
-msgstr ""
+msgstr "Fahrzeug"
 
 #: gpxMotionEdit.js:688
 msgid "Duration (sec)"
-msgstr ""
+msgstr "Dauer (sek)"
 
 #: gpxMotionEdit.js:690
 msgid "Section title"
-msgstr ""
+msgstr "Titel des Abschnitts"
 
 #: gpxMotionEdit.js:691
 msgid "Guess title from track/route name"
-msgstr ""
+msgstr "Titel aus Namen der Strecke/Route ableiten"
 
 #: gpxMotionEdit.js:696
 msgid "Color"
-msgstr ""
+msgstr "Farbe"
 
 #: gpxMotionEdit.js:698
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 #: gpxMotionEdit.js:700
 msgid "Picture URL"
-msgstr ""
+msgstr "Grafikadresse"
 
 #: gpxMotionEdit.js:702
 msgid "Detail URL"
-msgstr ""
+msgstr "Detailadresse"
 
 #: gpxMotionEdit.js:704
 msgid "Starting point title"
-msgstr ""
+msgstr "Titel des Startpunktes"
 
 #: gpxMotionEdit.js:706
 msgid "Starting point description"
-msgstr ""
+msgstr "Beschreibung des Startpunktes"
 
 #: gpxMotionEdit.js:708
 msgid "Starting point picture URL"
-msgstr ""
+msgstr "Grafikadresse des Startpunkts"
 
 #: gpxMotionEdit.js:710
 msgid "Starting point detail URL"
-msgstr ""
+msgstr "Detailadresse des Startpunkts"
 
 #: gpxMotionEdit.js:715
 msgid "Remove section"
-msgstr ""
+msgstr "Auswahl aufheben"
 
 #: gpxMotionEdit.js:717
 msgid "Zoom on section"
-msgstr ""
+msgstr "Ansicht auf Auswahl aufziehen"
 
 #: gpxMotionEdit.js:719
 msgid "Insert section before"
-msgstr ""
+msgstr "Abschnitt einfügen vor"
 
 #: gpxMotionEdit.js:721
 msgid "Insert section after"
-msgstr ""
+msgstr "Abschnitt einfügen nach"
 
 #: gpxMotionEdit.js:774 gpxMotionEdit.js:781 gpxMotionEdit.js:788
 msgid "Impossible to write file"
-msgstr ""
+msgstr "Datei konnte nicht geschrieben werden"
 
 #: gpxMotionEdit.js:775
 msgid "Write access denied"
-msgstr ""
+msgstr "Schreibzugriff verweigert"
 
 #: gpxMotionEdit.js:782
 msgid "Folder does not exist"
-msgstr ""
+msgstr "Ordner existiert nicht"
 
 #: gpxMotionEdit.js:789
 msgid "Folder write access denied"
-msgstr ""
+msgstr "Schreibzugriff auf Verzeichnis verweigert"
 
 #: gpxMotionEdit.js:795
 msgid "Bad file name, must end with \".gpx\""
-msgstr ""
+msgstr "Ungültiger Dateiname: Dateiendung GPX erforderlich"
 
 #: gpxMotionEdit.js:1042 gpxMotionView.js:943
 msgid "Load file (gpx)"
-msgstr ""
+msgstr "GPX-Datei laden"
 
 #: gpxMotionEdit.js:1070
 msgid "There is nothing to save"
-msgstr ""
+msgstr "Es gibt nichts zu speichern"
 
 #: gpxMotionEdit.js:1077
 msgid "Where to save"
-msgstr ""
+msgstr "Speicherort angeben"
 
 #: gpxMotionEdit.js:1105
 msgid "Load and view animation file (gpx)"
-msgstr ""
+msgstr "Animationsdatei (GPX) laden und anzeigen"
 
 #: gpxMotionView.js:157
 msgid "All sections synchronized"
-msgstr ""
+msgstr "Alle Abschnitte synchronisiert"
 
 #: gpxMotionView.js:161
 msgid "All sections"
-msgstr ""
+msgstr "Alle Abschnitte"
 
 #: gpxMotionView.js:289
 msgid "no title"
-msgstr ""
+msgstr "Kein Titel"
 
 #: gpxMotionView.js:291 gpxMotionView.js:1457 gpxMotionView.js:1477
 #: gpxMotionView.js:1481 gpxMotionView.js:1485
 msgid "Section"
-msgstr ""
+msgstr "Abschnitt"
 
 #: gpxMotionView.js:609 editcontent.php:5 editcontent.php:99
 msgid "Options"
-msgstr ""
+msgstr "Einstellungen"
 
 #: gpxMotionView.js:611
 msgid "loop"
-msgstr ""
+msgstr "Schleife"
 
 #: gpxMotionView.js:613
 msgid "autozoom"
-msgstr ""
+msgstr "Automatische Ansicht"
 
 #: gpxMotionView.js:616
 msgid "Legend"
-msgstr ""
+msgstr "Zeichenerklärung"
 
 #: gpxMotionView.js:621
 msgid "Pins"
-msgstr ""
+msgstr "Stecknadeln"
 
 #: gpxMotionView.js:623
 msgid "start"
-msgstr ""
+msgstr "Start"
 
 #: gpxMotionView.js:624
 msgid "step"
-msgstr ""
+msgstr "Schritt"
 
 #: gpxMotionView.js:625
 msgid "end"
-msgstr ""
+msgstr "Ende"
 
 #: gpxMotionView.js:841
 msgid "Edit current file"
-msgstr ""
+msgstr "Aktuelle Datei bearbeiten"
 
 #: gpxMotionView.js:855
 msgid "Share current file"
-msgstr ""
+msgstr "Aktuelle Datei teilen"
 
 #: gpxMotionView.js:857
 msgid "Public link to"
-msgstr ""
+msgstr "Öffentlicher Link zu"
 
 #: gpxMotionView.js:905
 msgid "This public link will work only if \"{title}\" or one of its parent folder is shared in \"files\" app by public link without password"
-msgstr ""
+msgstr "Dieser öffentliche Link wird nur funktionieren, wenn „{title}”' oder einer seiner übergeordneten Ordner in der App „Dateien” durch einen öffentlichen Link ohne Passwort freigegeben wird."
 
 #: gpxMotionView.js:937
 msgid "Load file"
-msgstr ""
+msgstr "Datei laden"
 
 #: gpxMotionView.js:962
 msgid "Restrict animation to current view"
-msgstr ""
+msgstr "Animation auf die aktuelle Ansicht beschränken"
 
 #: gpxMotionView.js:975
 msgid "Next section (n)"
-msgstr ""
+msgstr "Nächsten Abschnitt (n)"
 
 #: gpxMotionView.js:988
 msgid "Previous section (p)"
-msgstr ""
+msgstr "Vorheriger Abschnitt (p)"
 
 #: gpxMotionView.js:1001
 msgid "Draw complete trip (g)"
-msgstr ""
+msgstr "Gesamte Wegstrecke zeichnen (g)"
 
 #: gpxMotionView.js:1017
 msgid "Reset (i)"
-msgstr ""
+msgstr "Zurücksetzen (i)"
 
 #: gpxMotionView.js:1034 gpxMotionView.js:1047
 msgid "Play/Pause animation (spacebar)"
-msgstr ""
+msgstr "Animation abspielen/anhalten (Leertaste)"
 
 #: gpxMotionView.js:1079
 msgid "No animation data found in the GPX file"
-msgstr ""
+msgstr "Keine Animationsdaten in der GPX-Datei gefunden"
 
 #: gpxMotionView.js:1257
 msgid "Nothing to display"
-msgstr ""
+msgstr "Nichts anzuzeigen"
 
 #: gpxMotionView.js:1464 gpxMotionView.js:1473 gpxMotionView.js:1512
 #: gpxMotionView.js:1521 gpxMotionView.js:1575 gpxMotionView.js:1584
 msgid "More about"
-msgstr ""
+msgstr "Weitere Informationen"
 
 #: gpxMotionView.js:1478 gpxMotionView.js:1482 gpxMotionView.js:1486
 #: gpxMotionView.js:1526 gpxMotionView.js:1554
 msgid "Click for more details"
-msgstr ""
+msgstr "Klicken Sie hier für weitere Details"
 
 #: gpxMotionView.js:1505 gpxMotionView.js:1524 gpxMotionView.js:1550
 #: gpxMotionView.js:1553 gpxMotionView.js:1566
 msgid "Step"
-msgstr ""
+msgstr "Schritt"
 
 #: gpxMotionView.js:1567
 msgid "final"
-msgstr ""
+msgstr "Endgültig"
 
 #: gpxMotionView.js:1612
 msgid "Ready to play"
-msgstr ""
+msgstr "Bereit zur Wiedergabe"
 
 #: gpxMotionView.js:1768
 msgid "Load a file to display an animation"
-msgstr ""
+msgstr "Datei zur Anzeige einer Animation laden"
 
 #: leaflet.js:5
 msgid "left"
-msgstr ""
+msgstr "Links"
 
 #: leaflet.js:5
 msgid "right"
-msgstr ""
+msgstr "Rechts"
 
 #: editcontent.php:4
 msgid "Load and save files"
-msgstr ""
+msgstr "Dateien laden und speichern"
 
 #: editcontent.php:6 editcontent.php:284
 msgid "About GpxMotion"
-msgstr ""
+msgstr "Über GpxMotion"
 
 #: editcontent.php:23
 msgid "Load and view file"
-msgstr ""
+msgstr "Dateien laden und anzeigen"
 
 #: editcontent.php:24
 msgid "Load and edit file"
-msgstr ""
+msgstr "Dateien laden und bearbeiten"
 
 #: editcontent.php:28
 msgid "Save"
-msgstr ""
+msgstr "Speichern"
 
 #: editcontent.php:30
 msgid "File name"
-msgstr ""
+msgstr "Dateiname"
 
 #: editcontent.php:34
 msgid "Choose directory and save"
-msgstr ""
+msgstr "Verzeichnis wählen und speichern"
 
 #: editcontent.php:38
 msgid "Preview current animation"
-msgstr ""
+msgstr "Vorschau der aktuellen Animation"
 
 #: editcontent.php:44
 msgid "Use real time proportions"
-msgstr ""
+msgstr "Echtzeitverhältnisse verwenden"
 
 #: editcontent.php:47
 msgid "Play all sections simultaneously"
-msgstr ""
+msgstr "Alle Abschnitte gleichzeitig wiedergeben"
 
 #: editcontent.php:50
 msgid "Play all sections synchronized in real time"
-msgstr ""
+msgstr "Alle Abschnitte synchronisiert in Echtzeit wiedergeben"
 
 #: editcontent.php:52
 msgid "Total duration (sec)"
-msgstr ""
+msgstr "Gesamtdauer (sek)"
 
 #: editcontent.php:55
 msgid "Clear animation sections"
-msgstr ""
+msgstr "Animationsbereiche leeren"
 
 #: editcontent.php:56
 msgid "Add animation section"
-msgstr ""
+msgstr "Animationsbereiche hinzufügen"
 
 #: editcontent.php:67
 msgid "loading file"
-msgstr ""
+msgstr "Datei wird geladen"
 
 #: editcontent.php:71
 msgid "exporting file to gpx"
-msgstr ""
+msgstr "Datei als GPX exportieren"
 
 #: editcontent.php:75
 msgid "saving file"
-msgstr ""
+msgstr "Datei wird gespeichert"
 
 #: editcontent.php:102
 msgid "Clear sections before loading"
-msgstr ""
+msgstr "Abschnitte vor dem Laden leeren"
 
 #: editcontent.php:106
 msgid "Custom tile servers"
-msgstr ""
+msgstr "Benutzerdefinierte Kachelserver"
 
 #: editcontent.php:109 editcontent.php:148 editcontent.php:191
 #: editcontent.php:236
 msgid "Server name"
-msgstr ""
+msgstr "Servername"
 
 #: editcontent.php:110 editcontent.php:149 editcontent.php:192
 #: editcontent.php:237
 msgid "For example : my custom server"
-msgstr ""
+msgstr "Zum Beispiel: Mein XY-Server"
 
 #: editcontent.php:111 editcontent.php:150 editcontent.php:193
 #: editcontent.php:238
 msgid "Server url"
-msgstr ""
+msgstr "Serveradresse"
 
 #: editcontent.php:112 editcontent.php:194
 msgid "For example : http://tile.server.org/cycle/{z}/{x}/{y}.png"
-msgstr ""
+msgstr "Zum Beispiel: http://tile.server.org/cycle/{z}/{x}/{y}.png"
 
 #: editcontent.php:113 editcontent.php:152 editcontent.php:195
 #: editcontent.php:240
 msgid "Min zoom (1-20)"
-msgstr ""
+msgstr "Vergrößerung mind. (1-20)"
 
 #: editcontent.php:115 editcontent.php:154 editcontent.php:197
 #: editcontent.php:242
 msgid "Max zoom (1-20)"
-msgstr ""
+msgstr "Vergrößerung max. (1-20)"
 
 #: editcontent.php:117 editcontent.php:160 editcontent.php:205
 #: editcontent.php:254
 msgid "Add"
-msgstr ""
+msgstr "Hinzufügen"
 
 #: editcontent.php:120
 msgid "Your tile servers"
-msgstr ""
+msgstr "Ihr Kachelserver"
 
 #: editcontent.php:145
 msgid "Custom overlay tile servers"
-msgstr ""
+msgstr "Benutzerdefinierte Überlagerungs-Kachel-Server"
 
 #: editcontent.php:151 editcontent.php:239
 msgid "For example : http://overlay.server.org/cycle/{z}/{x}/{y}.png"
-msgstr ""
+msgstr "Zum Beispiel : http://overlay.server.org/cycle/{z}/{x}/{y}.png"
 
 #: editcontent.php:156 editcontent.php:244
 msgid "Transparent"
-msgstr ""
+msgstr "Transparent"
 
 #: editcontent.php:158 editcontent.php:246
 msgid "Opacity (0.0-1.0)"
-msgstr ""
+msgstr "Deckkraft (0.0-1.0)"
 
 #: editcontent.php:163
 msgid "Your overlay tile servers"
-msgstr ""
+msgstr "Eigener Überlagerungs-Kachelserver"
 
 #: editcontent.php:188
 msgid "Custom WMS tile servers"
-msgstr ""
+msgstr "Benutzerdefinierter WMS-Kachelserver"
 
 #: editcontent.php:199 editcontent.php:248
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 #: editcontent.php:201 editcontent.php:250
 msgid "WMS version"
-msgstr ""
+msgstr "WMS-Version"
 
 #: editcontent.php:203 editcontent.php:252
 msgid "Layers to display"
-msgstr ""
+msgstr "Anzuzeigende Ebenen"
 
 #: editcontent.php:208
 msgid "Your WMS tile servers"
-msgstr ""
+msgstr "Ihr WMS-Kachelserver"
 
 #: editcontent.php:233
 msgid "Custom WMS overlay servers"
-msgstr ""
+msgstr "Benutzerdefinierte WMS-Überlagerungs-Kachelserver"
 
 #: editcontent.php:257
 msgid "Your WMS overlay tile servers"
-msgstr ""
+msgstr "Ihr WMS-Überlagerungs-Kachelserver"
 
 #: editcontent.php:286
 msgid "Features overview"
-msgstr ""
+msgstr "Funktionsübersicht"
 
 #: editcontent.php:288
 msgid "Shortcuts"
-msgstr ""
+msgstr "Tastaturkürzel"
 
 #: editcontent.php:290
 msgid "toggle sidebar"
-msgstr ""
+msgstr "Seitenleiste ein-/ausblenden"
 
 #: editcontent.php:293
 msgid "Documentation"
-msgstr ""
+msgstr "Dokumentation"
 
 #: editcontent.php:301
 msgid "Source management"
-msgstr ""
+msgstr "Quellenverwaltung"
 
 #: editcontent.php:312
 msgid "Authors"
-msgstr ""
+msgstr "Autoren"
 
