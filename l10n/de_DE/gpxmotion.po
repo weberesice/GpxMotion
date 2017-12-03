@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gpxmotion\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
 "POT-Creation-Date: 2017-11-10 15:35+0100\n"
-"PO-Revision-Date: 2017-11-29 16:22-0500\n"
+"PO-Revision-Date: 2017-12-03 14:42-0500\n"
 "Last-Translator: eneiluj <eneiluj@posteo.net>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -30,7 +30,7 @@ msgstr "Mit GpxMotion bearbeiten"
 
 #: gpxMotionEdit.js:8
 msgid "no vehicle"
-msgstr "Kein Fahrzeug"
+msgstr "kein Fahrzeug"
 
 #: gpxMotionEdit.js:9 gpxMotionView.js:33
 msgid "plane"
@@ -66,7 +66,7 @@ msgstr "Kachelserver „{ts}” konnte nicht gelöscht werden"
 
 #: gpxMotionEdit.js:315
 msgid "Server name or server url should not be empty"
-msgstr "Servername oder -adresse dürfen nicht leer sein"
+msgstr "Servername oder adresse dürfen nicht leer sein"
 
 #: gpxMotionEdit.js:316 gpxMotionEdit.js:321
 msgid "Impossible to add tile server"
@@ -91,7 +91,7 @@ msgstr "Hinzufügen des Kachelservers „{ts}” fehlgeschlagen"
 
 #: gpxMotionEdit.js:417
 msgid "File successfully saved as"
-msgstr "Datei erfolgreich gespeichert als:"
+msgstr "Datei erfolgreich gespeichert als"
 
 #: gpxMotionEdit.js:446
 msgid "Impossible to load this file. "
@@ -219,7 +219,7 @@ msgstr "Alle Abschnitte"
 
 #: gpxMotionView.js:289
 msgid "no title"
-msgstr "Kein Titel"
+msgstr "kein Titel"
 
 #: gpxMotionView.js:291 gpxMotionView.js:1457 gpxMotionView.js:1477
 #: gpxMotionView.js:1481 gpxMotionView.js:1485
@@ -272,7 +272,7 @@ msgstr "Öffentlicher Link zu"
 
 #: gpxMotionView.js:905
 msgid "This public link will work only if \"{title}\" or one of its parent folder is shared in \"files\" app by public link without password"
-msgstr "Dieser öffentliche Link wird nur funktionieren, wenn „{title}”' oder einer seiner übergeordneten Ordner in der App „Dateien” durch einen öffentlichen Link ohne Passwort freigegeben wird."
+msgstr "Dieser öffentliche Link wird nur funktionieren, wenn „{title}”' oder einer seiner übergeordneten Ordner in der App „Dateien” durch einen öffentlichen Link ohne Passwort freigegeben wird"
 
 #: gpxMotionView.js:937
 msgid "Load file"
