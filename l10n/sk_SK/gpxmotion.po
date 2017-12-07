@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gpxmotion\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
 "POT-Creation-Date: 2017-11-10 15:35+0100\n"
-"PO-Revision-Date: 2017-12-07 17:41-0500\n"
+"PO-Revision-Date: 2017-12-07 17:51-0500\n"
 "Last-Translator: eneiluj <eneiluj@posteo.net>\n"
 "Language-Team: Slovak\n"
 "Language: sk_SK\n"
@@ -111,7 +111,7 @@ msgstr ""
 
 #: gpxMotionEdit.js:676
 msgid "Vehicle"
-msgstr ""
+msgstr "Vozidlo"
 
 #: gpxMotionEdit.js:688
 msgid "Duration (sec)"
@@ -228,7 +228,7 @@ msgstr ""
 
 #: gpxMotionView.js:609 editcontent.php:5 editcontent.php:99
 msgid "Options"
-msgstr ""
+msgstr "Možnosti"
 
 #: gpxMotionView.js:611
 msgid "loop"
@@ -240,7 +240,7 @@ msgstr ""
 
 #: gpxMotionView.js:616
 msgid "Legend"
-msgstr ""
+msgstr "Vysvetlivky"
 
 #: gpxMotionView.js:621
 msgid "Pins"
@@ -252,7 +252,7 @@ msgstr ""
 
 #: gpxMotionView.js:624
 msgid "step"
-msgstr ""
+msgstr "krok"
 
 #: gpxMotionView.js:625
 msgid "end"
