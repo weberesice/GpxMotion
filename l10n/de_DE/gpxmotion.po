@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gpxmotion\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
 "POT-Creation-Date: 2017-11-10 15:35+0100\n"
-"PO-Revision-Date: 2017-12-03 14:42-0500\n"
+"PO-Revision-Date: 2017-12-10 13:24-0500\n"
 "Last-Translator: eneiluj <eneiluj@posteo.net>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -95,7 +95,7 @@ msgstr "Datei erfolgreich gespeichert als"
 
 #: gpxMotionEdit.js:446
 msgid "Impossible to load this file. "
-msgstr "Datei kann nicht geladen werden. "
+msgstr "Datei konnte nicht geladen werden. "
 
 #: gpxMotionEdit.js:447
 msgid "Supported format : gpx"
