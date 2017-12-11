@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gpxmotion\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
 "POT-Creation-Date: 2017-11-10 15:35+0100\n"
-"PO-Revision-Date: 2017-11-27 16:55-0500\n"
+"PO-Revision-Date: 2017-12-11 10:09-0500\n"
 "Last-Translator: eneiluj <eneiluj@posteo.net>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -58,11 +58,11 @@ msgstr ""
 
 #: gpxMotionEdit.js:293
 msgid "Tile server \"{ts}\" has been deleted"
-msgstr ""
+msgstr "Servidor de mosaico \"{ts}\" se ha eliminado"
 
 #: gpxMotionEdit.js:296 gpxMotionEdit.js:300
 msgid "Failed to delete tile server \"{ts}\""
-msgstr ""
+msgstr "No se pudo eliminar el servidor de mosaico \"{ts}\""
 
 #: gpxMotionEdit.js:315
 msgid "Server name or server url should not be empty"
@@ -70,7 +70,7 @@ msgstr ""
 
 #: gpxMotionEdit.js:316 gpxMotionEdit.js:321
 msgid "Impossible to add tile server"
-msgstr ""
+msgstr "Imposible añadir servidor de mosaico"
 
 #: gpxMotionEdit.js:320
 msgid "A server with this name already exists"
@@ -83,11 +83,11 @@ msgstr ""
 
 #: gpxMotionEdit.js:386
 msgid "Tile server \"{ts}\" has been added"
-msgstr ""
+msgstr "Se ha agregado el servidor de mosaico \"{ts}\""
 
 #: gpxMotionEdit.js:389 gpxMotionEdit.js:393
 msgid "Failed to add tile server \"{ts}\""
-msgstr ""
+msgstr "No se pudo agregar el servidor de mosaico \"{ts}\""
 
 #: gpxMotionEdit.js:417
 msgid "File successfully saved as"
@@ -419,7 +419,7 @@ msgstr ""
 
 #: editcontent.php:106
 msgid "Custom tile servers"
-msgstr ""
+msgstr "Servidores de mosaicos personalizados"
 
 #: editcontent.php:109 editcontent.php:148 editcontent.php:191
 #: editcontent.php:236
@@ -438,7 +438,7 @@ msgstr ""
 
 #: editcontent.php:112 editcontent.php:194
 msgid "For example : http://tile.server.org/cycle/{z}/{x}/{y}.png"
-msgstr ""
+msgstr "Por ejemplo: http://tile.server.org/cycle/{z}/{x}/{y}.png"
 
 #: editcontent.php:113 editcontent.php:152 editcontent.php:195
 #: editcontent.php:240
@@ -457,11 +457,11 @@ msgstr ""
 
 #: editcontent.php:120
 msgid "Your tile servers"
-msgstr ""
+msgstr "Sus servidores de mosaico"
 
 #: editcontent.php:145
 msgid "Custom overlay tile servers"
-msgstr ""
+msgstr "Servidores de mosaicos de superposición personales"
 
 #: editcontent.php:151 editcontent.php:239
 msgid "For example : http://overlay.server.org/cycle/{z}/{x}/{y}.png"
@@ -477,11 +477,11 @@ msgstr ""
 
 #: editcontent.php:163
 msgid "Your overlay tile servers"
-msgstr ""
+msgstr "Sus servidores de mosaico de superposición"
 
 #: editcontent.php:188
 msgid "Custom WMS tile servers"
-msgstr ""
+msgstr "Servidores de mosaico WMS personalizados"
 
 #: editcontent.php:199 editcontent.php:248
 msgid "Format"
@@ -497,7 +497,7 @@ msgstr ""
 
 #: editcontent.php:208
 msgid "Your WMS tile servers"
-msgstr ""
+msgstr "Sus servidores de mosaico WMS"
 
 #: editcontent.php:233
 msgid "Custom WMS overlay servers"
@@ -505,7 +505,7 @@ msgstr ""
 
 #: editcontent.php:257
 msgid "Your WMS overlay tile servers"
-msgstr ""
+msgstr "Sus servidores de mosaico de superposición WMS"
 
 #: editcontent.php:286
 msgid "Features overview"
