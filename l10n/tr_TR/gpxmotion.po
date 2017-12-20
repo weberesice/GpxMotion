@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gpxmotion\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
 "POT-Creation-Date: 2017-11-10 15:35+0100\n"
-"PO-Revision-Date: 2017-11-27 16:55-0500\n"
+"PO-Revision-Date: 2017-12-20 18:40-0500\n"
 "Last-Translator: eneiluj <eneiluj@posteo.net>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -18,43 +18,43 @@ msgstr ""
 
 #: app.php:42
 msgid "GpxMotion"
-msgstr ""
+msgstr "GpxMotion"
 
 #: filetypes.js:22
 msgid "View in GpxMotion"
-msgstr ""
+msgstr "GpxMotion'da Görüntüle"
 
 #: filetypes.js:37
 msgid "Edit with GpxMotion"
-msgstr ""
+msgstr "GpxMotion ile Düzenle"
 
 #: gpxMotionEdit.js:8
 msgid "no vehicle"
-msgstr ""
+msgstr "araç yok"
 
 #: gpxMotionEdit.js:9 gpxMotionView.js:33
 msgid "plane"
-msgstr ""
+msgstr "uçak"
 
 #: gpxMotionEdit.js:10 gpxMotionView.js:36
 msgid "car"
-msgstr ""
+msgstr "araba"
 
 #: gpxMotionEdit.js:11 gpxMotionView.js:35
 msgid "foot"
-msgstr ""
+msgstr "yaya"
 
 #: gpxMotionEdit.js:12 gpxMotionView.js:34
 msgid "bike"
-msgstr ""
+msgstr "bisiklet"
 
 #: gpxMotionEdit.js:13 gpxMotionView.js:38
 msgid "train"
-msgstr ""
+msgstr "tren"
 
 #: gpxMotionEdit.js:14 gpxMotionView.js:37
 msgid "bus"
-msgstr ""
+msgstr "otobüs"
 
 #: gpxMotionEdit.js:293
 msgid "Tile server \"{ts}\" has been deleted"
