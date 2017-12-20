@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gpxmotion\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
 "POT-Creation-Date: 2017-11-10 15:35+0100\n"
-"PO-Revision-Date: 2017-12-20 18:40-0500\n"
+"PO-Revision-Date: 2017-12-20 18:50-0500\n"
 "Last-Translator: eneiluj <eneiluj@posteo.net>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -58,40 +58,40 @@ msgstr "otobüs"
 
 #: gpxMotionEdit.js:293
 msgid "Tile server \"{ts}\" has been deleted"
-msgstr ""
+msgstr "Kiremit sunucu \"{ts} silindi"
 
 #: gpxMotionEdit.js:296 gpxMotionEdit.js:300
 msgid "Failed to delete tile server \"{ts}\""
-msgstr ""
+msgstr "Kiremit sunucu \"{ts}\" silinemedi"
 
 #: gpxMotionEdit.js:315
 msgid "Server name or server url should not be empty"
-msgstr ""
+msgstr "Sunucu adı veya sunucu URL'si boş olmamalı"
 
 #: gpxMotionEdit.js:316 gpxMotionEdit.js:321
 msgid "Impossible to add tile server"
-msgstr ""
+msgstr "Kiremit sunucu eklenemez"
 
 #: gpxMotionEdit.js:320
 msgid "A server with this name already exists"
-msgstr ""
+msgstr "Bu adda bir sunucu zaten var"
 
 #: gpxMotionEdit.js:353 editcontent.php:136 editcontent.php:179
 #: editcontent.php:224 editcontent.php:273
 msgid "Delete"
-msgstr ""
+msgstr "Sil"
 
 #: gpxMotionEdit.js:386
 msgid "Tile server \"{ts}\" has been added"
-msgstr ""
+msgstr "Kiremit sunucu \"{ts}\" eklendi"
 
 #: gpxMotionEdit.js:389 gpxMotionEdit.js:393
 msgid "Failed to add tile server \"{ts}\""
-msgstr ""
+msgstr "Kiremit sunucu \"{ts}\" eklenemedi"
 
 #: gpxMotionEdit.js:417
 msgid "File successfully saved as"
-msgstr ""
+msgstr "Dosya başarılı bir şekilde kaydedildi"
 
 #: gpxMotionEdit.js:446
 msgid "Impossible to load this file. "
