@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gpxmotion\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
 "POT-Creation-Date: 2017-11-10 15:35+0100\n"
-"PO-Revision-Date: 2017-12-20 19:21-0500\n"
+"PO-Revision-Date: 2017-12-20 19:31-0500\n"
 "Last-Translator: eneiluj <eneiluj@posteo.net>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -244,43 +244,43 @@ msgstr "Gösterge"
 
 #: gpxMotionView.js:621
 msgid "Pins"
-msgstr ""
+msgstr "Pin"
 
 #: gpxMotionView.js:623
 msgid "start"
-msgstr ""
+msgstr "başla"
 
 #: gpxMotionView.js:624
 msgid "step"
-msgstr ""
+msgstr "adım"
 
 #: gpxMotionView.js:625
 msgid "end"
-msgstr ""
+msgstr "bitiş"
 
 #: gpxMotionView.js:841
 msgid "Edit current file"
-msgstr ""
+msgstr "Geçerli dosyayı düzenle"
 
 #: gpxMotionView.js:855
 msgid "Share current file"
-msgstr ""
+msgstr "Geçerli dosyayı paylaş"
 
 #: gpxMotionView.js:857
 msgid "Public link to"
-msgstr ""
+msgstr "Genel bağlantı"
 
 #: gpxMotionView.js:905
 msgid "This public link will work only if \"{title}\" or one of its parent folder is shared in \"files\" app by public link without password"
-msgstr ""
+msgstr "Bu genel bağlantı sadece \"{title}\" veya üst klasörünün biri \"dosyalar\" uygulamasında herkese açık şekilde şifresiz paylaşılmışsa çalışacaktır"
 
 #: gpxMotionView.js:937
 msgid "Load file"
-msgstr ""
+msgstr "Dosya yükle"
 
 #: gpxMotionView.js:962
 msgid "Restrict animation to current view"
-msgstr ""
+msgstr "Geçerli görünüm için animasyonu kısıtla"
 
 #: gpxMotionView.js:975
 msgid "Next section (n)"
