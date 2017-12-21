@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gpxmotion\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
 "POT-Creation-Date: 2017-11-10 15:35+0100\n"
-"PO-Revision-Date: 2017-12-20 19:31-0500\n"
+"PO-Revision-Date: 2017-12-20 19:41-0500\n"
 "Last-Translator: eneiluj <eneiluj@posteo.net>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -284,106 +284,106 @@ msgstr "Geçerli görünüm için animasyonu kısıtla"
 
 #: gpxMotionView.js:975
 msgid "Next section (n)"
-msgstr ""
+msgstr "Sonraki bölüm (n)"
 
 #: gpxMotionView.js:988
 msgid "Previous section (p)"
-msgstr ""
+msgstr "Önceki bölüm (p)"
 
 #: gpxMotionView.js:1001
 msgid "Draw complete trip (g)"
-msgstr ""
+msgstr "Tüm yolculuğu çiz (g)"
 
 #: gpxMotionView.js:1017
 msgid "Reset (i)"
-msgstr ""
+msgstr "Sıfırlama (i)"
 
 #: gpxMotionView.js:1034 gpxMotionView.js:1047
 msgid "Play/Pause animation (spacebar)"
-msgstr ""
+msgstr "Animasyonu oynat/duraklat (ara tuşu)"
 
 #: gpxMotionView.js:1079
 msgid "No animation data found in the GPX file"
-msgstr ""
+msgstr "GPX dosyasında animasyon verisi bulunamadı"
 
 #: gpxMotionView.js:1257
 msgid "Nothing to display"
-msgstr ""
+msgstr "Görüntülenecek bir şey yok"
 
 #: gpxMotionView.js:1464 gpxMotionView.js:1473 gpxMotionView.js:1512
 #: gpxMotionView.js:1521 gpxMotionView.js:1575 gpxMotionView.js:1584
 msgid "More about"
-msgstr ""
+msgstr "Hakkında daha fazla bilgi"
 
 #: gpxMotionView.js:1478 gpxMotionView.js:1482 gpxMotionView.js:1486
 #: gpxMotionView.js:1526 gpxMotionView.js:1554
 msgid "Click for more details"
-msgstr ""
+msgstr "Daha fazla ayrıntı için tıklayınız"
 
 #: gpxMotionView.js:1505 gpxMotionView.js:1524 gpxMotionView.js:1550
 #: gpxMotionView.js:1553 gpxMotionView.js:1566
 msgid "Step"
-msgstr ""
+msgstr "Adım"
 
 #: gpxMotionView.js:1567
 msgid "final"
-msgstr ""
+msgstr "son"
 
 #: gpxMotionView.js:1612
 msgid "Ready to play"
-msgstr ""
+msgstr "Oynatmaya hazır"
 
 #: gpxMotionView.js:1768
 msgid "Load a file to display an animation"
-msgstr ""
+msgstr "Bir animasyonu görüntülemek için bir dosya yükle"
 
 #: leaflet.js:5
 msgid "left"
-msgstr ""
+msgstr "sol"
 
 #: leaflet.js:5
 msgid "right"
-msgstr ""
+msgstr "sağ"
 
 #: editcontent.php:4
 msgid "Load and save files"
-msgstr ""
+msgstr "Dosyaları yükle ve kaydet"
 
 #: editcontent.php:6 editcontent.php:284
 msgid "About GpxMotion"
-msgstr ""
+msgstr "GpxMotion hakkında"
 
 #: editcontent.php:23
 msgid "Load and view file"
-msgstr ""
+msgstr "Dosyayı yükle ve görüntüle"
 
 #: editcontent.php:24
 msgid "Load and edit file"
-msgstr ""
+msgstr "Dosyayı yükle ve düzenle"
 
 #: editcontent.php:28
 msgid "Save"
-msgstr ""
+msgstr "Kaydet"
 
 #: editcontent.php:30
 msgid "File name"
-msgstr ""
+msgstr "Dosya adı"
 
 #: editcontent.php:34
 msgid "Choose directory and save"
-msgstr ""
+msgstr "Dizin seç ve kaydet"
 
 #: editcontent.php:38
 msgid "Preview current animation"
-msgstr ""
+msgstr "Geçerli animasyon önizleme"
 
 #: editcontent.php:44
 msgid "Use real time proportions"
-msgstr ""
+msgstr "Gerçek zaman dilimlerini kullan"
 
 #: editcontent.php:47
 msgid "Play all sections simultaneously"
-msgstr ""
+msgstr "Tüm bölümleri aynı anda oynat"
 
 #: editcontent.php:50
 msgid "Play all sections synchronized in real time"
