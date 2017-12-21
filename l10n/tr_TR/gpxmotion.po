@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gpxmotion\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
 "POT-Creation-Date: 2017-11-10 15:35+0100\n"
-"PO-Revision-Date: 2017-12-20 19:03-0500\n"
+"PO-Revision-Date: 2017-12-20 19:21-0500\n"
 "Last-Translator: eneiluj <eneiluj@posteo.net>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -191,56 +191,56 @@ msgstr "Klasör yazma erişimi reddedildi"
 
 #: gpxMotionEdit.js:795
 msgid "Bad file name, must end with \".gpx\""
-msgstr ""
+msgstr "Hatalı dosya adı, \".gpx\" ile bitmeli"
 
 #: gpxMotionEdit.js:1042 gpxMotionView.js:943
 msgid "Load file (gpx)"
-msgstr ""
+msgstr "Dosya yükle (gpx)"
 
 #: gpxMotionEdit.js:1070
 msgid "There is nothing to save"
-msgstr ""
+msgstr "Kaydedilecek birşey yok"
 
 #: gpxMotionEdit.js:1077
 msgid "Where to save"
-msgstr ""
+msgstr "Kayıt yeri"
 
 #: gpxMotionEdit.js:1105
 msgid "Load and view animation file (gpx)"
-msgstr ""
+msgstr "Animasyon dosyasını (gpx) yükle ve görüntüle"
 
 #: gpxMotionView.js:157
 msgid "All sections synchronized"
-msgstr ""
+msgstr "Tüm bölümler senkronize edildi"
 
 #: gpxMotionView.js:161
 msgid "All sections"
-msgstr ""
+msgstr "Tüm bölümler"
 
 #: gpxMotionView.js:289
 msgid "no title"
-msgstr ""
+msgstr "başlık yok"
 
 #: gpxMotionView.js:291 gpxMotionView.js:1457 gpxMotionView.js:1477
 #: gpxMotionView.js:1481 gpxMotionView.js:1485
 msgid "Section"
-msgstr ""
+msgstr "Bölüm"
 
 #: gpxMotionView.js:609 editcontent.php:5 editcontent.php:99
 msgid "Options"
-msgstr ""
+msgstr "Seçenekler"
 
 #: gpxMotionView.js:611
 msgid "loop"
-msgstr ""
+msgstr "döngü"
 
 #: gpxMotionView.js:613
 msgid "autozoom"
-msgstr ""
+msgstr "otoyakınlaştırma"
 
 #: gpxMotionView.js:616
 msgid "Legend"
-msgstr ""
+msgstr "Gösterge"
 
 #: gpxMotionView.js:621
 msgid "Pins"
@@ -424,110 +424,110 @@ msgstr ""
 #: editcontent.php:109 editcontent.php:148 editcontent.php:191
 #: editcontent.php:236
 msgid "Server name"
-msgstr ""
+msgstr "Sunucu adı"
 
 #: editcontent.php:110 editcontent.php:149 editcontent.php:192
 #: editcontent.php:237
 msgid "For example : my custom server"
-msgstr ""
+msgstr "Örneğin : özel sunucum"
 
 #: editcontent.php:111 editcontent.php:150 editcontent.php:193
 #: editcontent.php:238
 msgid "Server url"
-msgstr ""
+msgstr "Sunucu adresi"
 
 #: editcontent.php:112 editcontent.php:194
 msgid "For example : http://tile.server.org/cycle/{z}/{x}/{y}.png"
-msgstr ""
+msgstr "Örneğin: http://tile.server.org/cycle/{z}/{x}/{y}.png"
 
 #: editcontent.php:113 editcontent.php:152 editcontent.php:195
 #: editcontent.php:240
 msgid "Min zoom (1-20)"
-msgstr ""
+msgstr "Minimum yakınlaştırma (1-20)"
 
 #: editcontent.php:115 editcontent.php:154 editcontent.php:197
 #: editcontent.php:242
 msgid "Max zoom (1-20)"
-msgstr ""
+msgstr "Maksimum yakınlaştırma (1-20)"
 
 #: editcontent.php:117 editcontent.php:160 editcontent.php:205
 #: editcontent.php:254
 msgid "Add"
-msgstr ""
+msgstr "Ekle"
 
 #: editcontent.php:120
 msgid "Your tile servers"
-msgstr ""
+msgstr "Kiremit sunucuların"
 
 #: editcontent.php:145
 msgid "Custom overlay tile servers"
-msgstr ""
+msgstr "Özel kaplama kiremit sunucular"
 
 #: editcontent.php:151 editcontent.php:239
 msgid "For example : http://overlay.server.org/cycle/{z}/{x}/{y}.png"
-msgstr ""
+msgstr "Örneğin : http://overlay.server.org/cycle/{z}/{x}/{y}.png"
 
 #: editcontent.php:156 editcontent.php:244
 msgid "Transparent"
-msgstr ""
+msgstr "Saydam"
 
 #: editcontent.php:158 editcontent.php:246
 msgid "Opacity (0.0-1.0)"
-msgstr ""
+msgstr "Opaklık (0.0-1.0)"
 
 #: editcontent.php:163
 msgid "Your overlay tile servers"
-msgstr ""
+msgstr "Özel kaplama kiremit sunucularınız"
 
 #: editcontent.php:188
 msgid "Custom WMS tile servers"
-msgstr ""
+msgstr "Özel WMS kiremit sunucular"
 
 #: editcontent.php:199 editcontent.php:248
 msgid "Format"
-msgstr ""
+msgstr "Biçim"
 
 #: editcontent.php:201 editcontent.php:250
 msgid "WMS version"
-msgstr ""
+msgstr "WMS versiyonu"
 
 #: editcontent.php:203 editcontent.php:252
 msgid "Layers to display"
-msgstr ""
+msgstr "Görüntülenecek katmanlar"
 
 #: editcontent.php:208
 msgid "Your WMS tile servers"
-msgstr ""
+msgstr "WMS kiremit sunucuların"
 
 #: editcontent.php:233
 msgid "Custom WMS overlay servers"
-msgstr ""
+msgstr "Özel WMS yerleşimi sunucular"
 
 #: editcontent.php:257
 msgid "Your WMS overlay tile servers"
-msgstr ""
+msgstr "WMS yerleşimi kiremit sunucularınız"
 
 #: editcontent.php:286
 msgid "Features overview"
-msgstr ""
+msgstr "Özelliklere genel bakış"
 
 #: editcontent.php:288
 msgid "Shortcuts"
-msgstr ""
+msgstr "Kısayollar"
 
 #: editcontent.php:290
 msgid "toggle sidebar"
-msgstr ""
+msgstr "kenar çubuğunu değiştir"
 
 #: editcontent.php:293
 msgid "Documentation"
-msgstr ""
+msgstr "Dökümanlar"
 
 #: editcontent.php:301
 msgid "Source management"
-msgstr ""
+msgstr "Kaynak yönetimi"
 
 #: editcontent.php:312
 msgid "Authors"
-msgstr ""
+msgstr "Yazarlar"
 
