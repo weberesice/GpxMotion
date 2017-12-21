@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gpxmotion\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
 "POT-Creation-Date: 2017-11-10 15:35+0100\n"
-"PO-Revision-Date: 2017-12-20 18:50-0500\n"
+"PO-Revision-Date: 2017-12-20 19:01-0500\n"
 "Last-Translator: eneiluj <eneiluj@posteo.net>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -95,75 +95,75 @@ msgstr "Dosya başarılı bir şekilde kaydedildi"
 
 #: gpxMotionEdit.js:446
 msgid "Impossible to load this file. "
-msgstr ""
+msgstr "Bu dosya yüklenemez. "
 
 #: gpxMotionEdit.js:447
 msgid "Supported format : gpx"
-msgstr ""
+msgstr "Desteklenen formatlar: gpx"
 
 #: gpxMotionEdit.js:448 gpxMotionView.js:1080 gpxMotionView.js:1082
 msgid "Load error"
-msgstr ""
+msgstr "Yükleme hatası"
 
 #: gpxMotionEdit.js:674
 msgid "Number of tracks/routes"
-msgstr ""
+msgstr "Yol/güzergah sayısı"
 
 #: gpxMotionEdit.js:676
 msgid "Vehicle"
-msgstr ""
+msgstr "Araç"
 
 #: gpxMotionEdit.js:688
 msgid "Duration (sec)"
-msgstr ""
+msgstr "Süre (sn)"
 
 #: gpxMotionEdit.js:690
 msgid "Section title"
-msgstr ""
+msgstr "Bölüm başlığı"
 
 #: gpxMotionEdit.js:691
 msgid "Guess title from track/route name"
-msgstr ""
+msgstr "Yol/güzergah isminden başlığı tahmin et"
 
 #: gpxMotionEdit.js:696
 msgid "Color"
-msgstr ""
+msgstr "Renk"
 
 #: gpxMotionEdit.js:698
 msgid "Description"
-msgstr ""
+msgstr "Açıklama"
 
 #: gpxMotionEdit.js:700
 msgid "Picture URL"
-msgstr ""
+msgstr "Resim URL'si"
 
 #: gpxMotionEdit.js:702
 msgid "Detail URL"
-msgstr ""
+msgstr "Ayrıntılar URL'si"
 
 #: gpxMotionEdit.js:704
 msgid "Starting point title"
-msgstr ""
+msgstr "Başlangıç noktası başlığı"
 
 #: gpxMotionEdit.js:706
 msgid "Starting point description"
-msgstr ""
+msgstr "Başlangıç noktası açıklaması"
 
 #: gpxMotionEdit.js:708
 msgid "Starting point picture URL"
-msgstr ""
+msgstr "Başlangıç noktası resim URL'si"
 
 #: gpxMotionEdit.js:710
 msgid "Starting point detail URL"
-msgstr ""
+msgstr "Başlangıç noktası ayrıntısı URL"
 
 #: gpxMotionEdit.js:715
 msgid "Remove section"
-msgstr ""
+msgstr "Bölümü Kaldır"
 
 #: gpxMotionEdit.js:717
 msgid "Zoom on section"
-msgstr ""
+msgstr "Bölümü yakınlaştır"
 
 #: gpxMotionEdit.js:719
 msgid "Insert section before"
