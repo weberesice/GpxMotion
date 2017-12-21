@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gpxmotion\n"
 "Report-Msgid-Bugs-To: translations@owncloud.org\n"
 "POT-Creation-Date: 2017-11-10 15:35+0100\n"
-"PO-Revision-Date: 2017-12-20 19:02-0500\n"
+"PO-Revision-Date: 2017-12-20 19:03-0500\n"
 "Last-Translator: eneiluj <eneiluj@posteo.net>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -175,19 +175,19 @@ msgstr "Sonuna bölüm ekle"
 
 #: gpxMotionEdit.js:774 gpxMotionEdit.js:781 gpxMotionEdit.js:788
 msgid "Impossible to write file"
-msgstr ""
+msgstr "Dosya yazılamıyor"
 
 #: gpxMotionEdit.js:775
 msgid "Write access denied"
-msgstr ""
+msgstr "Yazma erişimi reddedildi"
 
 #: gpxMotionEdit.js:782
 msgid "Folder does not exist"
-msgstr ""
+msgstr "Klasör mevcut değil"
 
 #: gpxMotionEdit.js:789
 msgid "Folder write access denied"
-msgstr ""
+msgstr "Klasör yazma erişimi reddedildi"
 
 #: gpxMotionEdit.js:795
 msgid "Bad file name, must end with \".gpx\""
